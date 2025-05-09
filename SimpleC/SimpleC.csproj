@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Example\HelloWorld\code\header\" />
+    <Folder Include="Example\HelloWorld\rules\" />
+    <Folder Include="Example\HelloWorld\code\source\" />
+    <Folder Include="Example\HelloWorld\code\asm\" />
     <Folder Include="Main\Interface\" />
   </ItemGroup>
 
