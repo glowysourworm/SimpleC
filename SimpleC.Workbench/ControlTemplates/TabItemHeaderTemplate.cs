@@ -86,7 +86,8 @@ namespace SimpleC.Workbench.ControlTemplates
             {
                 Header = panel,
                 Cursor = new Cursor(StandardCursorType.Hand),
-                Padding = new Avalonia.Thickness(5, 0)
+                Padding = new Avalonia.Thickness(5, 0),
+                Background = Brushes.White
             };
 
             ellipseButton.PointerEntered += EllipseButton_PointerEntered;

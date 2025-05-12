@@ -1,0 +1,11 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 x:CompileBindings="False"
+             x:Class="SimpleC.Workbench.Controls.TabItemButton">
+	
+	<Ellipse x:Name="TheEllipse" 
+			 Fill="LightGray"
+			 Stroke="DarkGray">
+		
+	</Ellipse>
+</UserControl>

@@ -4,11 +4,22 @@
 			 x:CompileBindings="False"
              x:Class="SimpleC.Workbench.Controls.ProjectFileTreeControl">
 
-	<Grid RowDefinitions="Auto, *">
-		
-		<TextBox IsReadOnly="True" Text="{Binding ProjectFiles.FullPath}" />
-		
-		<TreeView ItemsSource="{Binding ProjectFiles.DirectoryFiles}" Grid.Row="1">
+	<Grid RowDefinitions="Auto, Auto, *">
+
+		<Border Background="#DDDDDD">
+			<TextBlock Text="Workspace" Padding="10" />
+		</Border>
+
+		<Border Background="#EEEEEE" Grid.Row="1">
+			<TextBlock Text="{Binding ProjectFiles.FullPath}" Padding="10" >
+				<ToolTip.Tip>
+					<TextBlock Text="{Binding ProjectFiles.FullPath}" />
+				</ToolTip.Tip>
+			</TextBlock>
+		</Border>
+
+
+		<TreeView ItemsSource="{Binding ProjectFiles.DirectoryFiles}" Grid.Row="2">
 			<TreeView.ItemTemplate>
 				<TreeDataTemplate ItemsSource="{Binding DirectoryFiles}">
 					<TextBlock Text="{Binding FileNameOrDirectoryName}"/>

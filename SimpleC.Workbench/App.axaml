@@ -12,6 +12,9 @@
     <Application.Styles>
         <FluentTheme />
 
+		
+		<DockFluentTheme />
+
 		<!-- AvaloniaEdit Themes -->
 		<StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
     </Application.Styles>

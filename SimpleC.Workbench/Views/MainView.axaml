@@ -2,7 +2,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:controls="clr-namespace:SimpleC.Workbench.Controls;assembly=SimpleC.Workbench"
 			 xmlns:controlTemplates="clr-namespace:SimpleC.Workbench.ControlTemplates;assembly=SimpleC.Workbench"
-             x:Class="SimpleC.Workbench.Views.MainView" Margin="0">
+			 xmlns:viewModel="using:SimpleC.Workbench.ViewModels"			 
+             x:Class="SimpleC.Workbench.Views.MainView" 
+			 x:DataType="viewModel:ViewModel"
+			 Margin="0">
+
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="/Resources/Template/FileTabControl.axaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</UserControl.Resources>
 
 	<!-- Primary Docker Dock.Avalonia is not quite stable / usable. -->
 	<Grid>
@@ -20,6 +31,7 @@
 		<!-- Grid Resizer Vertical -->
 		<GridSplitter Grid.Column="1"
 					  Padding="0"
+					  Width="3"
 					  Background="#EEEEEE"
 					  ResizeDirection="Columns" />
 
@@ -27,30 +39,15 @@
 		<GridSplitter Grid.Row="1"
 					  Grid.ColumnSpan="3"
 					  Padding="0"
+					  Height="3"
 					  Background="#EEEEEE"
 					  ResizeDirection="Rows"  />
 
 		<!-- Project Files -->
 		<controls:ProjectFileTreeControl />
 
-		<TabControl Grid.Column="2" Padding="0">
-
-			<TabItem FontSize="14">
-				<TabItem.HeaderTemplate>
-					<controlTemplates:TabItemHeaderTemplate Header="File1.cs" />
-				</TabItem.HeaderTemplate>
-				<controls:SimpleTextEditor x:Name="TextEditor1"  />
-			</TabItem>
-
-			<TabItem FontSize="14">
-				<TabItem.HeaderTemplate>
-					<controlTemplates:TabItemHeaderTemplate Header="File2.cs" />
-				</TabItem.HeaderTemplate>
-				
-				<controls:SimpleTextEditor x:Name="TextEditor2" />
-			</TabItem>
-
-		</TabControl>
+		<!-- Instance of FileTabControl (see Resources / Template / FileTabControl.axaml) -->
+		<TabControl Grid.Column="2" Padding="0" ItemsSource="{Binding CodeFiles}" />
 
 	</Grid>
 

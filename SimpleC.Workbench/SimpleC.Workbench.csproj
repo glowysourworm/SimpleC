@@ -11,7 +11,6 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <Folder Include="Resources\Template\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +26,9 @@
     </PackageReference>
     <PackageReference Include="AvaloniaEdit.TextMate" Version="11.3.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Dock.Avalonia" Version="11.3.0" />
+    <PackageReference Include="Dock.Avalonia.Themes.Default" Version="0.10.0" />
+    <PackageReference Include="Dock.Model.Mvvm" Version="11.3.0" />
     <PackageReference Include="TextMateSharp.Grammars" Version="1.0.66" />
   </ItemGroup>
 </Project>

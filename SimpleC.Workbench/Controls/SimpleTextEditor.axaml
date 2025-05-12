@@ -1,7 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:avaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
-             x:Class="SimpleC.Workbench.Controls.SimpleTextEditor">
+			 xmlns:viewModel="using:SimpleC.Workbench.ViewModels"
+             x:Class="SimpleC.Workbench.Controls.SimpleTextEditor"
+			 x:DataType="viewModel:CodeFileViewModel">
 
 	<Grid>
 		<Grid.RowDefinitions>

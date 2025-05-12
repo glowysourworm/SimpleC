@@ -1,4 +1,7 @@
 using Avalonia.Controls;
+using Avalonia.Controls.Generators;
+using Avalonia.Markup.Xaml.Templates;
+using Avalonia.Styling;
 
 namespace SimpleC.Workbench.Views
 {
@@ -7,7 +10,6 @@ namespace SimpleC.Workbench.Views
         public MainView()
         {
             InitializeComponent();
-
         }
 
         private void OpenItem_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
