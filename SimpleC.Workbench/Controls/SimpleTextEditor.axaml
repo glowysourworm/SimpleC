@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:avaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+             x:Class="SimpleC.Workbench.Controls.SimpleTextEditor">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<Border Background="#EEEEEE">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<ComboBox x:Name="GrammarCB" HorizontalAlignment="Stretch" Margin="3" />
+				<ComboBox x:Name="FunctionCB" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10 3 3 3" />
+				<TextBox x:Name="SearchTB" Grid.Column="2" HorizontalAlignment="Stretch" Margin="10 3 3 3" />
+			</Grid>
+		</Border>
+
+		<avaEdit:TextEditor x:Name="Editor"
+							Grid.Row="1"
+							Margin="10 0 0 0"
+							ShowLineNumbers="True"
+							FontFamily="Cascadia Code,Consolas,Menlo,Monospace" />
+	</Grid>
+</UserControl>

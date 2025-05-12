@@ -1,34 +1,53 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:local="clr-namespace:SimpleC.Workbench.Views;assembly=SimpleC.Workbench"
-             x:Class="SimpleC.Workbench.Views.MainView">
+			 xmlns:controls="clr-namespace:SimpleC.Workbench.Controls;assembly=SimpleC.Workbench"
+			 xmlns:controlTemplates="clr-namespace:SimpleC.Workbench.ControlTemplates;assembly=SimpleC.Workbench"
+             x:Class="SimpleC.Workbench.Views.MainView" Margin="0">
 
 	<!-- Primary Docker Dock.Avalonia is not quite stable / usable. -->
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="250" />
+			<ColumnDefinition Width="250" MinWidth="250" />
 			<ColumnDefinition Width="2" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="2" />
-			<RowDefinition Height="250" />
+			<RowDefinition Height="250" MinHeight="250" />
 		</Grid.RowDefinitions>
 
 		<!-- Grid Resizer Vertical -->
 		<GridSplitter Grid.Column="1"
-					  Background="LightGray"
+					  Padding="0"
+					  Background="#EEEEEE"
 					  ResizeDirection="Columns" />
 
 		<!-- Grid Resizer Horizontal -->
 		<GridSplitter Grid.Row="1"
 					  Grid.ColumnSpan="3"
-					  Height="2"
-					  Background="LightGray"
+					  Padding="0"
+					  Background="#EEEEEE"
 					  ResizeDirection="Rows"  />
 
-		<local:SimpleTextEditor x:Name="TextEditor" Grid.Column="2" />
+		<TabControl Grid.Column="2" Padding="0">
+
+			<TabItem FontSize="14">
+				<TabItem.HeaderTemplate>
+					<controlTemplates:TabItemHeaderTemplate Header="File1.cs" />
+				</TabItem.HeaderTemplate>
+				<controls:SimpleTextEditor x:Name="TextEditor1"  />
+			</TabItem>
+
+			<TabItem FontSize="14">
+				<TabItem.HeaderTemplate>
+					<controlTemplates:TabItemHeaderTemplate Header="File2.cs" />
+				</TabItem.HeaderTemplate>
+				
+				<controls:SimpleTextEditor x:Name="TextEditor2" />
+			</TabItem>
+
+		</TabControl>
 
 	</Grid>
 

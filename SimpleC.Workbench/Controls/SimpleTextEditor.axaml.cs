@@ -5,7 +5,7 @@ using AvaloniaEdit.TextMate;
 
 using TextMateSharp.Grammars;
 
-namespace SimpleC.Workbench.Views
+namespace SimpleC.Workbench.Controls
 {
     public partial class SimpleTextEditor : UserControl
     {
