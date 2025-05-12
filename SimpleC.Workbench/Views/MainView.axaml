@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="clr-namespace:SimpleC.Workbench.Views;assembly=SimpleC.Workbench"
+             x:Class="SimpleC.Workbench.Views.MainView">
+
+	<!-- Primary Docker Dock.Avalonia is not quite stable / usable. -->
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="250" />
+			<ColumnDefinition Width="2" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="2" />
+			<RowDefinition Height="250" />
+		</Grid.RowDefinitions>
+
+		<!-- Grid Resizer Vertical -->
+		<GridSplitter Grid.Column="1"
+					  Background="LightGray"
+					  ResizeDirection="Columns" />
+
+		<!-- Grid Resizer Horizontal -->
+		<GridSplitter Grid.Row="1"
+					  Grid.ColumnSpan="3"
+					  Height="2"
+					  Background="LightGray"
+					  ResizeDirection="Rows"  />
+
+		<local:SimpleTextEditor x:Name="TextEditor" Grid.Column="2" />
+
+	</Grid>
+
+</UserControl>

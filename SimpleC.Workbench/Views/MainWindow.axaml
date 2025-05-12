@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SimpleC.Workbench.ViewModels"
+		xmlns:local="clr-namespace:SimpleC.Workbench.Views;assembly=SimpleC.Workbench"
+		xmlns:avaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+        x:Class="SimpleC.Workbench.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SimpleC.Workbench">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<local:MainView />
+
+</Window>
