@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:vm="clr-namespace:SimpleC.Workbench.Controls;assembly=SimpleC.Workbench"
+			 x:CompileBindings="False"
+             x:Class="SimpleC.Workbench.Controls.ProjectFileTreeControl">
+
+	<Grid RowDefinitions="Auto, *">
+		
+		<TextBox IsReadOnly="True" Text="{Binding ProjectFiles.FullPath}" />
+		
+		<TreeView ItemsSource="{Binding ProjectFiles.DirectoryFiles}" Grid.Row="1">
+			<TreeView.ItemTemplate>
+				<TreeDataTemplate ItemsSource="{Binding DirectoryFiles}">
+					<TextBlock Text="{Binding FileNameOrDirectoryName}"/>
+				</TreeDataTemplate>
+			</TreeView.ItemTemplate>
+		</TreeView>
+		
+	</Grid>
+</UserControl>

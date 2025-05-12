@@ -4,16 +4,24 @@
 		xmlns:local="clr-namespace:SimpleC.Workbench.Views;assembly=SimpleC.Workbench"
 		xmlns:avaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
         x:Class="SimpleC.Workbench.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
+        x:DataType="vm:ViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="SimpleC.Workbench">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+        <vm:ViewModel x:Name="TheViewModel" />
     </Design.DataContext>
 
-	<local:MainView />
+	<Grid RowDefinitions="Auto,*">
+		<Menu>
+			<MenuItem Header="_File">
+				<MenuItem x:Name="OpenMenuItem" Header="_Workspace" Click="Workspace_Click" />
+			</MenuItem>
+		</Menu>
+
+		<local:MainView Grid.Row="1" />
+	</Grid>
 
 </Window>

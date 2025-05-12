@@ -30,6 +30,9 @@
 					  Background="#EEEEEE"
 					  ResizeDirection="Rows"  />
 
+		<!-- Project Files -->
+		<controls:ProjectFileTreeControl />
+
 		<TabControl Grid.Column="2" Padding="0">
 
 			<TabItem FontSize="14">

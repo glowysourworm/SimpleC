@@ -27,7 +27,7 @@ namespace SimpleC.Workbench
                 DisableAvaloniaDataAnnotationValidation();
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = new ViewModel(),
                 };
             }
 
