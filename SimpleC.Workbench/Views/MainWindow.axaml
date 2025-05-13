@@ -6,7 +6,7 @@
         x:Class="SimpleC.Workbench.Views.MainWindow"
         x:DataType="vm:ViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SimpleC.Workbench">
+        Title="Simple C Workbench">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,

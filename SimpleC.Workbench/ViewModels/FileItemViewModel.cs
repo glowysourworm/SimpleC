@@ -35,16 +35,16 @@ namespace SimpleC.Workbench.ViewModels
 
         public FileItemViewModel(string fullPath, bool isDirectory)
         {
-            Load(fullPath, isDirectory);
+            Load(fullPath, fullPath, isDirectory);
         }
 
-        public void Load(string fullPath, bool isDirectory)
+        public void Load(string fullPathBase, string fullPath, bool isDirectory)
         {
             if (isDirectory)
             {
                 if (Directory.Exists(fullPath))
                 {
-                    LoadImpl(fullPath, isDirectory);
+                    LoadImpl(fullPathBase, fullPath, isDirectory);
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace SimpleC.Workbench.ViewModels
             {
                 if (Path.Exists(fullPath))
                 {
-                    LoadImpl(fullPath, isDirectory);
+                    LoadImpl(fullPathBase, fullPath, isDirectory);
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace SimpleC.Workbench.ViewModels
             }
         }
 
-        private void LoadImpl(string fullPath, bool isDirectory)
+        private void LoadImpl(string fullPathBase, string fullPath, bool isDirectory)
         {
             this.DirectoryFiles = new ObservableCollection<FileItemViewModel>();
             this.IsDirectory = isDirectory;
@@ -81,15 +81,16 @@ namespace SimpleC.Workbench.ViewModels
             if (isDirectory)
             {
                 // Short Name
-                this.FileNameOrDirectoryName = Path.GetDirectoryName(fullPath) ?? "";
+                var directoryName = Path.GetDirectoryName(fullPath) ?? "";
+                this.FileNameOrDirectoryName = Path.GetRelativePath(directoryName, fullPathBase);
 
-                foreach (var file in System.IO.Directory.GetFiles(fullPath))
-                {
-                    this.DirectoryFiles.Add(new FileItemViewModel(file, false));
-                }
                 foreach (var directory in System.IO.Directory.GetDirectories(fullPath))
                 {
                     this.DirectoryFiles.Add(new FileItemViewModel(directory, true));
+                }
+                foreach (var file in System.IO.Directory.GetFiles(fullPath))
+                {
+                    this.DirectoryFiles.Add(new FileItemViewModel(file, false));
                 }
             }
             else

@@ -28,10 +28,10 @@
 
 	<ControlTheme x:Key="FirstTabItemControlTheme" TargetType="TabItem" BasedOn="{StaticResource BaseTabItemControlTheme}">
 		<Setter Property="Background" Value="#EEEEEE" />
+		<Setter Property="Cursor" Value="Hand" />
 		<Setter Property="HeaderTemplate">
 			<DataTemplate>
-				<Border Cursor="Hand" 
-						Background="{Binding IsSelected, 
+				<Border Background="{Binding IsSelected, 
 											 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}, 
 											 Converter={StaticResource BoolToBrushConverter},
 											 ConverterParameter={x:Static Brushes.White}}">
@@ -84,7 +84,6 @@
 
 	<ControlTheme x:Key="FirstTabControlTheme" TargetType="TabControl" BasedOn="{StaticResource BaseTabControlTheme}">
 		<Setter Property="Background" Value="White" />
-		<Setter Property="BorderBrush" Value="Red" />
 		<Setter Property="ItemsPanel">
 			<Setter.Value>
 				<ItemsPanelTemplate>

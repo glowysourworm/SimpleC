@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace SimpleC.Workbench.ViewModels
 {
@@ -41,7 +42,14 @@ namespace SimpleC.Workbench.ViewModels
 
         public void Load(string projectFilePath)
         {
-            this.ProjectFiles.Load(projectFilePath, true);
+            try
+            {
+                this.ProjectFiles.Load(projectFilePath, projectFilePath, true);
+            }
+            catch (Exception ex)
+            {
+                // TODO
+            }
         }
     }
 }
