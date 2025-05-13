@@ -6,11 +6,18 @@
     public static class GrammarCConstants
     {
         public const char Backslash = '\\';
+        public const char BracketCurlyLeft = '{';
+        public const char BracketCurlyRight = '}';
+        public const char BracketLeft = '(';
+        public const char BracketRight = ')';
+        public const char BracketSquareLeft = '[';
+        public const char BracketSquareRight = ']';
         public const char CaretLeft = '<';
         public const char CaretRight = '>';
+        public const char Comma = ',';
         public const char DoubleQuote = '"';
         public const char Period = '.';
-        public const char Semicolor = ';';
+        public const char Semicolon = ';';
         public const char SingleQuote = '\'';
 
         public const char Plus = '+';

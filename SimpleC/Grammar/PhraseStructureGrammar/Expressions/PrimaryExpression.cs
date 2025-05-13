@@ -13,7 +13,37 @@ namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
         Constant _constant;
         StringLiteral _literal;
 
-        // TODO: Must be surrounded by brackets
+        public const char LeftBracket = GrammarCConstants.BracketLeft;
         Expression _expression;
+        public const char RightBracket = GrammarCConstants.BracketRight;
+
+        public Identifier Identifier
+        {
+            get { return _identifier; }
+            set { this.RaiseAndSetIfChanged(ref _identifier, value); }
+        }
+        public Constant Constant
+        {
+            get { return _constant; }
+            set { this.RaiseAndSetIfChanged(ref _constant, value); }
+        }
+        public StringLiteral Literal
+        {
+            get { return _literal; }
+            set { this.RaiseAndSetIfChanged(ref _literal, value); }
+        }
+        public Expression Expression
+        {
+            get { return _expression; }
+            set { this.RaiseAndSetIfChanged(ref _expression, value); }
+        }
+
+        public PrimaryExpression()
+        {
+            this.Identifier = new Identifier();
+            this.Constant = new Constant();
+            this.Literal = new StringLiteral();
+            this.Expression = new Expression();
+        }
     }
 }

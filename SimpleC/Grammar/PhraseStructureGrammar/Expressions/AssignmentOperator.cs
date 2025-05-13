@@ -2,5 +2,6 @@
 {
     public class AssignmentOperator : GrammarConstant
     {
+        // One Of:  = *= /= %= += -= <<= >>= &= ^= |=
     }
 }
