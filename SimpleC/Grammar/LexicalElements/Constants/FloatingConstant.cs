@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleC.Grammar.LexicalElements.Constants
+﻿namespace SimpleC.Grammar.LexicalElements.Constants
 {
     public class FloatingConstant : GrammarBase
     {
+        DecimalFloatingConstant _decimalFloatingConstant;
+
+        public DecimalFloatingConstant DecimalFloatingConstant
+        {
+            get { return _decimalFloatingConstant; }
+            set { this.RaiseAndSetIfChanged(ref _decimalFloatingConstant, value); }
+        }
+
+        public FloatingConstant()
+        {
+            this.DecimalFloatingConstant = new DecimalFloatingConstant();
+        }
     }
 }

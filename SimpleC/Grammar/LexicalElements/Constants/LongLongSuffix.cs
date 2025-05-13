@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleC.Grammar.LexicalElements.Constants
+﻿namespace SimpleC.Grammar.LexicalElements.Constants
 {
     public class LongLongSuffix : GrammarConstant
     {
+        // ONE OF: ll LL
     }
 }

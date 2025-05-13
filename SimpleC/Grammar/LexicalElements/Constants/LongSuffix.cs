@@ -2,5 +2,6 @@
 {
     public class LongSuffix : GrammarConstant
     {
+        // ONE OF:  l L
     }
 }

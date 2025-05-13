@@ -2,5 +2,6 @@
 {
     public class Sign : GrammarConstant
     {
+        // ONE OF:  + - 
     }
 }

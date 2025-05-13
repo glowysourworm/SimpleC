@@ -2,6 +2,8 @@
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
+using SimpleC.Base.Exception;
+
 namespace SimpleC.Base
 {
     public abstract class ModelBase : INotifyPropertyChanged
@@ -22,7 +24,7 @@ namespace SimpleC.Base
                 OnPropertyChanged(memberExpression.Member.Name);
 
             else
-                throw new Exception("Invalid Member Expression OnPropertyChanged<T>");
+                throw new SimpleCException("Invalid Member Expression OnPropertyChanged<T>");
         }
 
         /// <summary>

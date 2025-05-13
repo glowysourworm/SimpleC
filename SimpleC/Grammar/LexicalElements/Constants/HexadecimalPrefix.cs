@@ -8,5 +8,6 @@ namespace SimpleC.Grammar.LexicalElements.Constants
 {
     public class HexadecimalPrefix : GrammarConstant
     {
+        // ONE OF:  0x 0X
     }
 }
