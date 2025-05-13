@@ -14,6 +14,7 @@
         public const char BracketSquareRight = ']';
         public const char CaretLeft = '<';
         public const char CaretRight = '>';
+        public const char Colon = ':';
         public const char Comma = ',';
         public const char DoubleQuote = '"';
         public const char Period = '.';
