@@ -8,5 +8,6 @@ namespace SimpleC.Grammar.LexicalElements
 {
     public class Punctuator : GrammarConstant
     {
+        // ONE OF: ... (see A.1.7)
     }
 }

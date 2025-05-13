@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleC.Grammar
+﻿namespace SimpleC.Grammar
 {
     /// <summary>
     /// Base list of grammar constant characters for pieces of the grammar to refer to
@@ -12,9 +6,12 @@ namespace SimpleC.Grammar
     public static class GrammarCConstants
     {
         public const char Backslash = '\\';
-        public const char SingleQuote = '\'';
+        public const char CaretLeft = '<';
+        public const char CaretRight = '>';
+        public const char DoubleQuote = '"';
         public const char Period = '.';
         public const char Semicolor = ';';
+        public const char SingleQuote = '\'';
 
         public const char Plus = '+';
         public const char Minus = '-';

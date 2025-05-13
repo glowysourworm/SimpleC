@@ -26,7 +26,7 @@ namespace SimpleC.Grammar.LexicalElements.Constants
 
         public CChar()
         {
-            this.Char = GrammarCConstants.SingleQuote;
+            this.Char = GrammarCConstants.Letter_a;
             this.EscapeSequence = new EscapeSequence();
         }
     }
