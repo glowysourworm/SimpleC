@@ -18,12 +18,16 @@
         public const char Colon = ':';
         public const char Comma = ',';
         public const char DoubleQuote = '"';
+        public const char Hashtag = '#';
         public const char Period = '.';
         public const char Semicolon = ';';
         public const char SingleQuote = '\'';
 
         public const char Plus = '+';
         public const char Minus = '-';
+
+        public const char Newline = '\n';
+        public const char ReturnCarriage = '\r';
 
         public const char Number0 = '0';
         public const char Number1 = '1';

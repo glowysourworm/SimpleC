@@ -52,5 +52,18 @@
         public const string Keyword_return = "return";
         public const string Keyword_switch = "switch";
         public const string Keyword_while = "while";
+
+        // Preprocessing
+        public const string Keyword_define = "define";
+        public const string Keyword_elif = "elif";
+        public const string Keyword_endif = "endif";
+        public const string Keyword_error = "error";
+        public const string Keyword_ifdef = "ifdef";
+        public const string Keyword_ifndef = "ifndef";
+        public const string Keyword_include = "include";
+        public const string Keyword_line = "line";
+        public const string Keyword_pragma = "pragma";
+        public const string Keyword_undef = "undef";
+
     }
 }

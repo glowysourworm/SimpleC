@@ -2,5 +2,6 @@
 {
     public class PreprocessingFile : GrammarBase
     {
+        Group? _group;
     }
 }
