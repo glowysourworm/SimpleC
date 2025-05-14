@@ -27,5 +27,16 @@
         // Struct or Union
         public const string Keyword_struct = "struct";
         public const string Keyword_union = "union";
+
+        // Enum
+        public const string Keyword_enum = "enum";
+
+        // Type Qualifier
+        public const string Keyword_const = "const";
+        public const string Keyword_restrict = "restrict";
+        public const string Keyword_volatile = "volatile";
+
+        // Function Specifier
+        public const string Keyword_inline = "inline";
     }
 }

@@ -5,6 +5,7 @@
     /// </summary>
     public static class GrammarCConstants
     {
+        public const char Asterix = '*';
         public const char Backslash = '\\';
         public const char BracketCurlyLeft = '{';
         public const char BracketCurlyRight = '}';
