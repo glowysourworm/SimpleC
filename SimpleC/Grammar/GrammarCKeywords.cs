@@ -38,5 +38,19 @@
 
         // Function Specifier
         public const string Keyword_inline = "inline";
+
+        // Statements
+        public const string Keyword_break = "break";
+        public const string Keyword_case = "case";
+        public const string Keyword_continue = "continue";
+        public const string Keyword_default = "default";
+        public const string Keyword_do = "do";
+        public const string Keyword_else = "else";
+        public const string Keyword_for = "for";
+        public const string Keyword_goto = "goto";
+        public const string Keyword_if = "if";
+        public const string Keyword_return = "return";
+        public const string Keyword_switch = "switch";
+        public const string Keyword_while = "while";
     }
 }

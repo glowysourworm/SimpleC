@@ -2,5 +2,6 @@
 {
     public class Statement : GrammarBase
     {
+        // Appears to be a "base class" grammar
     }
 }
