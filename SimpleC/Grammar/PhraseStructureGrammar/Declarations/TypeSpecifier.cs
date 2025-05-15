@@ -1,47 +1,76 @@
-﻿using SimpleC.Grammar.LexicalElements;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    /// <summary>
-    /// (see A.2.2 -> 6.7.2) type-specifier:
-    /// </summary>
-    public class TypeSpecifier : GrammarBase
+    [Grammar(Name = "type-specifier (base)",
+             Description = "type-specifier: (4 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2)]
+    public abstract class TypeSpecifier : GrammarBase
     {
-        Keyword _keyword1;
-
-        StructOrUnionSpecifier _structOrUnionSpecifier2;
-
-        EnumSpecifier _enumSpecifier3;
-
-        TypedefName _typedefName4;
-
-        public Keyword Keyword1
+        protected TypeSpecifier(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _keyword1; }
-            set { this.RaiseAndSetIfChanged(ref _keyword1, value); }
         }
-        public StructOrUnionSpecifier StructOrUnionSpecifier2
-        {
-            get { return _structOrUnionSpecifier2; }
-            set { this.RaiseAndSetIfChanged(ref _structOrUnionSpecifier2, value); }
-        }
-        public EnumSpecifier EnumSpecifier3
-        {
-            get { return _enumSpecifier3; }
-            set { this.RaiseAndSetIfChanged(ref _enumSpecifier3, value); }
-        }
-        public TypedefName TypedefName4
-        {
-            get { return _typedefName4; }
-            set { this.RaiseAndSetIfChanged(ref _typedefName4, value); }
-        }
+    }
 
-        public TypeSpecifier()
+    [Grammar(Name = "type-specifier (variant 1)",
+             Description = "type-specifier: one of (...)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2)]
+    public class TypeSpecifier_V1 : TypeSpecifier
+    {
+        // One of: void, char, short, int, long, float, double, signed, unsigned, _Bool, _Complex
+        Keyword Keyword;
+
+        public TypeSpecifier_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Keyword1 = new Keyword();
-            this.EnumSpecifier3 = new EnumSpecifier();
-            this.StructOrUnionSpecifier2 = new StructOrUnionSpecifier();
-            this.TypedefName4 = new TypedefName();
+        }
+    }
+
+    [Grammar(Name = "type-specifier (variant 2)",
+             Description = "type-specifier: struct-or-union-specifier",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2)]
+    public class TypeSpecifier_V2 : TypeSpecifier
+    {
+        StructOrUnionSpecifier StructOrUnionSpecifier;
+
+        public TypeSpecifier_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "type-specifier (variant 3)",
+             Description = "type-specifier: enum-specifier",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2)]
+    public class TypeSpecifier_V3 : TypeSpecifier
+    {
+        EnumSpecifier EnumSpecifier;    
+
+        public TypeSpecifier_V3(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "type-specifier (variant 4)",
+             Description = "type-specifier: typedef-name",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2)]
+    public class TypeSpecifier_V4 : TypeSpecifier
+    {
+        TypedefName TypedefName;
+
+        public TypeSpecifier_V4(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

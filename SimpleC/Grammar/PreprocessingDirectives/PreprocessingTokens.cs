@@ -1,35 +1,48 @@
-﻿using SimpleC.Grammar.LexicalElements;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements;
 
 namespace SimpleC.Grammar.PreprocessingDirectives
 {
-    public class PreprocessingTokens : GrammarBase
+    [Grammar(Name = "pp-tokens (base)",
+             Description = "pp-tokens: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public abstract class PreprocessingTokens : GrammarBase
     {
-        PreprocessingToken _preprocessingToken1;
-
-        PreprocessingTokens _preprocessingTokens2;
-        PreprocessingToken _preprocessingToken2;
-
-        public PreprocessingToken PreprocessingToken1
+        public PreprocessingTokens(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _preprocessingToken1; }
-            set { this.RaiseAndSetIfChanged(ref _preprocessingToken1, value); }
         }
-        public PreprocessingTokens PreprocessingTokens2
-        {
-            get { return _preprocessingTokens2; }
-            set { this.RaiseAndSetIfChanged(ref _preprocessingTokens2, value); }
-        }
-        public PreprocessingToken PreprocessingToken2
-        {
-            get { return _preprocessingToken2; }
-            set { this.RaiseAndSetIfChanged(ref _preprocessingToken2, value); }
-        }
+    }
 
-        public PreprocessingTokens()
+    [Grammar(Name = "pp-tokens (variant 1)",
+             Description = "pp-tokens: preprocessing-token",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class PreprocessingTokens_V1 : PreprocessingTokens
+    {
+        PreprocessingToken PreprocessingToken;
+
+        public PreprocessingTokens_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.PreprocessingToken1 = new PreprocessingToken();
-            this.PreprocessingToken2 = new PreprocessingToken();
-            this.PreprocessingTokens2 = new PreprocessingTokens();
+        }
+    }
+
+    [Grammar(Name = "pp-tokens (variant 2)",
+             Description = "pp-tokens: pp-tokens preprocessing-token",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class PreprocessingTokens_V2 : PreprocessingTokens
+    {
+        PreprocessingTokens PreprocessingTokens;
+        PreprocessingToken PreprocessingToken;
+
+        public PreprocessingTokens_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,36 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class LogicalORExpression : GrammarBase
+    [Grammar(Name = "logical-OR-expression (base)",
+             Description = "logical-OR-expression: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_14)]
+    public abstract class LogicalORExpression : GrammarBase
     {
-        // See Annex (6.5.14)
-        LogicalANDExpression _logicalANDExpression1;
+        protected LogicalORExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        LogicalORExpression _logicalORExpression2;
+    [Grammar(Name = "logical-OR-expression (variant 1)",
+             Description = "logical-OR-expression: logical-AND-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_14)]
+    public class LogicalORExpression_V1 : LogicalORExpression
+    {
+        LogicalANDExpression LogicalANDExpression;
+
+        public LogicalORExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "logical-OR-expression (variant 2)",
+             Description = "logical-OR-expression: logical-OR-expression || logical-AND-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_14)]
+    public class LogicalORExpression_V2 : LogicalORExpression
+    {
+        LogicalORExpression LogicalORExpression;
         public const string LogicalOROperator = GrammarCOperators.LogicalOR;
-        LogicalANDExpression _logicalANDExpression2;
+        LogicalANDExpression LogicalANDExpression;
 
-        public LogicalANDExpression LogicalANDExpression1
+        public LogicalORExpression_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _logicalANDExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _logicalANDExpression1, value); }
-        }
-        public LogicalORExpression LogicalORExpression2
-        {
-            get { return _logicalORExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _logicalORExpression2, value); }
-        }
-        public LogicalANDExpression LogicalANDExpression2
-        {
-            get { return _logicalANDExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _logicalANDExpression2, value); }
-        }
-
-
-        public LogicalORExpression()
-        {
-            this.LogicalANDExpression1 = new LogicalANDExpression();
-            this.LogicalANDExpression2 = new LogicalANDExpression();
-            this.LogicalORExpression2 = new LogicalORExpression();
         }
     }
 }

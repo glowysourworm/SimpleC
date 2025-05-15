@@ -1,43 +1,50 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class ConditionalExpression : GrammarBase
+    [Grammar(Name = "conditional-expression (base)",
+             Description = "conditional-expression: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_15)]
+    public abstract class ConditionalExpression : GrammarBase
     {
-        LogicalORExpression _logicalORExpression1;
+        protected ConditionalExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        LogicalORExpression _logicalORExpression2;
+    [Grammar(Name = "conditional-expression (variant 1)",
+             Description = "conditional-expression: logical-OR-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_15)]
+    public class ConditionalExpression_V1 : ConditionalExpression
+    {
+        public LogicalORExpression LogicalORExpression;
+
+        public ConditionalExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "conditional-expression (variant 2)",
+             Description = "conditional-expression: logical-OR-expression ? expression : conditional-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_15)]
+    public class ConditionalExpression_V2 : ConditionalExpression
+    {
+        LogicalORExpression LogicalORExpression;
         public const string TertiaryBranchOperatorQuestionMark = GrammarCOperators.TertiaryIfThenQuestionMark;
-        Expression _expression2;
+        Expression Expression;
         public const string TertiaryBranchOperatorColon = GrammarCOperators.TertiaryIfThenColon;
-        ConditionalExpression _conditionalExpression2;
+        ConditionalExpression ConditionalExpression;
 
-        public LogicalORExpression LogicalORExpression1
+        public ConditionalExpression_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _logicalORExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _logicalORExpression1, value); }
-        }
-        public LogicalORExpression LogicalORExpression2
-        {
-            get { return _logicalORExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _logicalORExpression2, value); }
-        }
-        public Expression Expression2
-        {
-            get { return _expression2; }
-            set { this.RaiseAndSetIfChanged(ref _expression2, value); }
-        }
-        public ConditionalExpression ConditionalExpression2
-        {
-            get { return _conditionalExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _conditionalExpression2, value); }
-        }
-
-
-        public ConditionalExpression()
-        {
-            this.ConditionalExpression2 = new ConditionalExpression();
-            this.Expression2 = new Expression();
-            this.LogicalORExpression1 = new LogicalORExpression();
-            this.LogicalORExpression2 = new LogicalORExpression();
         }
     }
 }

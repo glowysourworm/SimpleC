@@ -1,32 +1,47 @@
-﻿namespace SimpleC.Grammar.LexicalElements.HeaderNames
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.HeaderNames
 {
-    public class HCharSequence : GrammarBase
+    [Grammar(Name = "h-char-sequence (base)",
+             Description = "h-char-sequence: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public abstract class HCharSequence : GrammarBase
     {
-        HChar _hChar1;
-        HCharSequence _hCharSequence2;
-        HChar _hChar2;
+        protected HCharSequence(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public HChar HChar1
-        {
-            get { return _hChar1; }
-            set { this.RaiseAndSetIfChanged(ref _hChar1, value); }
-        }
-        public HCharSequence HCharSequence2
-        {
-            get { return _hCharSequence2; }
-            set { this.RaiseAndSetIfChanged(ref _hCharSequence2, value); }
-        }
-        public HChar HChar2
-        {
-            get { return _hChar2; }
-            set { this.RaiseAndSetIfChanged(ref _hChar2, value); }
-        }
+    [Grammar(Name = "h-char-sequence (variant 1)",
+             Description = "h-char-sequence: h-char",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public class HCharSequence_V1 : HCharSequence
+    {
+        HChar HChar;
 
-        public HCharSequence()
+        public HCharSequence_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.HChar1 = new HChar();
-            this.HChar2 = new HChar();
-            this.HCharSequence2 = new HCharSequence();
+        }
+    }
+
+    [Grammar(Name = "h-char-sequence (variant 2)",
+             Description = "h-char-sequence: h-char-sequence h-char",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public class HCharSequence_V2 : HCharSequence
+    {
+        HCharSequence HCharSequence;
+        HChar HChar;
+
+        public HCharSequence_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,39 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class OctalEscapeSequence : GrammarBase
+    [Grammar(Name = "octal-escape-sequence (base)",
+             Description = "octal-escape-sequence: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public abstract class OctalEscapeSequence : GrammarBase
     {
         public const char BackslashPrefix = GrammarCConstants.Backslash;
         OctalDigit _octalDigit1;
-        OctalDigit _octalDigit2;
-        OctalDigit _octalDigit3;
 
-        public OctalDigit OctalDigit1
+        protected OctalEscapeSequence(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _octalDigit1; }
-            set { this.RaiseAndSetIfChanged(ref _octalDigit1, value); }
         }
-        public OctalDigit OctalDigit2
-        {
-            get { return _octalDigit2; }
-            set { this.RaiseAndSetIfChanged(ref _octalDigit2, value); }
-        }
-        public OctalDigit OctalDigit3
-        {
-            get { return _octalDigit3; }
-            set { this.RaiseAndSetIfChanged(ref _octalDigit3, value); }
-        }
+    }
 
-        public OctalEscapeSequence()
+    [Grammar(Name = "octal-escape-sequence (variant 1)",
+             Description = "octal-escape-sequence: \\ octal-digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class OctalEscapeSequence_V1 : GrammarBase
+    {
+        public const char BackslashPrefix = GrammarCConstants.Backslash;
+        OctalDigit OctalDigit;
+
+        protected OctalEscapeSequence_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.OctalDigit1 = new OctalDigit();
-            this.OctalDigit2 = new OctalDigit();
-            this.OctalDigit3 = new OctalDigit();
+        }
+    }
+
+    [Grammar(Name = "octal-escape-sequence (variant 2)",
+             Description = "octal-escape-sequence: \\ octal-digit octal-digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class OctalEscapeSequence_V2 : GrammarBase
+    {
+        public const char BackslashPrefix = GrammarCConstants.Backslash;
+        OctalDigit OctalDigit1;
+        OctalDigit OctalDigit2;
+
+        protected OctalEscapeSequence_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "octal-escape-sequence (variant 3)",
+             Description = "octal-escape-sequence: \\ octal-digit octal-digit octal-digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class OctalEscapeSequence_V3 : GrammarBase
+    {
+        public const char BackslashPrefix = GrammarCConstants.Backslash;
+        OctalDigit OctalDigit1;
+        OctalDigit OctalDigit2;
+        OctalDigit OctalDigit3;
+
+        protected OctalEscapeSequence_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

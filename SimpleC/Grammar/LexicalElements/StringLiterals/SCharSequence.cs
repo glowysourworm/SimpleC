@@ -1,32 +1,47 @@
-﻿namespace SimpleC.Grammar.LexicalElements.StringLiterals
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.StringLiterals
 {
-    public class SCharSequence : GrammarBase
+    [Grammar(Name = "s-char-sequence (base)",
+             Description = "s-char-sequence: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public abstract class SCharSequence : GrammarBase
     {
-        SChar _schar1;
-        SChar _schar2;
-        SCharSequence _scharSequence2;
+        protected SCharSequence(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public SChar SChar1
-        {
-            get { return _schar1; }
-            set { this.RaiseAndSetIfChanged(ref _schar1, value); }
-        }
-        public SChar SChar2
-        {
-            get { return _schar2; }
-            set { this.RaiseAndSetIfChanged(ref _schar2, value); }
-        }
-        public SCharSequence SCharSequence2
-        {
-            get { return _scharSequence2; }
-            set { this.RaiseAndSetIfChanged(ref _scharSequence2, value); }
-        }
+    [Grammar(Name = "s-char-sequence (variant 1)",
+             Description = "s-char-sequence: s-char",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public class SCharSequence_V1 : GrammarBase
+    {
+        SChar SChar;
 
-        public SCharSequence()
+        public SCharSequence_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.SChar1 = new SChar();
-            this.SChar2 = new SChar();
-            this.SCharSequence2 = new SCharSequence();
+        }
+    }
+
+    [Grammar(Name = "s-char-sequence (variant 2)",
+             Description = "s-char-sequence: s-char-sequence s-char",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public class SCharSequence_V2 : GrammarBase
+    {
+        SCharSequence SCharSequence;
+        SChar SChar;
+
+        public SCharSequence_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

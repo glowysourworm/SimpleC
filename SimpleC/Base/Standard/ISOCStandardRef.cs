@@ -1,58 +1,56 @@
 ﻿namespace SimpleC.Base.Standard
 {
     /// <summary>
-    /// Class for data about referencing the ISO C Standard
+    /// Class for data about referencing the ISO C Standard. Most of the detail can be referenced via the Annexes. So, the
+    /// enums are to specify where those are pointing. The page number is also included; and the ISO standard (which we're 
+    /// assuming to be C99 for this branch)
     /// </summary>
     public class ISOCStandardRef : ModelBase
     {
         ISOCStandard _standard;
-        string _chapter;
-        string _heading;
-        string _section;
-        string _subSection;
+
+        ISOCStandardAnnexSection _section;
+        ISOCStandardAnnexSubSection _subSection;
+        ISOCStandardAnnexSubSectionChapter _subSectionChapterRef;
+
+        int _pageNumber;
 
         public ISOCStandard Standard
         {
             get { return _standard; }
             set { this.RaiseAndSetIfChanged(ref _standard, value); }
         }
-        public string Chapter
-        {
-            get { return _chapter; }
-            set { this.RaiseAndSetIfChanged(ref _chapter, value); }
-        }
-        public string Heading
-        {
-            get { return _heading; }
-            set { this.RaiseAndSetIfChanged(ref _heading, value); }
-        }
-        public string Section
+        public ISOCStandardAnnexSection Section
         {
             get { return _section; }
             set { this.RaiseAndSetIfChanged(ref _section, value); }
         }
-        public string SubSection
+        public ISOCStandardAnnexSubSection SubSection
         {
             get { return _subSection; }
             set { this.RaiseAndSetIfChanged(ref _subSection, value); }
         }
-
-        // KLUDGY:  There may be a better way to structure this ISO standards data.. Perhaps with attribute tags, or 
-        //          something after it's well understood.
-
-        public static string ANNEX = "Annex";
-
-        public static ISOCStandardRef GetLexicalGrammarAnnex(string section, string subSection)
+        public ISOCStandardAnnexSubSectionChapter SubSectionChapterRef
         {
-            return new ISOCStandardRef(ANNEX + " A", "A.1", section, subSection);
+            get { return _subSectionChapterRef; }
+            set { this.RaiseAndSetIfChanged(ref _subSectionChapterRef, value); }
+        }
+        public int PageNumber
+        {
+            get { return _pageNumber; }
+            set { this.RaiseAndSetIfChanged(ref _pageNumber, value); }
         }
 
-        public ISOCStandardRef(string chapter, string heading, string section, string subSection)
+        public ISOCStandardRef(ISOCStandardAnnexSection section, 
+                               ISOCStandardAnnexSubSection subSection, 
+                               ISOCStandardAnnexSubSectionChapter chapterRef,
+                               int pageNumber)
         {
-            this.Chapter = string.Empty;
-            this.Heading = string.Empty;
-            this.Section = string.Empty;
-            this.SubSection = string.Empty;
+            this.Standard = ISOCStandard.C99;
+            this.Section = section;
+            this.SubSection = subSection;
+            this.SubSectionChapterRef = chapterRef;
+            this.PageNumber = pageNumber;
         }
     }
 }

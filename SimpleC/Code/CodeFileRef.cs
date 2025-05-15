@@ -32,11 +32,10 @@
             set { this.RaiseAndSetIfChanged(ref _endIndex, value); }
         }
 
-        public CodeFileRef() : base()
+        public CodeFileRef() : base(string.Empty)
         {
             this.Path = string.Empty;
             this.FileType = CodeFileType.C;
-            this.Value = string.Empty;
             this.StartIndex = -1;
             this.EndIndex = -1;
         }

@@ -1,82 +1,96 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class RelationalExpression : GrammarBase
+    [Grammar(Name = "relational-expression (base)",
+             Description = "relational-expression: (5 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_8)]
+    public abstract class RelationalExpression : GrammarBase
     {
-        ShiftExpression _shiftExpression1;
+        protected RelationalExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        RelationalExpression _relationExpression2;
-        public const string LessThanOperator2 = GrammarCOperators.LessThan;
-        ShiftExpression _shiftExpression2;
+    [Grammar(Name = "relational-expression (variant 1)",
+             Description = "relational-expression: shift-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_8)]
+    public class RelationalExpression_V1 : RelationalExpression
+    {
+        ShiftExpression ShiftExpression;
 
-        RelationalExpression _relationExpression3;
-        public const string GreaterThanOperator3 = GrammarCOperators.GreaterThan;
-        ShiftExpression _shiftExpression3;
+        public RelationalExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        RelationalExpression _relationExpression4;
-        public const string LessThanOrEqualToOperator4 = GrammarCOperators.LessThanOrEqualTo;
-        ShiftExpression _shiftExpression4;
+    [Grammar(Name = "relational-expression (variant 2)",
+             Description = "relational-expression: relational-expression < shift-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_8)]
+    public class RelationalExpression_V2 : RelationalExpression
+    {
+        RelationalExpression RelationalExpression;
+        public const string LessThanOperator = GrammarCOperators.LessThan;
+        ShiftExpression ShiftExpression;    
 
-        RelationalExpression _relationExpression5;
-        public const string GreaterThanOrEqualToOperator5 = GrammarCOperators.GreaterThanOrEqualTo;
-        ShiftExpression _shiftExpression5;
+        public RelationalExpression_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public ShiftExpression ShiftExpression1
-        {
-            get { return _shiftExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _shiftExpression1, value); }
-        }
-        public RelationalExpression RelationExpression2
-        {
-            get { return _relationExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _relationExpression2, value); }
-        }
-        public ShiftExpression ShiftExpression2
-        {
-            get { return _shiftExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _shiftExpression2, value); }
-        }
-        public RelationalExpression RelationExpression3
-        {
-            get { return _relationExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _relationExpression3, value); }
-        }
-        public ShiftExpression ShiftExpression3
-        {
-            get { return _shiftExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _shiftExpression3, value); }
-        }
-        public RelationalExpression RelationExpression4
-        {
-            get { return _relationExpression4; }
-            set { this.RaiseAndSetIfChanged(ref _relationExpression4, value); }
-        }
-        public ShiftExpression ShiftExpression4
-        {
-            get { return _shiftExpression4; }
-            set { this.RaiseAndSetIfChanged(ref _shiftExpression4, value); }
-        }
-        public RelationalExpression RelationExpression5
-        {
-            get { return _relationExpression5; }
-            set { this.RaiseAndSetIfChanged(ref _relationExpression5, value); }
-        }
-        public ShiftExpression ShiftExpression5
-        {
-            get { return _shiftExpression5; }
-            set { this.RaiseAndSetIfChanged(ref _shiftExpression5, value); }
-        }
+    [Grammar(Name = "relational-expression (variant 3)",
+             Description = "relational-expression: relational-expression > shift-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_8)]
+    public class RelationalExpression_V3 : RelationalExpression
+    {
+        RelationalExpression RelationalExpression;
+        public const string GreaterThanOperator = GrammarCOperators.GreaterThan;
+        ShiftExpression ShiftExpression;
 
-        public RelationalExpression()
+        public RelationalExpression_V3(CodeRefBase codeRef) : base(codeRef)
         {
-            this.RelationExpression2 = new RelationalExpression();
-            this.RelationExpression3 = new RelationalExpression();
-            this.RelationExpression4 = new RelationalExpression();
-            this.RelationExpression5 = new RelationalExpression();
-            this.ShiftExpression1 = new ShiftExpression();
-            this.ShiftExpression2 = new ShiftExpression();
-            this.ShiftExpression3 = new ShiftExpression();
-            this.ShiftExpression4 = new ShiftExpression();
-            this.ShiftExpression5 = new ShiftExpression();
+        }
+    }
+
+    [Grammar(Name = "relational-expression (variant 4)",
+             Description = "relational-expression: relational-expression <= shift-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_8)]
+    public class RelationalExpression_V4 : RelationalExpression
+    {
+        RelationalExpression RelationalExpression;
+        public const string LessThanOrEqualToOperator = GrammarCOperators.LessThanOrEqualTo;
+        ShiftExpression ShiftExpression;
+
+        public RelationalExpression_V4(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "relational-expression (variant 5)",
+             Description = "relational-expression: relational-expression >= shift-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_8)]
+    public class RelationalExpression_V5 : RelationalExpression
+    {
+        RelationalExpression RelationalExpression;
+        public const string GreaterThanOrEqualToOperator = GrammarCOperators.GreaterThanOrEqualTo;
+        ShiftExpression ShiftExpression;
+
+        public RelationalExpression_V5(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,36 +1,49 @@
-﻿using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class StructDeclarator : GrammarBase
+    [Grammar(Name = "struct-declarator (base)",
+             Description = "struct-declarator: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public abstract class StructDeclarator : GrammarBase
     {
-        Declarator _declarator1;
-
-        Declarator? _declarator2;
-        public const char ColorSeparator2 = GrammarCConstants.Colon;
-        ConstantExpression _constantExpression2;
-
-        public Declarator Declarator1
+        protected StructDeclarator(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _declarator1; }
-            set { this.RaiseAndSetIfChanged(ref _declarator1, value); }
         }
-        public Declarator? Declarator2
-        {
-            get { return _declarator2; }
-            set { this.RaiseAndSetIfChanged(ref _declarator2, value); }
-        }
-        public ConstantExpression ConstantExpression2
-        {
-            get { return _constantExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _constantExpression2, value); }
-        }
+    }
 
-        public StructDeclarator()
+    [Grammar(Name = "struct-declarator (variant 1)",
+             Description = "struct-declarator: declarator",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public class StructDeclarator_V1 : StructDeclarator
+    {
+        Declarator Declarator;
+
+        public StructDeclarator_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Declarator1 = new Declarator();
-            this.Declarator2 = null;
-            this.ConstantExpression2 = new ConstantExpression();
+        }
+    }
+
+    [Grammar(Name = "struct-declarator (variant 2)",
+             Description = "struct-declarator: declarator_opt : constant-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public class StructDeclarator_V2 : StructDeclarator
+    {
+        Declarator? Declarator;
+        public const char ColonSeparator = GrammarCConstants.Colon;
+        ConstantExpression ConstantExpression;
+
+        public StructDeclarator_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

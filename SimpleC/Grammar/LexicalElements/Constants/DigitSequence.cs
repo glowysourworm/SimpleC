@@ -1,35 +1,48 @@
-﻿using SimpleC.Grammar.LexicalElements.Identifiers;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements.Identifiers;
 
 namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class DigitSequence : GrammarBase
+    [Grammar(Name = "digit-sequence (base)",
+             Description = "digit-sequence: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_2)]
+    public abstract class DigitSequence : GrammarBase
     {
-        Digit _digit1;
-        DigitSequence _digitSequence2;
-        Digit _digit2;
-
-        public Digit Digit1
+        protected DigitSequence(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _digit1; }
-            set { this.RaiseAndSetIfChanged(ref _digit1, value); }
         }
-        public DigitSequence DigitSequence2
-        {
-            get { return _digitSequence2; }
-            set { this.RaiseAndSetIfChanged(ref _digitSequence2, value); }
-        }
-        public Digit Digit2
-        {
-            get { return _digit2; }
-            set { this.RaiseAndSetIfChanged(ref _digit2, value); }
-        }
+    }
 
+    [Grammar(Name = "digit-sequence (variant 1)",
+             Description = "digit-sequence: digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_2)]
+    public class DigitSequence_V1 : DigitSequence
+    {
+        public Digit Digit;
 
-        public DigitSequence()
+        public DigitSequence_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.DigitSequence2 = new DigitSequence();
-            this.Digit1 = new Digit();
-            this.Digit2 = new Digit();
+        }
+    }
+
+    [Grammar(Name = "digit-sequence (variant 2)",
+             Description = "digit-sequence: digit-sequence digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_2)]
+    public class DigitSequence_V2 : DigitSequence
+    {
+        public DigitSequence DigitSequence;
+        public Digit Digit;
+
+        public DigitSequence_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

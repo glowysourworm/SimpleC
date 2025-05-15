@@ -1,56 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class EqualityExpression : GrammarBase
+    [Grammar(Name = "equality-expression (base)",
+             Description = "equality-expression: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_9)]
+    public abstract class EqualityExpression : GrammarBase
     {
-        RelationalExpression _relationalExpression1;
+        protected EqualityExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        EqualityExpression _equalityExpression2;
-        public const string EqualityComparisonOperator2 = GrammarCOperators.Equality;
-        RelationalExpression _relationalExpression2;
+    [Grammar(Name = "equality-expression (variant 1)",
+             Description = "equality-expression: relational-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_9)]
+    public class EqualityExpression_V1 : EqualityExpression
+    {
+        RelationalExpression RelationalExpression;
 
-        EqualityExpression _equalityExpression3;
-        public const string EqualityNOTComparisonOperator2 = GrammarCOperators.EqualityNOT;
-        RelationalExpression _relationalExpression3;
+        public EqualityExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public RelationalExpression RelationalExpression1
-        {
-            get { return _relationalExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _relationalExpression1, value); }
-        }
-        public EqualityExpression EqualityExpression2
-        {
-            get { return _equalityExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _equalityExpression2, value); }
-        }
-        public RelationalExpression RelationalExpression2
-        {
-            get { return _relationalExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _relationalExpression2, value); }
-        }
-        public EqualityExpression EqualityExpression3
-        {
-            get { return _equalityExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _equalityExpression3, value); }
-        }
-        public RelationalExpression RelationalExpression3
-        {
-            get { return _relationalExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _relationalExpression3, value); }
-        }
+    [Grammar(Name = "equality-expression (variant 2)",
+             Description = "equality-expression: equality-expression == relational-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_9)]
+    public class EqualityExpression_V2 : EqualityExpression
+    {
+        EqualityExpression EqualityExpression;
+        public const string EqualityOperator = GrammarCOperators.Equality;
+        RelationalExpression RelationalExpression;
 
-        public EqualityExpression()
+        public EqualityExpression_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.EqualityExpression2 = new EqualityExpression();
-            this.EqualityExpression3 = new EqualityExpression();
-            this.RelationalExpression1 = new RelationalExpression();
-            this.RelationalExpression2 = new RelationalExpression();
-            this.RelationalExpression3 = new RelationalExpression();
+        }
+    }
+
+    [Grammar(Name = "equality-expression (variant 3)",
+             Description = "equality-expression: equality-expression != relational-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_9)]
+    public class EqualityExpression_V3 : EqualityExpression
+    {
+        EqualityExpression EqualityExpression;
+        public const string EqualityNOTOperator = GrammarCOperators.EqualityNOT;
+        RelationalExpression RelationalExpression;
+
+        public EqualityExpression_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,18 +1,20 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
+    [Grammar(Name = "constant-expression",
+             Description = "constant-expression: conditional-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_6)]
     public class ConstantExpression : GrammarBase
     {
-        ConditionalExpression _conditionalExpression;
+        ConditionalExpression ConditionalExpression;
 
-        public ConditionalExpression ConditionalExpression
+        public ConstantExpression(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _conditionalExpression; }
-            set { this.RaiseAndSetIfChanged(ref _conditionalExpression, value); }
-        }
-
-        public ConstantExpression()
-        {
-            this.ConditionalExpression = new ConditionalExpression();
         }
     }
 }

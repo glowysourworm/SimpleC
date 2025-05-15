@@ -1,33 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class CChar : GrammarBase
+    [Grammar(Name = "c-char (base)",
+             Description = "c-char: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public abstract class CChar : GrammarBase
     {
-        // "Any member of the source character set except the single-quote ', backslash \, or new-line character"
-        char _char;
-        EscapeSequence _escapeSequence;
-
-        public char Char
+        public CChar(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _char; }
-            set { this.RaiseAndSetIfChanged(ref _char, value); }
         }
-        public EscapeSequence EscapeSequence
+    }
+
+    [Grammar(Name = "c-char (variant 1)",
+             Description = "c-char: any member of the source character set except the single-quote ', backslash \\, or new-line character",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class CChar_V1 : CChar
+    {
+        public CChar_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _escapeSequence; }
-            set { this.RaiseAndSetIfChanged(ref _escapeSequence, value); }
         }
+    }
 
+    [Grammar(Name = "c-char (variant 2)",
+             Description = "c-char: escape-sequence",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class CChar_V2 : CChar
+    {
+        EscapeSequence EscapeSequence;
 
-        public CChar()
+        public CChar_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Char = GrammarCConstants.Letter_a;
-            this.EscapeSequence = new EscapeSequence();
         }
     }
 }

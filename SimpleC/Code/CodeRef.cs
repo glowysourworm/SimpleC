@@ -16,10 +16,9 @@
             set { this.RaiseAndSetIfChanged(ref _fileType, value); }
         }
 
-        public CodeRef() : base()
+        public CodeRef() : base(string.Empty)
         {
             this.FileType = CodeFileType.C;
-            this.Value = string.Empty;
         }
     }
 }

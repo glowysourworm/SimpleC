@@ -1,32 +1,47 @@
-﻿namespace SimpleC.Grammar.LexicalElements.Constants
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class CCharSequence : GrammarBase
+    [Grammar(Name = "c-char-sequence (base)",
+             Description = "c-char-sequence: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public abstract class CCharSequence : GrammarBase
     {
-        CChar _cchar1;
-        CCharSequence _ccharSequence2;
-        CChar _cchar2;
+        protected CCharSequence(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public CChar CChar1
-        {
-            get { return _cchar1; }
-            set { this.RaiseAndSetIfChanged(ref _cchar1, value); }
-        }
-        public CCharSequence CCharSequence2
-        {
-            get { return _ccharSequence2; }
-            set { this.RaiseAndSetIfChanged(ref _ccharSequence2, value); }
-        }
-        public CChar CChar2
-        {
-            get { return _cchar2; }
-            set { this.RaiseAndSetIfChanged(ref _cchar2, value); }
-        }
+    [Grammar(Name = "c-char-sequence (variant 1)",
+             Description = "c-char-sequence: c-char",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class CCharSequence_V1 : CCharSequence
+    {
+        CChar CChar;
 
-        public CCharSequence()
+        protected CCharSequence_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.CChar1 = new CChar();
-            this.CChar2 = new CChar();
-            this.CCharSequence2 = new CCharSequence();
+        }
+    }
+
+    [Grammar(Name = "c-char-sequence (variant 2)",
+             Description = "c-char-sequence: c-char-sequence c-char",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class CCharSequence_V2 : CCharSequence
+    {
+        CCharSequence CCharSequence;
+        CChar CChar;
+
+        protected CCharSequence_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

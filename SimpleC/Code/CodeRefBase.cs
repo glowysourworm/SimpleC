@@ -8,16 +8,19 @@ namespace SimpleC.Code
     /// </summary>
     public abstract class CodeRefBase : ModelBase
     {
-        string _value;
+        string _code;
 
-        public string Value
+        /// <summary>
+        /// Readonly value of the code from which the code ref came. This is a raw-unprocessed value; and 
+        /// is a substring of a code file or in-memory string.
+        /// </summary>
+        public string Code
         {
-            get { return _value; }
-            set { this.RaiseAndSetIfChanged(ref _value, value); }
+            get { return _code; }
         }
-        public CodeRefBase()
+        public CodeRefBase(string code)
         {
-            this.Value = string.Empty;
+            _code = code;       // TODO: Create string wrapper class to prevent string copying
         }
     }
 }

@@ -1,32 +1,47 @@
-﻿namespace SimpleC.Grammar.LexicalElements.HeaderNames
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.HeaderNames
 {
-    public class QCharSequence : GrammarBase
+    [Grammar(Name = "q-char-sequence (base)",
+             Description = "q-char-sequence: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public abstract class QCharSequence : GrammarBase
     {
-        QChar _qChar1;
-        QCharSequence _qCharSequence2;
-        QChar _qChar2;
+        protected QCharSequence(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public QChar QChar1
-        {
-            get { return _qChar1; }
-            set { this.RaiseAndSetIfChanged(ref _qChar1, value); }
-        }
-        public QCharSequence QCharSequence2
-        {
-            get { return _qCharSequence2; }
-            set { this.RaiseAndSetIfChanged(ref _qCharSequence2, value); }
-        }
-        public QChar QChar2
-        {
-            get { return _qChar2; }
-            set { this.RaiseAndSetIfChanged(ref _qChar2, value); }
-        }
+    [Grammar(Name = "q-char-sequence (variant 1)",
+             Description = "q-char-sequence: q-char",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public class QCharSequence_V1 : GrammarBase
+    {
+        QChar QChar;
 
-        public QCharSequence()
+        public QCharSequence_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.QChar1 = new QChar();
-            this.QCharSequence2 = new QCharSequence();
-            this.QChar2 = new QChar();
+        }
+    }
+
+    [Grammar(Name = "q-char-sequence (variant 2)",
+             Description = "q-char-sequence: q-char-sequence q-char",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public class QCharSequence_V2 : GrammarBase
+    {
+        QCharSequence QCharSequence;
+        QChar QChar;
+
+        public QCharSequence_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

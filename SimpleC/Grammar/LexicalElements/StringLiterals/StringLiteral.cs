@@ -1,31 +1,53 @@
-﻿namespace SimpleC.Grammar.LexicalElements.StringLiterals
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.StringLiterals
 {
-    public class StringLiteral : GrammarBase
+    [Grammar(Name = "string-literal (base)",
+             Description = "string-literal (base): (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public abstract class StringLiteral : Token
+    {
+        public StringLiteral(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "string-literal (variant 1)",
+             Description = "string-literal: \" s-char-sequence_opt \"",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public class StringLiteral_V1 : StringLiteral
     {
         public const char PrefixDoubleQuote1 = GrammarCConstants.DoubleQuote;
-        public SCharSequence? _sequence1;
+        public SCharSequence? SCharSequence;
         public const char SuffixDoubleQuote1 = GrammarCConstants.DoubleQuote;
 
+        public StringLiteral_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+
+        }
+    }
+
+    [Grammar(Name = "string-literal (variant 2)",
+             Description = "string-literal: L\" s-char-sequence_opt \"",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public class StringLiteral_V2 : StringLiteral
+    {
         public const char PrefixLiteralConstant2 = GrammarCConstants.Letter_L;
         public const char PrefixDoubleQuote2 = GrammarCConstants.DoubleQuote;
-        public SCharSequence? _sequence2;
+        public SCharSequence? SCharSequence;
         public const char SuffixDoubleQuote2 = GrammarCConstants.DoubleQuote;
 
-        public SCharSequence? Sequence1
+        public StringLiteral_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _sequence1; }
-            set { this.RaiseAndSetIfChanged(ref _sequence1, value); }
-        }
-        public SCharSequence? Sequence2
-        {
-            get { return _sequence2; }
-            set { this.RaiseAndSetIfChanged(ref _sequence2, value); }
-        }
 
-        public StringLiteral()
-        {
-            this.Sequence1 = null;
-            this.Sequence2 = null;
         }
     }
 }

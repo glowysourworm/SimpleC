@@ -1,40 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class ParameterDeclaration : GrammarBase
+    [Grammar(Name = "parameter-declaration (base)",
+             Description = "parameter-declaration: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public abstract class ParameterDeclaration : GrammarBase
     {
-        DeclarationSpecifiers _declarationSpecifiers1;
-        Declarator _declarator1;
+        protected ParameterDeclaration(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        DeclarationSpecifiers _declarationSpecifiers2;
-        AbstractDeclarator? _abstractDeclarator;
+    [Grammar(Name = "parameter-declaration (variant 1)",
+             Description = "parameter-declaration: declaration-specifiers declarator",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public class ParameterDeclaration_V1 : ParameterDeclaration
+    {
+        DeclarationSpecifiers DeclarationSpecifiers;
+        Declarator Declarator;
 
-        public DeclarationSpecifiers DeclarationSpecifiers1
+        public ParameterDeclaration_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _declarationSpecifiers1; }
-            set { this.RaiseAndSetIfChanged(ref _declarationSpecifiers1, value); }
         }
-        public Declarator Declarator1
-        {
-            get { return _declarator1; }
-            set { this.RaiseAndSetIfChanged(ref _declarator1, value); }
-        }
-        public DeclarationSpecifiers DeclarationSpecifiers2
-        {
-            get { return _declarationSpecifiers2; }
-            set { this.RaiseAndSetIfChanged(ref _declarationSpecifiers2, value); }
-        }
-        public AbstractDeclarator? AbstractDeclarator
-        {
-            get { return _abstractDeclarator; }
-            set { this.RaiseAndSetIfChanged(ref _abstractDeclarator, value); }
-        }
+    }
 
-        public ParameterDeclaration()
+    [Grammar(Name = "parameter-declaration (variant 2)",
+             Description = "parameter-declaration: declaration-specifiers abstract-declarator_opt",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public class ParameterDeclaration_V2 : ParameterDeclaration
+    {
+        DeclarationSpecifiers DeclarationSpecifiers;
+        AbstractDeclarator? AbstractDeclarator;
+
+        public ParameterDeclaration_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.AbstractDeclarator = null;
-            this.Declarator1 = new Declarator();
-            this.DeclarationSpecifiers1 = new DeclarationSpecifiers();
-            this.DeclarationSpecifiers2 = new DeclarationSpecifiers();
         }
     }
 }

@@ -1,28 +1,47 @@
-﻿using SimpleC.Grammar.PhraseStructureGrammar.Declarations;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.PhraseStructureGrammar.Declarations;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.ExternalDefinitions
 {
-    public class ExternalDeclaration : GrammarBase
+    [Grammar(Name = "external-declaration (base)",
+             Description = "external-declaration: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9)]
+    public abstract class ExternalDeclaration : GrammarBase
     {
-        FunctionDefinition _functionDefinition1;
-
-        Declaration _declaration2;
-
-        public FunctionDefinition FunctionDefinition1
+        protected ExternalDeclaration(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _functionDefinition1; }
-            set { this.RaiseAndSetIfChanged(ref _functionDefinition1, value); }
         }
-        public Declaration Declaration2
-        {
-            get { return _declaration2; }
-            set { this.RaiseAndSetIfChanged(ref _declaration2, value); }
-        }
+    }
 
-        public ExternalDeclaration()
+    [Grammar(Name = "external-declaration (variant 1)",
+             Description = "external-declaration: function-definition",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9)]
+    public class ExternalDeclaration_V1 : ExternalDeclaration
+    {
+        FunctionDefinition FunctionDefinition;
+
+        public ExternalDeclaration_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.FunctionDefinition1 = new FunctionDefinition();
-            this.Declaration2 = new Declaration();
+        }
+    }
+
+    [Grammar(Name = "external-declaration (variant 2)",
+             Description = "external-declaration: declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9)]
+    public class ExternalDeclaration_V2 : ExternalDeclaration
+    {
+        Declaration Declaration;
+
+        public ExternalDeclaration_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,33 +1,47 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class TypeQualifierList : GrammarBase
+    [Grammar(Name = "type-qualifier-list (base)",
+             Description = "type-qualifier-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public abstract class TypeQualifierList : GrammarBase
     {
-        TypeQualifier _typeQualifier1;
-
-        TypeQualifierList _typeQualifierList2;
-        TypeQualifier _typeQualifier2;
-
-        public TypeQualifier TypeQualifier1
+        protected TypeQualifierList(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _typeQualifier1; }
-            set { this.RaiseAndSetIfChanged(ref _typeQualifier1, value); }
         }
-        public TypeQualifierList TypeQualifierList2
-        {
-            get { return _typeQualifierList2; }
-            set { this.RaiseAndSetIfChanged(ref _typeQualifierList2, value); }
-        }
-        public TypeQualifier TypeQualifier2
-        {
-            get { return _typeQualifier2; }
-            set { this.RaiseAndSetIfChanged(ref _typeQualifier2, value); }
-        }
+    }
 
-        public TypeQualifierList()
+    [Grammar(Name = "type-qualifier-list (variant 1)",
+             Description = "type-qualifier-list: type-qualifier",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public class TypeQualifierList_V1 : TypeQualifierList
+    {
+        TypeQualifier TypeQualifier;
+
+        public TypeQualifierList_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.TypeQualifier1 = new TypeQualifier();
-            this.TypeQualifier2 = new TypeQualifier();
-            this.TypeQualifierList2 = new TypeQualifierList();
+        }
+    }
+
+    [Grammar(Name = "type-qualifier-list (variant 2)",
+             Description = "type-qualifier-list: type-qualifier-list type-qualifier",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public class TypeQualifierList_V2 : TypeQualifierList
+    {
+        TypeQualifierList TypeQualifierList;
+        TypeQualifier TypeQualifier;
+
+        public TypeQualifierList_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

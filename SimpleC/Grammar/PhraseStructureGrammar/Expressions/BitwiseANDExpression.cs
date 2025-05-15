@@ -1,34 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class BitwiseANDExpression : GrammarBase
+    [Grammar(Name = "AND-expression (base)",
+             Description = "AND-expression: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_10)]
+    public abstract class BitwiseANDExpression : GrammarBase
     {
-        EqualityExpression _equalityExpression1;
+        protected BitwiseANDExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        BitwiseANDExpression _bitwiseANDExpression2;
+    [Grammar(Name = "AND-expression (variant 1)",
+             Description = "AND-expression: equality-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_10)]
+    public class BitwiseANDExpression_V1 : BitwiseANDExpression
+    {
+        EqualityExpression EqualityExpression;
+
+        public BitwiseANDExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "AND-expression (variant 2)",
+             Description = "AND-expression: AND-expression & equality-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_10)]
+    public class BitwiseANDExpression_V2 : BitwiseANDExpression
+    {
+        BitwiseANDExpression ANDExpression;
         public const string BitwiseANDOperator = GrammarCOperators.BitwiseAND;
-        EqualityExpression _equalityExpression2;
+        EqualityExpression EqualityExpression;
 
-        public EqualityExpression EqualityExpression1
+        public BitwiseANDExpression_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _equalityExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _equalityExpression1, value); }
-        }
-        public BitwiseANDExpression BitwiseANDExpression2
-        {
-            get { return _bitwiseANDExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _bitwiseANDExpression2, value); }
-        }
-        public EqualityExpression EqualityExpression2
-        {
-            get { return _equalityExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _equalityExpression2, value); }
-        }
-
-        public BitwiseANDExpression()
-        {
-            this.EqualityExpression1 = new EqualityExpression();
-            this.BitwiseANDExpression2 = new BitwiseANDExpression();
-            this.EqualityExpression2 = new EqualityExpression();
         }
     }
 }

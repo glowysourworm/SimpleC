@@ -1,43 +1,75 @@
-﻿namespace SimpleC.Grammar.PreprocessingDirectives
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PreprocessingDirectives
 {
-    public class GroupPart : GrammarBase
+    [Grammar(Name = "group-part (base)",
+             Description = "group-part: (4 variants)",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public abstract class GroupPart : GrammarBase
     {
-        IfSection _ifSection1;
-
-        ControlLine _controlLine2;
-
-        TextLine _textLine3;
-
-        public const char HashtagNonDirective4 = GrammarCConstants.Hashtag;
-        NonDirective _nonDirective4;
-
-        public IfSection IfSection1
+        protected GroupPart(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _ifSection1; }
-            set { this.RaiseAndSetIfChanged(ref _ifSection1, value); }
         }
-        public ControlLine ControlLine2
-        {
-            get { return _controlLine2; }
-            set { this.RaiseAndSetIfChanged(ref _controlLine2, value); }
-        }
-        public TextLine TextLine3
-        {
-            get { return _textLine3; }
-            set { this.RaiseAndSetIfChanged(ref _textLine3, value); }
-        }
-        public NonDirective NonDirective4
-        {
-            get { return _nonDirective4; }
-            set { this.RaiseAndSetIfChanged(ref _nonDirective4, value); }
-        }
+    }
 
-        public GroupPart()
+    [Grammar(Name = "group-part (variant 1)",
+             Description = "group-part: if-section",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class GroupPart_V1 : GroupPart
+    {
+        IfSection IfSection;
+
+        public GroupPart_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.IfSection1 = new IfSection();
-            this.ControlLine2 = new ControlLine();
-            this.TextLine3 = new TextLine();
-            this.NonDirective4 = new NonDirective();
+        }
+    }
+
+    [Grammar(Name = "group-part (variant 2)",
+             Description = "group-part: control-line",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class GroupPart_V2 : GroupPart
+    {
+        ControlLine ControlLine;
+
+        public GroupPart_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "group-part (variant 3)",
+             Description = "group-part: text-line",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class GroupPart_V3 : GroupPart
+    {
+        TextLine TextLine;
+
+        public GroupPart_V3(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "group-part (variant 4)",
+             Description = "group-part: # non-directive",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class GroupPart_V4 : GroupPart
+    {
+        public const char HashtagPrefix = GrammarCConstants.Hashtag;
+        NonDirective NonDirective;
+
+        public GroupPart_V4(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

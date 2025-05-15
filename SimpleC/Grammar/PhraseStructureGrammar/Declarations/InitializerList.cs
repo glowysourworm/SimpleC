@@ -1,51 +1,50 @@
-﻿using SimpleC.Grammar.LexicalElements.Identifiers;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class InitializerList : GrammarBase
+    [Grammar(Name = "initializer-list (base)",
+             Description = "initializer-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public abstract class InitializerList : GrammarBase
     {
-        Designation? _designation1;
-        Initializer _initializer1;
+        protected InitializerList(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        InitializerList _initializerList2;
-        public const char CommaSeparator2 = GrammarCConstants.Comma;
-        Designation? _designation2;
-        Initializer _initializer2;
+    [Grammar(Name = "initializer-list (variant 1)",
+             Description = "initializer-list: designation_opt initializer",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class InitializerList_V1 : InitializerList
+    {
+        Designation? Designation;
+        Initializer Initializer;
 
-        public Designation? Designation1
+        public InitializerList_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _designation1; }
-            set { this.RaiseAndSetIfChanged(ref _designation1, value); }
         }
-        public Initializer Initializer1
-        {
-            get { return _initializer1; }
-            set { this.RaiseAndSetIfChanged(ref _initializer1, value); }
-        }
-        public InitializerList InitializerList2
-        {
-            get { return _initializerList2; }
-            set { this.RaiseAndSetIfChanged(ref _initializerList2, value); }
-        }
-        public Designation? Designation2
-        {
-            get { return _designation2; }
-            set { this.RaiseAndSetIfChanged(ref _designation2, value); }
-        }
-        public Initializer Initializer2
-        {
-            get { return _initializer2; }
-            set { this.RaiseAndSetIfChanged(ref _initializer2, value); }
-        }
+    }
 
+    [Grammar(Name = "initializer-list (variant 2)",
+             Description = "initializer-list: initializer-list , designation_opt initializer",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class InitializerList_V2 : InitializerList
+    {
+        InitializerList InitializerList;
+        public const char CommaSeparator = GrammarCConstants.Comma;
+        Designation? Designation;
+        Initializer Initializer;
 
-        public InitializerList()
+        public InitializerList_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Initializer1 = new Initializer();
-            this.InitializerList2 = new InitializerList();
-            this.Initializer2 = new Initializer();
-            this.Designation1 = null;
-            this.Designation2 = null;
         }
     }
 }

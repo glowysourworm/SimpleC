@@ -1,34 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class ParameterList : GrammarBase
+    [Grammar(Name = "parameter-list (base)",
+             Description = "parameter-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public abstract class ParameterList : GrammarBase
     {
-        ParameterDeclaration _parameterDeclaration1;
-
-        ParameterList _parameterList2;
-        public const char CommaSeparator2 = GrammarCConstants.Comma;
-        ParameterDeclaration _parameterDeclaration2;
-
-        public ParameterDeclaration ParameterDeclaration1
+        protected ParameterList(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _parameterDeclaration1; }
-            set { this.RaiseAndSetIfChanged(ref _parameterDeclaration1, value); }
         }
-        public ParameterList ParameterList2
-        {
-            get { return _parameterList2; }
-            set { this.RaiseAndSetIfChanged(ref _parameterList2, value); }
-        }
-        public ParameterDeclaration ParameterDeclaration2
-        {
-            get { return _parameterDeclaration2; }
-            set { this.RaiseAndSetIfChanged(ref _parameterDeclaration2, value); }
-        }
+    }
 
-        public ParameterList()
+    [Grammar(Name = "parameter-list (variant 1)",
+             Description = "parameter-list: parameter-declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public class ParameterList_V1 : ParameterList
+    {
+        ParameterDeclaration ParameterDeclaration;
+
+        public ParameterList_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.ParameterList2 = new ParameterList();
-            this.ParameterDeclaration1 = new ParameterDeclaration();
-            this.ParameterDeclaration2 = new ParameterDeclaration();
+        }
+    }
+
+    [Grammar(Name = "parameter-list (variant 2)",
+             Description = "parameter-list: parameter-list , parameter-declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public class ParameterList_V2 : ParameterList
+    {
+        ParameterList ParameterList;
+        public const char CommaSeparator = GrammarCConstants.Comma;
+        ParameterDeclaration ParameterDeclaration;
+
+        public ParameterList_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,34 +1,47 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class AbstractDeclarator : GrammarBase
+    [Grammar(Name = "abstract-declarator (base)",
+             Description = "abstract-declarator: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_6)]
+    public abstract class AbstractDeclarator : GrammarBase
     {
-        Pointer _pointer1;
-
-        Pointer? _pointer2;
-        DirectAbstractDeclarator _directAbstractDeclarator;
-
-        public Pointer Pointer1
+        protected AbstractDeclarator(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _pointer1; }
-            set { this.RaiseAndSetIfChanged(ref _pointer1, value); }
         }
-        public Pointer? Pointer2
-        {
-            get { return _pointer2; }
-            set { this.RaiseAndSetIfChanged(ref _pointer2, value); }
-        }
-        public DirectAbstractDeclarator DirectAbstractDeclarator
-        {
-            get { return _directAbstractDeclarator; }
-            set { this.RaiseAndSetIfChanged(ref _directAbstractDeclarator, value); }
-        }
+    }
 
+    [Grammar(Name = "abstract-declarator (variant 1)",
+             Description = "abstract-declarator: pointer",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_6)]
+    public class AbstractDeclarator_V1 : AbstractDeclarator
+    {
+        Pointer Pointer;
 
-        public AbstractDeclarator()
+        public AbstractDeclarator_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Pointer1 = new Pointer();
-            this.Pointer2 = null;
-            this.DirectAbstractDeclarator = new DirectAbstractDeclarator();
+        }
+    }
+
+    [Grammar(Name = "abstract-declarator (variant 2)",
+             Description = "abstract-declarator: pointer_opt direct-abstract-declarator",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_6)]
+    public class AbstractDeclarator_V2 : AbstractDeclarator
+    {
+        Pointer? Pointer;
+        DirectAbstractDeclarator DirectAbstractDeclarator;
+
+        public AbstractDeclarator_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

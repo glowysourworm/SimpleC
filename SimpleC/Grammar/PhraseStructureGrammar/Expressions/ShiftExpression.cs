@@ -1,50 +1,65 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code.Attribute;
+using SimpleC.Code;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class ShiftExpression : GrammarBase
+    [Grammar(Name = "shift-expression (base)",
+             Description = "shift-expression: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_7)]
+    public abstract class ShiftExpression : GrammarBase
     {
-        AdditiveExpression _additiveExpression1;
+        protected ShiftExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        ShiftExpression _shiftExpression2;
-        public const string BitwiseLeftShiftOperator2 = GrammarCOperators.BitwiseLeftShift;
-        AdditiveExpression _additiveExpression2;
+    [Grammar(Name = "shift-expression (variant 1)",
+             Description = "shift-expression: additive-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_7)]
+    public class ShiftExpression_V1 : ShiftExpression
+    {
+        AdditiveExpression AdditiveExpression;
 
-        ShiftExpression _shiftExpression3;
-        public const string BitwiseRightShiftOperator3 = GrammarCOperators.BitwiseRightShift;
-        AdditiveExpression _additiveExpression3;
+        public ShiftExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public AdditiveExpression AdditiveExpression1
-        {
-            get { return _additiveExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _additiveExpression1, value); }
-        }
-        public ShiftExpression ShiftExpression2
-        {
-            get { return _shiftExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _shiftExpression2, value); }
-        }
-        public AdditiveExpression AdditiveExpression2
-        {
-            get { return _additiveExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _additiveExpression2, value); }
-        }
-        public ShiftExpression ShiftExpression3
-        {
-            get { return _shiftExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _shiftExpression3, value); }
-        }
-        public AdditiveExpression AdditiveExpression3
-        {
-            get { return _additiveExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _additiveExpression3, value); }
-        }
+    [Grammar(Name = "shift-expression (variant 2)",
+             Description = "shift-expression: shift-expression << additive-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_7)]
+    public class ShiftExpression_V2 : ShiftExpression
+    {
+        ShiftExpression ShiftExpression;
+        public const string BitwiseLeftShiftOperator = GrammarCOperators.BitwiseLeftShift;
+        AdditiveExpression AdditiveExpression;
 
-        public ShiftExpression()
+        public ShiftExpression_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.AdditiveExpression1 = new AdditiveExpression();
-            this.AdditiveExpression2 = new AdditiveExpression();
-            this.AdditiveExpression3 = new AdditiveExpression();
-            this.ShiftExpression2 = new ShiftExpression();
-            this.ShiftExpression3 = new ShiftExpression();
+        }
+    }
+
+
+    [Grammar(Name = "shift-expression (variant 3)",
+             Description = "shift-expression: shift-expression >> additive-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_7)]
+    public class ShiftExpression_V3 : ShiftExpression
+    {
+        ShiftExpression ShiftExpression;
+        public const string BitwiseRightShiftOperator = GrammarCOperators.BitwiseRightShift;
+        AdditiveExpression AdditiveExpression;
+
+        public ShiftExpression_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

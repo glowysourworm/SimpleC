@@ -1,39 +1,82 @@
-﻿using SimpleC.Grammar.LexicalElements.Identifiers;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements.Identifiers;
 using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Statements
 {
-    public class JumpStatement : Statement
+    [Grammar(Name = "jump-statement (base)",
+             Description = "jump-statement: (4 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_6)]
+    public abstract class JumpStatement : Statement
     {
-        public const string GotoStatement1 = GrammarCKeywords.Keyword_goto;
-        Identifier _identifier1;
-        public const char SemicolonSeparator1 = GrammarCConstants.Semicolon;
-
-        public const string ContinueStatement2 = GrammarCKeywords.Keyword_continue;
-        public const char SemicolonSeparator2 = GrammarCConstants.Semicolon;
-
-        public const string BreakStatement3 = GrammarCKeywords.Keyword_break;
-        public const char SemicolonSeparator3 = GrammarCConstants.Semicolon;
-
-        public const string ReturnStatement4 = GrammarCKeywords.Keyword_return;
-        Expression? _expression4;
-        public const char SemicolonSeparator4 = GrammarCConstants.Semicolon;
-
-        public Identifier Identifier1
+        protected JumpStatement(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _identifier1; }
-            set { this.RaiseAndSetIfChanged(ref _identifier1, value); }
         }
-        public Expression? Expression4
-        {
-            get { return _expression4; }
-            set { this.RaiseAndSetIfChanged(ref _expression4, value); }
-        }
+    }
 
-        public JumpStatement()
+    [Grammar(Name = "jump-statement (variant 1)",
+             Description = "jump-statement: goto identifier ;",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_6)]
+    public class JumpStatement_V1 : JumpStatement
+    {
+        public const string GotoKeyword = GrammarCKeywords.Keyword_goto;
+        Identifier Identifier;
+        public const char SemicolonSeparator = GrammarCConstants.Semicolon;
+
+        public JumpStatement_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Identifier1 = new Identifier();
-            this.Expression4 = null;
+        }
+    }
+
+    [Grammar(Name = "jump-statement (variant 2)",
+             Description = "jump-statement: continue ;",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_6)]
+    public class JumpStatement_V2 : JumpStatement
+    {
+        public const string ContinueKeyword = GrammarCKeywords.Keyword_continue;
+        public const char SemicolonSeparator = GrammarCConstants.Semicolon;
+
+        public JumpStatement_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "jump-statement (variant 3)",
+             Description = "jump-statement: break ;",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_6)]
+    public class JumpStatement_V3 : JumpStatement
+    {
+        public const string BreakKeyword = GrammarCKeywords.Keyword_break;
+        public const char SemicolonSeparator = GrammarCConstants.Semicolon;
+
+        public JumpStatement_V3(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "jump-statement (variant 4)",
+             Description = "jump-statement: return expression_opt ;",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_6)]
+    public class JumpStatement_V4 : JumpStatement
+    {
+        public const string ReturnKeyword = GrammarCKeywords.Keyword_return;
+        public Expression? Expression;
+        public const char SemicolonSeparator = GrammarCConstants.Semicolon;
+
+        public JumpStatement_V4(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,20 +1,22 @@
-﻿namespace SimpleC.Grammar.PreprocessingDirectives
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code.Attribute;
+using SimpleC.Code;
+
+namespace SimpleC.Grammar.PreprocessingDirectives
 {
+    [Grammar(Name = "endif-line",
+             Description = "endif-line: # endif new-line",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
     public class EndifLine : GrammarBase
     {
-        public const char EndifGroupHashtag1 = GrammarCConstants.Hashtag;
-        public const string EndifKeyword1 = GrammarCKeywords.Keyword_else;
-        NewLine _newLine1;
+        public const char HashtagPrefix = GrammarCConstants.Hashtag;
+        public const string EndifKeyword = GrammarCKeywords.Keyword_endif;
+        NewLine NewLine;
 
-        public NewLine NewLine1
+        public EndifLine(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _newLine1; }
-            set { this.RaiseAndSetIfChanged(ref _newLine1, value); }
-        }
-
-        public EndifLine()
-        {
-            this.NewLine1 = new NewLine();
         }
     }
 }

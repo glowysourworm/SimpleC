@@ -1,33 +1,47 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Statements
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Statements
 {
-    public class BlockItemList : Statement
+    [Grammar(Name = "block-item-list (base)",
+             Description = "block-item-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_2)]
+    public abstract class BlockItemList : Statement
     {
-        BlockItem _blockItem1;
-
-        BlockItemList _blockItemList2;
-        BlockItem _blockItem2;
-
-        public BlockItem BlockItem1
+        protected BlockItemList(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _blockItem1; }
-            set { this.RaiseAndSetIfChanged(ref _blockItem1, value); }
         }
-        public BlockItemList BlockItemList2
-        {
-            get { return _blockItemList2; }
-            set { this.RaiseAndSetIfChanged(ref _blockItemList2, value); }
-        }
-        public BlockItem BlockItem2
-        {
-            get { return _blockItem2; }
-            set { this.RaiseAndSetIfChanged(ref _blockItem2, value); }
-        }
+    }
 
-        public BlockItemList()
+    [Grammar(Name = "block-item-list (variant 1)",
+             Description = "block-item-list: block-item",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_2)]
+    public class BlockItemList_V1 : BlockItemList
+    {
+        BlockItem BlockItem;
+
+        public BlockItemList_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.BlockItemList2 = new BlockItemList();
-            this.BlockItem1 = new BlockItem();
-            this.BlockItem2 = new BlockItem();
+        }
+    }
+
+    [Grammar(Name = "block-item-list (variant 2)",
+             Description = "block-item-list: block-item-list block-item",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_2)]
+    public class BlockItemList_V2 : BlockItemList
+    {
+        BlockItemList BlockItemList;
+        BlockItem BlockItem;
+
+        public BlockItemList_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,33 +1,47 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class StructDeclarationList : GrammarBase
+    [Grammar(Name = "struct-declaration-list (base)",
+             Description = "struct-declaration-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public abstract class StructDeclarationList : GrammarBase
     {
-        StructDeclaration _structDeclaration1;
-
-        StructDeclarationList _structDeclarationList2;
-        StructDeclaration _structDeclaration2;
-
-        public StructDeclaration StructDeclaration1
+        protected StructDeclarationList(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _structDeclaration1; }
-            set { this.RaiseAndSetIfChanged(ref _structDeclaration1, value); }
         }
-        public StructDeclarationList StructDeclarationList2
-        {
-            get { return _structDeclarationList2; }
-            set { this.RaiseAndSetIfChanged(ref _structDeclarationList2, value); }
-        }
-        public StructDeclaration StructDeclaration2
-        {
-            get { return _structDeclaration2; }
-            set { this.RaiseAndSetIfChanged(ref _structDeclaration2, value); }
-        }
+    }
 
-        public StructDeclarationList()
+    [Grammar(Name = "struct-declaration-list (variant 1)",
+             Description = "struct-declaration-list: struct-declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public class StructDeclarationList_V1 : StructDeclarationList
+    {
+        StructDeclaration StructDeclaration;
+
+        public StructDeclarationList_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.StructDeclarationList2 = new StructDeclarationList();
-            this.StructDeclaration1 = new StructDeclaration();
-            this.StructDeclaration2 = new StructDeclaration();  
+        }
+    }
+
+    [Grammar(Name = "struct-declaration-list (variant 2)",
+             Description = "struct-declaration-list: struct-declaration-list struct-declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public class StructDeclarationList_V2 : StructDeclarationList
+    {
+        StructDeclarationList StructDeclarationList;
+        StructDeclaration StructDeclaration;
+
+        public StructDeclarationList_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

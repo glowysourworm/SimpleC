@@ -1,12 +1,20 @@
-﻿using SimpleC.Grammar.LexicalElements;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    /// <summary>
-    /// (see A.2.2 -> 6.7.3) type-qualifier: This class should be just a keyword; but there may be other contextual data.
-    /// </summary>
+    [Grammar(Name = "type-qualifier",
+             Description = "type-qualifier: one of (...)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_3)]
     public class TypeQualifier : GrammarBase
     {
-        Keyword _keyword;
+        // One of: const, restrict, volatile
+        public TypeQualifier(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
     }
 }

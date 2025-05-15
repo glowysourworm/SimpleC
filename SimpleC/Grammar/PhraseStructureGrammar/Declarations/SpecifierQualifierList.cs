@@ -1,40 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class SpecifierQualifierList : GrammarBase
+    [Grammar(Name = "specifier-qualifier-list (base)",
+             Description = "specifier-qualifier-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public abstract class SpecifierQualifierList : GrammarBase
     {
-        TypeSpecifier _typeSpecifier1;
-        SpecifierQualifierList? _specifierQualifierList1;
+        public SpecifierQualifierList(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        TypeQualifier _typeQualifier2;
-        SpecifierQualifierList? _specifierQualifierList2;
+    [Grammar(Name = "specifier-qualifier-list (variant 1)",
+             Description = "specifier-qualifier-list: type-specifier specifier-qualifier-list_opt",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public class SpecifierQualifierList_V1 : SpecifierQualifierList
+    {
+        TypeSpecifier TypeSpecifier;
+        SpecifierQualifierList? SpecifierQualifierList;
 
-        public TypeSpecifier TypeSpecifier1
+        public SpecifierQualifierList_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _typeSpecifier1; }
-            set { this.RaiseAndSetIfChanged(ref _typeSpecifier1, value); }
         }
-        public SpecifierQualifierList? SpecifierQualifierList1
-        {
-            get { return _specifierQualifierList1; }
-            set { this.RaiseAndSetIfChanged(ref _specifierQualifierList1, value); }
-        }
-        public TypeQualifier TypeQualifier2
-        {
-            get { return _typeQualifier2; }
-            set { this.RaiseAndSetIfChanged(ref _typeQualifier2, value); }
-        }
-        public SpecifierQualifierList? SpecifierQualifierList2
-        {
-            get { return _specifierQualifierList2; }
-            set { this.RaiseAndSetIfChanged(ref _specifierQualifierList2, value); }
-        }
+    }
 
-        public SpecifierQualifierList()
+    [Grammar(Name = "specifier-qualifier-list (variant 2)",
+             Description = "specifier-qualifier-list: type-qualifier specifier-qualifier-list_opt",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_2_1)]
+    public class SpecifierQualifierList_V2 : SpecifierQualifierList
+    {
+        TypeQualifier TypeQualifier;
+        SpecifierQualifierList? SpecifierQualifierList;
+
+        public SpecifierQualifierList_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.SpecifierQualifierList1 = null;
-            this.SpecifierQualifierList2 = null;
-            this.TypeSpecifier1 = new TypeSpecifier();
-            this.TypeQualifier2 = new TypeQualifier();
         }
     }
 }

@@ -1,70 +1,76 @@
-﻿namespace SimpleC.Grammar.LexicalElements.Constants
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class IntegerSuffix : GrammarBase
+    [Grammar(Name = "integer-suffix (base)",
+             Description = "(base) integer-suffix: (4 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public abstract class IntegerSuffix : GrammarBase
     {
-        UnsignedSuffix _unsignedSuffix1;
-        LongSuffix _longSuffix1;
+        protected IntegerSuffix(CodeRefBase codeRef) : base(codeRef) {}
+    }
 
-        UnsignedSuffix _unsignedSuffix2;
-        LongLongSuffix _longLongSuffix2;
+    [Grammar(Name = "integer-suffix (variant 1)",
+             Description = "integer-suffix: unsigned-suffix long-suffix_opt",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class IntegerSuffix_V1 : IntegerSuffix
+    {
+        public UnsignedSuffix UnsignedSuffix;
+        public LongSuffix? LongSuffix;
 
-        LongSuffix _longSuffix3;
-        UnsignedSuffix _unsignedSuffix3;
+        public IntegerSuffix_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        LongLongSuffix _longLongSuffix4;
-        UnsignedSuffix _unsignedSuffix4;
+    [Grammar(Name = "integer-suffix (variant 2)",
+             Description = "integer-suffix: unsigned-suffix long-long-suffix",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class IntegerSuffix_V2 : IntegerSuffix
+    {
+        public UnsignedSuffix UnsignedSuffix;
+        public LongLongSuffix LongLongSuffix;
 
-        public UnsignedSuffix UnsignedSuffix1
+        public IntegerSuffix_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _unsignedSuffix1; }
-            set { this.RaiseAndSetIfChanged(ref _unsignedSuffix1, value); }
         }
-        public LongSuffix LongSuffix1
-        {
-            get { return _longSuffix1; }
-            set { this.RaiseAndSetIfChanged(ref _longSuffix1, value); }
-        }
-        public UnsignedSuffix UnsignedSuffix2
-        {
-            get { return _unsignedSuffix2; }
-            set { this.RaiseAndSetIfChanged(ref _unsignedSuffix2, value); }
-        }
-        public LongLongSuffix LongLongSuffix2
-        {
-            get { return _longLongSuffix2; }
-            set { this.RaiseAndSetIfChanged(ref _longLongSuffix2, value); }
-        }
-        public LongSuffix LongSuffix3
-        {
-            get { return _longSuffix3; }
-            set { this.RaiseAndSetIfChanged(ref _longSuffix3, value); }
-        }
-        public UnsignedSuffix UnsignedSuffix3
-        {
-            get { return _unsignedSuffix3; }
-            set { this.RaiseAndSetIfChanged(ref _unsignedSuffix3, value); }
-        }
-        public LongLongSuffix LongLongSuffix4
-        {
-            get { return _longLongSuffix4; }
-            set { this.RaiseAndSetIfChanged(ref _longLongSuffix4, value); }
-        }
-        public UnsignedSuffix UnsignedSuffix4
-        {
-            get { return _unsignedSuffix4; }
-            set { this.RaiseAndSetIfChanged(ref _unsignedSuffix4, value); }
-        }
+    }
 
-        public IntegerSuffix()
+    [Grammar(Name = "integer-suffix (variant 3)",
+             Description = "integer-suffix: long-suffix unsigned-suffix_opt",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class IntegerSuffix_V3 : IntegerSuffix
+    {
+        public LongSuffix LongSuffix;
+        public UnsignedSuffix? UnsignedSuffix;
+
+        public IntegerSuffix_V3(CodeRefBase codeRef) : base(codeRef)
         {
-            this.UnsignedSuffix1 = new UnsignedSuffix();
-            this.UnsignedSuffix2 = new UnsignedSuffix();
-            this.UnsignedSuffix3 = new UnsignedSuffix();
-            this.UnsignedSuffix4 = new UnsignedSuffix();
-            this.LongSuffix1 = new LongSuffix();
-            this.LongLongSuffix2 = new LongLongSuffix();
-            this.LongSuffix3 = new LongSuffix();
-            this.LongLongSuffix4 = new LongLongSuffix();
+        }
+    }
+
+    [Grammar(Name = "integer-suffix (variant 4)",
+             Description = "integer-suffix: long-long-suffix unsigned-suffix_opt",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class IntegerSuffix_V4 : IntegerSuffix
+    {
+        public LongLongSuffix LongSuffix;
+        public UnsignedSuffix? UnsignedSuffix;
+
+        public IntegerSuffix_V4(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

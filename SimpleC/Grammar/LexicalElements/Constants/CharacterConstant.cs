@@ -1,31 +1,51 @@
-﻿namespace SimpleC.Grammar.LexicalElements.Constants
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class CharacterConstant : GrammarBase
+    [Grammar(Name = "character-constant (base)",
+             Description = "character-constant: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_3)]
+    public abstract class CharacterConstant : GrammarBase
+    {
+        public CharacterConstant(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "character-constant (variant 1)",
+             Description = "character-constant: ' c-char-sequence '",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class CharacterConstant_V1 : CharacterConstant
     {
         const char PrefixApostrophe1 = GrammarCConstants.SingleQuote;
-        CCharSequence _sequence1;
+        public CCharSequence CCharSequence;
         const char PostfixApostrophe1 = GrammarCConstants.SingleQuote;
 
+        public CharacterConstant_V1(CodeRefBase codeRef) : base(codeRef) 
+        {
+        }
+    }
+
+    [Grammar(Name = "character-constant (variant 2)",
+             Description = "character-constant: L' c-char-sequence '",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class CharacterConstant_V2 : Constant
+    {
         const char PrefixLiteralConstant = GrammarCConstants.Letter_L;
         const char PrefixApostrophe2 = GrammarCConstants.SingleQuote;
-        CCharSequence _sequence2;
+        CCharSequence CCharSequence;
         const char PostfixApostrophe2 = GrammarCConstants.SingleQuote;
 
-        public CCharSequence Sequence1
+        public CharacterConstant_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _sequence1; }
-            set { this.RaiseAndSetIfChanged(ref _sequence1, value); }
-        }
-        public CCharSequence Sequence2
-        {
-            get { return _sequence2; }
-            set { this.RaiseAndSetIfChanged(ref _sequence2, value); }
-        }
-
-        public CharacterConstant()
-        {
-            this.Sequence1 = new CCharSequence();
-            this.Sequence2 = new CCharSequence();
         }
     }
 }

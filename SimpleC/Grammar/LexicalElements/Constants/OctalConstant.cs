@@ -1,33 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class OctalConstant : GrammarBase
+    [Grammar(Name = "octal-constant (base)",
+             Description = "(base) octal-constant: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public abstract class OctalConstant : GrammarBase
     {
-        const char ZERO = '0';  // This constant must be the first member of octal-constant (see Appendix -> 6.4.4.1)
+        public OctalConstant(CodeRefBase codeRef) : base(codeRef) { }
+    }
 
-        OctalConstant _octalConstantChild;
-        OctalDigit _octalDigit;
+    [Grammar(Name = "octal-constant (variant 1)",
+             Description = "octal-constant: 0 (the constant char for zero)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class OctalConstant_V1 : OctalConstant
+    {
+        public const char ZERO = GrammarCConstants.Number0;
 
-        public OctalConstant OctalConstantChild
-        {
-            get { return _octalConstantChild; }
-            set { this.RaiseAndSetIfChanged(ref _octalConstantChild, value); }
-        }
-        public OctalDigit OctalDigit
-        {
-            get { return _octalDigit; }
-            set { this.RaiseAndSetIfChanged(ref _octalDigit, value); }
-        }
+        public OctalConstant_V1(CodeRefBase codeRef) : base(codeRef) { }
+    }
 
-        public OctalConstant()
-        {
-            this.OctalConstantChild = new OctalConstant();
-            this.OctalDigit = new OctalDigit();
-        }
+    [Grammar(Name = "octal-constant (variant 2)",
+             Description = "octal-constant: octal-constant octal-digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class OctalConstant_V2 : OctalConstant
+    {
+        OctalConstant OctalConstant;
+        OctalDigit OctalDigit;
+
+        public OctalConstant_V2(CodeRefBase codeRef) : base(codeRef) { }
     }
 }

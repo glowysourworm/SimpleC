@@ -1,35 +1,49 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class Pointer : GrammarBase
+    [Grammar(Name = "pointer (base)",
+             Description = "pointer: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public abstract class Pointer : GrammarBase
     {
-        public const char PointerPrefix1 = GrammarCConstants.Asterix;
-        TypeQualifierList? _typeQualifierList1;
-
-        public const char PointerPrefix2 = GrammarCConstants.Asterix;
-        TypeQualifierList? _typeQualifierList2;
-        Pointer _pointer2;
-
-        public TypeQualifierList? TypeQualifierList1
+        protected Pointer(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _typeQualifierList1; }
-            set { this.RaiseAndSetIfChanged(ref _typeQualifierList1, value); }
         }
-        public TypeQualifierList? TypeQualifierList2
-        {
-            get { return _typeQualifierList2; }
-            set { this.RaiseAndSetIfChanged(ref _typeQualifierList2, value); }
-        }
-        public Pointer Pointer2
-        {
-            get { return _pointer2; }
-            set { this.RaiseAndSetIfChanged(ref _pointer2, value); }
-        }
+    }
 
-        public Pointer()
+    [Grammar(Name = "pointer (variant 1)",
+             Description = "pointer: * type-qualifier-list_opt",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public class Pointer_V1 : GrammarBase
+    {
+        public const char PointerAsterix = GrammarCConstants.Asterix;
+        TypeQualifierList? TypeQualifierList;
+
+        public Pointer_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.TypeQualifierList1 = null;
-            this.TypeQualifierList2 = null;
-            this.Pointer2 = new Pointer();
+        }
+    }
+
+    [Grammar(Name = "pointer (variant 2)",
+             Description = "pointer: * type-qualifier-list_opt pointer",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_5)]
+    public class Pointer_V2 : GrammarBase
+    {
+        public const char PointerAsterix = GrammarCConstants.Asterix;
+        TypeQualifierList? TypeQualifierList;
+        Pointer Pointer;
+
+        public Pointer_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,32 +1,51 @@
-﻿using SimpleC.Grammar.LexicalElements.Identifiers;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements.Identifiers;
 using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class Designator : GrammarBase
+    [Grammar(Name = "designator (base)",
+             Description = "designator: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public abstract class Designator : GrammarBase
     {
-        public const char DesignatorBracketOpen1 = GrammarCConstants.BracketSquareLeft;
-        ConstantExpression _constantExpression1;
-        public const char DesignatorBracketClose1 = GrammarCConstants.BracketSquareRight;
-
-        public const char DesignatorPeriodPunctuator2 = GrammarCConstants.Period;
-        Identifier _identifier2;
-
-        public ConstantExpression ConstantExpression1
+        protected Designator(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _constantExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _constantExpression1, value); }
         }
-        public Identifier Identifier2
-        {
-            get { return _identifier2; }
-            set { this.RaiseAndSetIfChanged(ref _identifier2, value); }
-        }
+    }
 
-        public Designator()
+    [Grammar(Name = "designator (variant 1)",
+             Description = "designator: [ constant-expression ]",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class Designator_V1 : Designator
+    {
+        public const char DesignatorBracketOpen = GrammarCConstants.BracketSquareLeft;
+        ConstantExpression ConstantExpression;
+        public const char DesignatorBracketClose = GrammarCConstants.BracketSquareRight;
+
+        public Designator_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.ConstantExpression1 = new ConstantExpression();
-            this.Identifier2 = new Identifier();
+        }
+    }
+
+    [Grammar(Name = "designator (variant 2)",
+             Description = "designator: . identifier",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class Designator_V2 : Designator
+    {
+        public const char DesignatorPeriodPunctuator = GrammarCConstants.Period;
+        Identifier Identifier;
+
+        public Designator_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

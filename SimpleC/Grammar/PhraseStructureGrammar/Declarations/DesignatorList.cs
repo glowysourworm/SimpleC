@@ -1,32 +1,47 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class DesignatorList : GrammarBase
+    [Grammar(Name = "designator-list (base)",
+             Description = "designator-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public abstract class DesignatorList : GrammarBase
     {
-        Designator _designator1;
-        DesignatorList _designatorList2;
-        Designator _designator2;
+        protected DesignatorList(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public Designator Designator1
-        {
-            get { return _designator1; }
-            set { this.RaiseAndSetIfChanged(ref _designator1, value); }
-        }
-        public DesignatorList DesignatorList2
-        {
-            get { return _designatorList2; }
-            set { this.RaiseAndSetIfChanged(ref _designatorList2, value); }
-        }
-        public Designator Designator2
-        {
-            get { return _designator2; }
-            set { this.RaiseAndSetIfChanged(ref _designator2, value); }
-        }
+    [Grammar(Name = "designator-list (variant 1)",
+             Description = "designator-list: designator",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class DesignatorList_V1 : DesignatorList
+    {
+        Designator Designator;
 
-        public DesignatorList()
+        public DesignatorList_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.DesignatorList2 = new DesignatorList();
-            this.Designator1 = new Designator();
-            this.Designator2 = new Designator();
+        }
+    }
+
+    [Grammar(Name = "designator-list (variant 2)",
+             Description = "designator-list: designator-list designator",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class DesignatorList_V2 : DesignatorList
+    {
+        DesignatorList DesignatorList;
+        Designator Designator;
+
+        public DesignatorList_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

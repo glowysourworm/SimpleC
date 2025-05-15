@@ -1,18 +1,21 @@
-﻿namespace SimpleC.Grammar.PreprocessingDirectives
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PreprocessingDirectives
 {
+
+    [Grammar(Name = "replacement-list",
+             Description = "replacement-list: pp-tokens_opt",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
     public class ReplacementList : GrammarBase
     {
-        PreprocessingTokens? _preprocessingTokens;
+        public PreprocessingTokens? PreprocessingTokens;
 
-        public PreprocessingTokens? PreprocessingTokens
+        public ReplacementList(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _preprocessingTokens; }
-            set { this.RaiseAndSetIfChanged(ref _preprocessingTokens, value); }
-        }
-
-        public ReplacementList()
-        {
-            this.PreprocessingTokens = null;
         }
     }
 }

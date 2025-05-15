@@ -1,34 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class InitDeclaratorList : GrammarBase
+    [Grammar(Name = "init-declarator-list (base)",
+             Description = "init-declarator-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public abstract class InitDeclaratorList : GrammarBase
     {
-        InitDeclarator _initDeclarator1;
+        protected InitDeclaratorList(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        InitDeclaratorList _initDeclaratorList2;
+    [Grammar(Name = "init-declarator-list (variant 1)",
+             Description = "init-declarator-list: init-declarator",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public class InitDeclaratorList_V1 : InitDeclaratorList
+    {
+        InitDeclarator InitDeclarator;
+
+        public InitDeclaratorList_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "init-declarator-list (variant 2)",
+             Description = "init-declarator-list: init-declarator-list , init-declarator",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public class InitDeclaratorList_V2 : InitDeclaratorList
+    {
+        InitDeclaratorList InitDeclaratorList;
         public const char CommaSeparator = GrammarCConstants.Comma;
-        InitDeclarator _initDeclarator2;
+        InitDeclarator InitDeclarator;
 
-        public InitDeclarator InitDeclarator1
+        public InitDeclaratorList_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _initDeclarator1; }
-            set { this.RaiseAndSetIfChanged(ref _initDeclarator1, value); }
-        }
-        public InitDeclaratorList InitDeclaratorList2
-        {
-            get { return _initDeclaratorList2; }
-            set { this.RaiseAndSetIfChanged(ref _initDeclaratorList2, value); }
-        }
-        public InitDeclarator InitDeclarator2
-        {
-            get { return _initDeclarator2; }
-            set { this.RaiseAndSetIfChanged(ref _initDeclarator2, value); }
-        }
-
-        public InitDeclaratorList()
-        {
-            this.InitDeclaratorList2 = new InitDeclaratorList();
-            this.InitDeclarator1 = new InitDeclarator();
-            this.InitDeclarator2 = new InitDeclarator();
         }
     }
 }

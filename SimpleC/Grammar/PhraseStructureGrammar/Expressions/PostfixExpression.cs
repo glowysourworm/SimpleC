@@ -1,148 +1,173 @@
-﻿using SimpleC.Grammar.LexicalElements.Identifiers;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements.Identifiers;
 using SimpleC.Grammar.PhraseStructureGrammar.Declarations;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class PostfixExpression : GrammarBase
+    [Grammar(Name = "postfix-expression (base)",
+             Description = "postfix-expression: (9 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public abstract class PostfixExpression : GrammarBase
     {
-        // Primary expression, with a choice of postfix-expressions (recursively) (see A.2.1 -> 6.5.2)
-        PrimaryExpression _primaryExpression;
+        protected PostfixExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        // Recursive postfix-expression
-        PostfixExpression _postfixExpression1;
-        PostfixExpression _postfixExpression2;
-        PostfixExpression _postfixExpression3;
-        PostfixExpression _postfixExpression4;
-        PostfixExpression _postfixExpression5;
-        PostfixExpression _postfixExpression6;
+    [Grammar(Name = "postfix-expression (variant 1)",
+             Description = "postfix-expression: primary-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V1 : PostfixExpression
+    {
+        public PrimaryExpression PrimaryExpression;
 
-        public const char BracketSquareLeft1 = GrammarCConstants.BracketSquareLeft;
-        Expression _expression1;
-        public const char BracketSquareRight1 = GrammarCConstants.BracketSquareRight;
+        public PostfixExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public const char BracketLeft2 = GrammarCConstants.BracketLeft;
-        ArgumentExpressionList? _argumentExpressionList2;
-        public const char BracketRight2 = GrammarCConstants.BracketRight;
+    [Grammar(Name = "postfix-expression (variant 2)",
+             Description = "postfix-expression: postfix-expression [ expression ]",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V2 : PostfixExpression
+    {
+        public PostfixExpression PostfixExpression;
 
-        public const char PeriodAfterPostfix3 = GrammarCConstants.Period;
-        Identifier _identifier3;
+        public const char ExpressionOpenBracket = GrammarCConstants.BracketSquareLeft;
+        public Expression Expression;
+        public const char ExpressionCloseBracket = GrammarCConstants.BracketSquareRight;
 
-        public const string ArrowAfterPostfix4 = GrammarCOperators.Arrow;
-        Identifier _identifier4;
+        public PostfixExpression_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public const string IncrementPostfix5 = GrammarCOperators.Increment;
-        public const string DecrementPostfix6 = GrammarCOperators.Decrement;
+    [Grammar(Name = "postfix-expression (variant 3)",
+             Description = "postfix-expression: postfix-expression ( argument-expression-list_opt )",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V3 : PostfixExpression
+    {
+        public PostfixExpression PostfixExpression;
 
-        public const char LeftBracketOption1 = GrammarCConstants.BracketLeft;
-        TypeName _typeNameOption1;
-        public const char RightBracketOption1 = GrammarCConstants.BracketRight;
+        public const char ExpressionOpenBracket = GrammarCConstants.BracketLeft;
+        public ArgumentExpressionList? ArgumentExpressionList;
+        public const char ExpressionCloseBracket = GrammarCConstants.BracketRight;
 
-        public const char LeftBracketCurlyOption1InitializerList = GrammarCConstants.BracketCurlyLeft;
-        InitializerList _initializerListOption1;
-        public const char RightBracketCurlyOption1InitializerList = GrammarCConstants.BracketCurlyRight;
+        public PostfixExpression_V3(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public const char LeftBracketOption2 = GrammarCConstants.BracketLeft;
-        TypeName _typeNameOption2;
-        public const char RightBracketOption2 = GrammarCConstants.BracketRight;
+    [Grammar(Name = "postfix-expression (variant 4)",
+             Description = "postfix-expression: postfix-expression . identifier",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V4 : PostfixExpression
+    {
+        public PostfixExpression PostfixExpression;
+        public const char PeriodPunctuator = GrammarCConstants.Period;
+        public Identifier Identifier;
 
-        public const char LeftBracketCurlyOption2InitializerList = GrammarCConstants.BracketCurlyLeft;
-        InitializerList _initializerListOption2;
-        public const char RightBracketCurlyOption2InitializerList = GrammarCConstants.BracketCurlyRight;
-        public const char InitilizerListOption2Comma = GrammarCConstants.Comma;
+        public PostfixExpression_V4(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public PrimaryExpression PrimaryExpression
-        {
-            get { return _primaryExpression; }
-            set { this.RaiseAndSetIfChanged(ref _primaryExpression, value); }
-        }
-        public PostfixExpression PostfixExpression1
-        {
-            get { return _postfixExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _postfixExpression1, value); }
-        }
-        public PostfixExpression PostfixExpression2
-        {
-            get { return _postfixExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _postfixExpression2, value); }
-        }
-        public PostfixExpression PostfixExpression3
-        {
-            get { return _postfixExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _postfixExpression3, value); }
-        }
-        public PostfixExpression PostfixExpression4
-        {
-            get { return _postfixExpression4; }
-            set { this.RaiseAndSetIfChanged(ref _postfixExpression4, value); }
-        }
-        public PostfixExpression PostfixExpression5
-        {
-            get { return _postfixExpression5; }
-            set { this.RaiseAndSetIfChanged(ref _postfixExpression5, value); }
-        }
-        public PostfixExpression PostfixExpression6
-        {
-            get { return _postfixExpression6; }
-            set { this.RaiseAndSetIfChanged(ref _postfixExpression6, value); }
-        }
-        public Expression Expression1
-        {
-            get { return _expression1; }
-            set { this.RaiseAndSetIfChanged(ref _expression1, value); }
-        }
-        public ArgumentExpressionList? ArgumentExpressionList2
-        {
-            get { return _argumentExpressionList2; }
-            set { this.RaiseAndSetIfChanged(ref _argumentExpressionList2, value); }
-        }
-        public Identifier Identifier3
-        {
-            get { return _identifier3; }
-            set { this.RaiseAndSetIfChanged(ref _identifier3, value); }
-        }
-        public Identifier Identifier4
-        {
-            get { return _identifier4; }
-            set { this.RaiseAndSetIfChanged(ref _identifier4, value); }
-        }
-        public TypeName TypeNameOption1
-        {
-            get { return _typeNameOption1; }
-            set { this.RaiseAndSetIfChanged(ref _typeNameOption1, value); }
-        }
-        public InitializerList InitializerListOption1
-        {
-            get { return _initializerListOption1; }
-            set { this.RaiseAndSetIfChanged(ref _initializerListOption1, value); }
-        }
-        public TypeName TypeNameOption2
-        {
-            get { return _typeNameOption2; }
-            set { this.RaiseAndSetIfChanged(ref _typeNameOption2, value); }
-        }
-        public InitializerList InitializerListOption2
-        {
-            get { return _initializerListOption2; }
-            set { this.RaiseAndSetIfChanged(ref _initializerListOption2, value); }
-        }
+    [Grammar(Name = "postfix-expression (variant 5)",
+             Description = "postfix-expression: postfix-expression -> identifier",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V5 : PostfixExpression
+    {
+        public PostfixExpression PostfixExpression;
+        public const string ArrowOperator = GrammarCOperators.Arrow;
+        public Identifier Identifier;
 
-        public PostfixExpression()
+        public PostfixExpression_V5(CodeRefBase codeRef) : base(codeRef)
         {
-            this.ArgumentExpressionList2 = new ArgumentExpressionList();
-            this.Expression1 = new Expression();
-            this.Identifier3 = new Identifier();
-            this.Identifier4 = new Identifier();
-            this.InitializerListOption1 = new InitializerList();
-            this.InitializerListOption2 = new InitializerList();
-            this.PostfixExpression1 = new PostfixExpression();
-            this.PostfixExpression2 = new PostfixExpression();
-            this.PostfixExpression3 = new PostfixExpression();
-            this.PostfixExpression4 = new PostfixExpression();
-            this.PostfixExpression5 = new PostfixExpression();
-            this.PostfixExpression6 = new PostfixExpression();
-            this.PrimaryExpression = new PrimaryExpression();
-            this.TypeNameOption1 = new TypeName();
-            this.TypeNameOption2 = new TypeName();
+        }
+    }
+
+    [Grammar(Name = "postfix-expression (variant 6)",
+             Description = "postfix-expression: postfix-expression ++",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V6 : PostfixExpression
+    {
+        public PostfixExpression PostfixExpression;
+        public const string IncrementOperator = GrammarCOperators.Increment;
+
+        public PostfixExpression_V6(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "postfix-expression (variant 7)",
+             Description = "postfix-expression: postfix-expression --",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V7 : PostfixExpression
+    {
+        public PostfixExpression PostfixExpression;
+        public const string DecrementOperator = GrammarCOperators.Increment;
+
+        public PostfixExpression_V7(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "postfix-expression (variant 8)",
+             Description = "postfix-expression: ( type-name ) { initializer-list }",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V8 : PostfixExpression
+    {
+        public const char TypeNameOpenBracket = GrammarCConstants.BracketLeft;
+        public TypeName TypeName;
+        public const char TypeNameCloseBracket = GrammarCConstants.BracketRight;
+
+        public const char InitializerListOpenBracket = GrammarCConstants.BracketCurlyLeft;
+        public InitializerList InitializerList;
+        public const char InitializerListCloseBracket = GrammarCConstants.BracketCurlyRight;
+
+        public PostfixExpression_V8(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "postfix-expression (variant 9)",
+             Description = "postfix-expression: ( type-name ) { initializer-list , }",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_2)]
+    public class PostfixExpression_V9 : PostfixExpression
+    {
+        public const char TypeNameOpenBracket = GrammarCConstants.BracketLeft;
+        public TypeName TypeName;
+        public const char TypeNameCloseBracket = GrammarCConstants.BracketRight;
+
+        public const char InitializerListOpenBracket = GrammarCConstants.BracketCurlyLeft;
+        public InitializerList InitializerList;
+        public const char CommaSeparator = GrammarCConstants.Comma;
+        public const char InitializerListCloseBracket = GrammarCConstants.BracketCurlyRight;
+
+        public PostfixExpression_V9(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,74 +1,75 @@
-﻿using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Statements
 {
-    public class SelectionStatement : Statement
+    [Grammar(Name = "selection-statement (base)",
+             Description = "selection-statement: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_4)]
+    public abstract class SelectionStatement : Statement
     {
-        public const string IfStatement1 = GrammarCKeywords.Keyword_if;
-        public const char IfStatementOpenBracket1 = GrammarCConstants.BracketLeft;
-        Expression _expression1;
-        public const char IfStatementCloseBracket1 = GrammarCConstants.BracketRight;
-        Statement _statement1;
+        protected SelectionStatement(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public const string IfStatement2 = GrammarCKeywords.Keyword_if;
-        public const char IfStatementOpenBracket2 = GrammarCConstants.BracketLeft;
-        Expression _expression2;
-        public const char IfStatementCloseBracket2 = GrammarCConstants.BracketRight;
-        Statement _statement2a;
-        public const string ElseStatement2 = GrammarCKeywords.Keyword_else;
-        Statement _statement2b;
+    [Grammar(Name = "selection-statement (variant 1)",
+             Description = "selection-statement: if ( expression ) statement",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_4)]
+    public class SelectionStatement_V1 : SelectionStatement
+    {
+        public const string IfKeyword = GrammarCKeywords.Keyword_if;
+        public const char IfOpenBracket = GrammarCConstants.BracketLeft;
+        Expression Expression;
+        public const char IfCloseBracket = GrammarCConstants.BracketRight;
+        Statement Statement;
 
-        public const string SwitchStatement3 = GrammarCKeywords.Keyword_switch;
-        public const char IfStatementOpenBracket3 = GrammarCConstants.BracketLeft;
-        Expression _expression3;
-        public const char IfStatementCloseBracket3 = GrammarCConstants.BracketRight;
-        Statement _statement3;
+        public SelectionStatement_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public Expression Expression1
-        {
-            get { return _expression1; }
-            set { this.RaiseAndSetIfChanged(ref _expression1, value); }
-        }
-        public Statement Statement1
-        {
-            get { return _statement1; }
-            set { this.RaiseAndSetIfChanged(ref _statement1, value); }
-        }
-        public Expression Expression2
-        {
-            get { return _expression2; }
-            set { this.RaiseAndSetIfChanged(ref _expression2, value); }
-        }
-        public Statement Statement2a
-        {
-            get { return _statement2a; }
-            set { this.RaiseAndSetIfChanged(ref _statement2a, value); }
-        }
-        public Statement Statement2b
-        {
-            get { return _statement2b; }
-            set { this.RaiseAndSetIfChanged(ref _statement2b, value); }
-        }
-        public Expression Expression3
-        {
-            get { return _expression3; }
-            set { this.RaiseAndSetIfChanged(ref _expression3, value); }
-        }
-        public Statement Statement3
-        {
-            get { return _statement3; }
-            set { this.RaiseAndSetIfChanged(ref _statement3, value); }
-        }
+    [Grammar(Name = "selection-statement (variant 2)",
+             Description = "selection-statement: if ( expression ) statement else statement",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_4)]
+    public class SelectionStatement_V2 : SelectionStatement
+    {
+        public const string IfKeyword = GrammarCKeywords.Keyword_if;
+        public const char IfOpenBracket = GrammarCConstants.BracketLeft;
+        Expression Expression;
+        public const char IfCloseBracket = GrammarCConstants.BracketRight;
+        Statement IfStatement;
+        public const string ElseKeyword = GrammarCKeywords.Keyword_else;
+        Statement ElseStatement;
 
-        public SelectionStatement()
+        public SelectionStatement_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Expression1 = new Expression();
-            this.Expression2 = new Expression();
-            this.Expression3 = new Expression();
-            this.Statement1 = new Statement();
-            this.Statement2a = new Statement();
-            this.Statement2b = new Statement();
-            this.Statement3 = new Statement();
+        }
+    }
+
+    [Grammar(Name = "selection-statement (variant 3)",
+             Description = "selection-statement: switch ( expression ) statement",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_4)]
+    public class SelectionStatement_V3 : SelectionStatement
+    {
+        public const string SwitchKeyword = GrammarCKeywords.Keyword_switch;
+        public const char IfOpenBracket = GrammarCConstants.BracketLeft;
+        Expression Expression;
+        public const char IfCloseBracket = GrammarCConstants.BracketRight;
+        Statement Statement;
+
+        public SelectionStatement_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

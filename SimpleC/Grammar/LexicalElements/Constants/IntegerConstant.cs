@@ -1,61 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class IntegerConstant : GrammarBase
+    [Grammar(Name = "integer-constant (base)",
+             Description = "integer-constant: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public abstract class IntegerConstant : GrammarBase
     {
-        DecimalConstant _decimalConstant1;
-        IntegerSuffix _integerSuffix1;
+        public IntegerConstant(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        OctalConstant _octalConstant2;
-        IntegerSuffix _integerSuffix2;
+    [Grammar(Name = "integer-constant (variant 1)",
+             Description = "integer-constant: decimal-constant integer-suffix_opt",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class IntegerConstant_V1 : IntegerConstant
+    {
+        DecimalConstant DecimalConstant;
+        IntegerSuffix? IntegerSuffix;
 
-        HexadecimalConstant _hexadecimalConstant3;
-        IntegerSuffix _integerSuffix3;
+        public IntegerConstant_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public DecimalConstant DecimalConstant1
-        {
-            get { return _decimalConstant1; }
-            set { this.RaiseAndSetIfChanged(ref _decimalConstant1, value); }
-        }
-        public IntegerSuffix IntegerSuffix1
-        {
-            get { return _integerSuffix1; }
-            set { this.RaiseAndSetIfChanged(ref _integerSuffix1, value); }
-        }
-        public OctalConstant OctalConstant2
-        {
-            get { return _octalConstant2; }
-            set { this.RaiseAndSetIfChanged(ref _octalConstant2, value); }
-        }
-        public IntegerSuffix IntegerSuffix2
-        {
-            get { return _integerSuffix2; }
-            set { this.RaiseAndSetIfChanged(ref _integerSuffix2, value); }
-        }
-        public HexadecimalConstant HexadecimalConstant3
-        {
-            get { return _hexadecimalConstant3; }
-            set { this.RaiseAndSetIfChanged(ref _hexadecimalConstant3, value); }
-        }
-        public IntegerSuffix IntegerSuffix3
-        {
-            get { return _integerSuffix3; }
-            set { this.RaiseAndSetIfChanged(ref _integerSuffix3, value); }
-        }
+    [Grammar(Name = "integer-constant (variant 2)",
+             Description = "integer-constant: octal-constant integer-suffix_opt",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class IntegerConstant_V2 : IntegerConstant
+    {
+        OctalConstant OctalConstant;
+        IntegerSuffix? IntegerSuffix;
 
-        public IntegerConstant()
+        public IntegerConstant_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.DecimalConstant1 = new DecimalConstant();
-            this.OctalConstant2 = new OctalConstant();
-            this.HexadecimalConstant3 = new HexadecimalConstant();
-            this.IntegerSuffix1 = new IntegerSuffix();
-            this.IntegerSuffix2 = new IntegerSuffix();
-            this.IntegerSuffix3 = new IntegerSuffix();
+        }
+    }
+
+    [Grammar(Name = "integer-constant (variant 3)",
+             Description = "integer-constant: hexadecimal-constant integer-suffix_opt",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_1)]
+    public class IntegerConstant_V3 : IntegerConstant
+    {
+        HexadecimalConstant HexadecimalConstant;
+        IntegerSuffix? IntegerSuffix;
+
+        public IntegerConstant_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

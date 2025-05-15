@@ -1,19 +1,18 @@
-﻿namespace SimpleC.Grammar.LexicalElements.HeaderNames
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.HeaderNames
 {
+    [Grammar(Name = "h-char",
+             Description = "h-char: any member of the source character set except the new-line character and >",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
     public class HChar : GrammarBase
     {
-        // "Any member of the source character set except the new-line character and >"   (see A.1.8 -> 6.4.7)
-        char _character;
-
-        public char Character
+        public HChar(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _character; }
-            set { this.RaiseAndSetIfChanged(ref _character, value); }
-        }
-
-        public HChar()
-        {
-            this.Character = GrammarCConstants.Letter_a;
         }
     }
 }

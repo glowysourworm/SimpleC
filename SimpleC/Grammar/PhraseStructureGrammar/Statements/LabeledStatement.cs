@@ -1,56 +1,69 @@
-﻿using SimpleC.Grammar.LexicalElements.Identifiers;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements.Identifiers;
 using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Statements
 {
-    public class LabeledStatement : Statement
+    [Grammar(Name = "labeled-statement (base)",
+             Description = "labeled-statement: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_1)]
+    public abstract class LabeledStatement : Statement
     {
-        Identifier _identifier1;
-        public const char ColonSeparator1 = GrammarCConstants.Colon;
-        Statement _statement1;
+        protected LabeledStatement(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public const string CaseStatement2 = GrammarCKeywords.Keyword_case;
-        ConstantExpression _constantExpression2;
-        public const char ColonSeparator2 = GrammarCConstants.Colon;
-        Statement _statement2;
+    [Grammar(Name = "labeled-statement (variant 1)",
+             Description = "labeled-statement: identifier : statement",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_1)]
+    public class LabeledStatement_V1 : Statement
+    {
+        Identifier Identifier;
+        public const char ColonSeparator = GrammarCConstants.Colon;
+        Statement Statement;
 
-        public const string DefaultStatement3 = GrammarCKeywords.Keyword_default;
-        public const char ColonSeparator3 = GrammarCConstants.Colon;
-        Statement _statement3;
+        public LabeledStatement_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public Identifier Identifier1
-        {
-            get { return _identifier1; }
-            set { this.RaiseAndSetIfChanged(ref _identifier1, value); }
-        }
-        public Statement Statement1
-        {
-            get { return _statement1; }
-            set { this.RaiseAndSetIfChanged(ref _statement1, value); }
-        }
-        public ConstantExpression ConstantExpression2
-        {
-            get { return _constantExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _constantExpression2, value); }
-        }
-        public Statement Statement2
-        {
-            get { return _statement2; }
-            set { this.RaiseAndSetIfChanged(ref _statement2, value); }
-        }
-        public Statement Statement3
-        {
-            get { return _statement3; }
-            set { this.RaiseAndSetIfChanged(ref _statement3, value); }
-        }
+    [Grammar(Name = "labeled-statement (variant 2)",
+             Description = "labeled-statement: case constant-expression : statement",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_1)]
+    public class LabeledStatement_V2 : Statement
+    {
+        public const string CaseKeyword = GrammarCKeywords.Keyword_case;
+        ConstantExpression ConstantExpression;
+        public const char ColonSeparator = GrammarCConstants.Colon;
+        Statement Statement;
 
-        public LabeledStatement()
+        public LabeledStatement_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Identifier1 = new Identifier();
-            this.ConstantExpression2 = new ConstantExpression();
-            this.Statement1 = new Statement();
-            this.Statement2 = new Statement();
-            this.Statement3 = new Statement();
+        }
+    }
+
+    [Grammar(Name = "labeled-statement (variant 3)",
+             Description = "labeled-statement: default : statement",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_8_1)]
+    public class LabeledStatement_V3 : Statement
+    {
+        public const string DefaultKeyword = GrammarCKeywords.Keyword_default;
+        public const char ColonSeparator = GrammarCConstants.Colon;
+        Statement Statement;
+
+        public LabeledStatement_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,133 +1,158 @@
-﻿using SimpleC.Grammar.LexicalElements.Constants;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements.Constants;
 using SimpleC.Grammar.LexicalElements.Identifiers;
 
 namespace SimpleC.Grammar.LexicalElements
 {
-    public class PreprocessingNumber : GrammarBase
+    [Grammar(Name = "pp-number (base)",
+             Description = "pp-number: (9 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public abstract class PreprocessingNumber : GrammarBase
     {
-        Digit _digit1;
+        protected PreprocessingNumber(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public const char PeriodPrefix2 = GrammarCConstants.Period;
-        Digit _digit2;
+    [Grammar(Name = "pp-number (variant 1)",
+             Description = "pp-number: digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V1 : GrammarBase
+    {
+        Digit Digit;
 
-        PreprocessingNumber _preProcessingNumber3;
-        Digit _digit3;
+        public PreprocessingNumber_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        PreprocessingNumber _preProcessingNumber4;
-        IdentifierNonDigit _identifierNonDigit4;
+    [Grammar(Name = "pp-number (variant 2)",
+             Description = "pp-number: . digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V2 : GrammarBase
+    {
+        public const char PeriodPrefix = GrammarCConstants.Period;
+        Digit Digit;
 
-        PreprocessingNumber _preProcessingNumber5;
-        public const char eConstant5 = GrammarCConstants.Letter_e;
-        Sign _sign5;
+        public PreprocessingNumber_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        PreprocessingNumber _preProcessingNumber6;
-        public const char EConstant6 = GrammarCConstants.Letter_E;
-        Sign _sign6;
+    [Grammar(Name = "pp-number (variant 3)",
+             Description = "pp-number: pp-number digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V3 : GrammarBase
+    {
+        PreprocessingNumber PreprocessingNumber;
+        Digit Digit;
 
-        PreprocessingNumber _preProcessingNumber7;
-        public const char PConstant7 = GrammarCConstants.Letter_P;
-        Sign _sign7;
+        public PreprocessingNumber_V3(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        PreprocessingNumber _preProcessingNumber8;
-        public const char pConstant8 = GrammarCConstants.Letter_p;
-        Sign _sign8;
+    [Grammar(Name = "pp-number (variant 4)",
+             Description = "pp-number: pp-number identifier-nondigit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V4 : GrammarBase
+    {
+        PreprocessingNumber PreprocessingNumber;
+        IdentifierNonDigit IdentifierNonDigit;
 
-        PreprocessingNumber _preProcessingNumber9;
-        public const char PeriodSuffix9 = GrammarCConstants.Period;
+        public PreprocessingNumber_V4(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public Digit Digit1
-        {
-            get { return _digit1; }
-            set { this.RaiseAndSetIfChanged(ref _digit1, value); }
-        }
-        public Digit Digit2
-        {
-            get { return _digit2; }
-            set { this.RaiseAndSetIfChanged(ref _digit2, value); }
-        }
-        public PreprocessingNumber PreProcessingNumber3
-        {
-            get { return _preProcessingNumber3; }
-            set { this.RaiseAndSetIfChanged(ref _preProcessingNumber3, value); }
-        }
-        public Digit Digit3
-        {
-            get { return _digit3; }
-            set { this.RaiseAndSetIfChanged(ref _digit3, value); }
-        }
-        public PreprocessingNumber PreProcessingNumber4
-        {
-            get { return _preProcessingNumber4; }
-            set { this.RaiseAndSetIfChanged(ref _preProcessingNumber4, value); }
-        }
-        public IdentifierNonDigit IdentifierNonDigit4
-        {
-            get { return _identifierNonDigit4; }
-            set { this.RaiseAndSetIfChanged(ref _identifierNonDigit4, value); }
-        }
-        public PreprocessingNumber PreProcessingNumber5
-        {
-            get { return _preProcessingNumber5; }
-            set { this.RaiseAndSetIfChanged(ref _preProcessingNumber5, value); }
-        }
-        public Sign Sign5
-        {
-            get { return _sign5; }
-            set { this.RaiseAndSetIfChanged(ref _sign5, value); }
-        }
-        public PreprocessingNumber PreProcessingNumber6
-        {
-            get { return _preProcessingNumber6; }
-            set { this.RaiseAndSetIfChanged(ref _preProcessingNumber6, value); }
-        }
-        public Sign Sign6
-        {
-            get { return _sign6; }
-            set { this.RaiseAndSetIfChanged(ref _sign6, value); }
-        }
-        public PreprocessingNumber PreProcessingNumber7
-        {
-            get { return _preProcessingNumber7; }
-            set { this.RaiseAndSetIfChanged(ref _preProcessingNumber7, value); }
-        }
-        public Sign Sign7
-        {
-            get { return _sign7; }
-            set { this.RaiseAndSetIfChanged(ref _sign7, value); }
-        }
-        public PreprocessingNumber PreProcessingNumber8
-        {
-            get { return _preProcessingNumber8; }
-            set { this.RaiseAndSetIfChanged(ref _preProcessingNumber8, value); }
-        }
-        public Sign Sign8
-        {
-            get { return _sign8; }
-            set { this.RaiseAndSetIfChanged(ref _sign8, value); }
-        }
-        public PreprocessingNumber PreProcessingNumber9
-        {
-            get { return _preProcessingNumber9; }
-            set { this.RaiseAndSetIfChanged(ref _preProcessingNumber9, value); }
-        }
+    [Grammar(Name = "pp-number (variant 5)",
+             Description = "pp-number: pp-number e sign",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V5 : GrammarBase
+    {
+        PreprocessingNumber PreprocessingNumber;
+        public const char eConstant = GrammarCConstants.Letter_e;           // TODO: Not sure what this is used for, or what it's called
+        Sign Sign;
 
-        public PreprocessingNumber()
+        public PreprocessingNumber_V5(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Digit1 = new Digit();
-            this.Digit2 = new Digit();
-            this.Digit3 = new Digit();
-            this.IdentifierNonDigit4 = new IdentifierNonDigit();
-            this.PreProcessingNumber3 = new PreprocessingNumber();
-            this.PreProcessingNumber4 = new PreprocessingNumber();
-            this.PreProcessingNumber5 = new PreprocessingNumber();
-            this.PreProcessingNumber6 = new PreprocessingNumber();
-            this.PreProcessingNumber7 = new PreprocessingNumber();
-            this.PreProcessingNumber8 = new PreprocessingNumber();
-            this.PreProcessingNumber9 = new PreprocessingNumber();
-            this.Sign5 = new Sign();
-            this.Sign6 = new Sign();
-            this.Sign7 = new Sign();
-            this.Sign8 = new Sign();
+        }
+    }
+
+    [Grammar(Name = "pp-number (variant 6)",
+             Description = "pp-number: pp-number E sign",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V6 : GrammarBase
+    {
+        PreprocessingNumber PreprocessingNumber;
+        public const char EConstant = GrammarCConstants.Letter_E;           // TODO: Not sure what this is used for, or what it's called
+        Sign Sign;
+
+        public PreprocessingNumber_V6(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "pp-number (variant 7)",
+             Description = "pp-number: pp-number p sign",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V7 : GrammarBase
+    {
+        PreprocessingNumber PreprocessingNumber;
+        public const char pConstant = GrammarCConstants.Letter_p;           // TODO: Not sure what this is used for, or what it's called
+        Sign Sign;
+
+        public PreprocessingNumber_V7(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "pp-number (variant 8)",
+             Description = "pp-number: pp-number P sign",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V8 : GrammarBase
+    {
+        PreprocessingNumber PreprocessingNumber;
+        public const char PConstant = GrammarCConstants.Letter_P;           // TODO: Not sure what this is used for, or what it's called
+        Sign Sign;
+
+        public PreprocessingNumber_V8(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "pp-number (variant 9)",
+             Description = "pp-number: pp-number .",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_9,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_8)]
+    public class PreprocessingNumber_V9 : GrammarBase
+    {
+        PreprocessingNumber PreprocessingNumber;
+        public const char Dot = GrammarCConstants.Period;
+
+        public PreprocessingNumber_V9(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

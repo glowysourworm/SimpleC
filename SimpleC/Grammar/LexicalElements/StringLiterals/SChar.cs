@@ -1,28 +1,45 @@
-﻿using SimpleC.Grammar.LexicalElements.Constants;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.LexicalElements.Constants;
 
 namespace SimpleC.Grammar.LexicalElements.StringLiterals
 {
-    public class SChar : GrammarBase
+    [Grammar(Name = "s-char (base)",
+             Description = "s-char: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public abstract class SChar : GrammarBase
     {
-        // "Any member of the source character set except the single-quote ', backslash \, or new-line character"
-        char _char;
-        EscapeSequence _escapeSequence;
-
-        public char Char
+        protected SChar(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _char; }
-            set { this.RaiseAndSetIfChanged(ref _char, value); }
         }
-        public EscapeSequence EscapeSequence
-        {
-            get { return _escapeSequence; }
-            set { this.RaiseAndSetIfChanged(ref _escapeSequence, value); }
-        }
+    }
 
-        public SChar()
+    [Grammar(Name = "s-char (variant 1)",
+             Description = "s-char: any member of the source character set except the double-quote \", backslash \\, or new-line character",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public class SChar_V1 : GrammarBase
+    {
+        public SChar_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Char = GrammarCConstants.Letter_a;
-            this.EscapeSequence = new EscapeSequence();
+        }
+    }
+
+    [Grammar(Name = "s-char (variant 2)",
+             Description = "s-char: escape-sequence",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_6,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_5)]
+    public class SChar_V2 : GrammarBase
+    {
+        EscapeSequence EscapeSequence;
+
+        public SChar_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

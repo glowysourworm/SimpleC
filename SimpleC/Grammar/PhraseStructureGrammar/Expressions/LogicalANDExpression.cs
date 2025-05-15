@@ -1,36 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class LogicalANDExpression : GrammarBase
+    [Grammar(Name = "logical-AND-expression (base)",
+             Description = "logical-AND-expression: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_13)]
+    public abstract class LogicalANDExpression : GrammarBase
     {
-        // See Annex (6.5.13)
-        BitwiseORExpression _bitwiseORExpression1;
+        protected LogicalANDExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        LogicalANDExpression _logicalANDExpression2;
+    [Grammar(Name = "logical-AND-expression (variant 1)",
+             Description = "logical-AND-expression: inclusive-OR-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_13)]
+    public class LogicalANDExpression_V1 : LogicalANDExpression
+    {
+        BitwiseORExpression ORExpression;
+
+        public LogicalANDExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "logical-AND-expression (variant 2)",
+             Description = "logical-AND-expression: logical-AND-expression && inclusive-OR-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_13)]
+    public class LogicalANDExpression_V2 : LogicalANDExpression
+    {
+        LogicalANDExpression LogicalANDExpression;
         public const string LogicalANDOperator = GrammarCOperators.LogicalAND;
-        BitwiseORExpression _bitwiseORExpression2;
+        BitwiseORExpression ORExpression;
 
-        public BitwiseORExpression BitwiseORExpression1
+        public LogicalANDExpression_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _bitwiseORExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _bitwiseORExpression1, value); }
-        }
-        public LogicalANDExpression LogicalANDExpression2
-        {
-            get { return _logicalANDExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _logicalANDExpression2, value); }
-        }
-        public BitwiseORExpression BitwiseORExpression2
-        {
-            get { return _bitwiseORExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _bitwiseORExpression2, value); }
-        }
-
-
-        public LogicalANDExpression()
-        {
-            this.BitwiseORExpression1 = new BitwiseORExpression();
-            this.LogicalANDExpression2 = new LogicalANDExpression();
-            this.BitwiseORExpression2 = new BitwiseORExpression();
         }
     }
 }

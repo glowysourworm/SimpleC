@@ -1,33 +1,47 @@
-﻿namespace SimpleC.Grammar.PreprocessingDirectives
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PreprocessingDirectives
 {
-    public class ElifGroups : GrammarBase
+    [Grammar(Name = "elif-groups (base)",
+             Description = "elif-groups: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public abstract class ElifGroups : GrammarBase
     {
-        ElifGroup _elifGroup1;
-
-        ElifGroups _elifGroups2;
-        ElifGroup _elifGroup2;
-
-        public ElifGroup ElifGroup1
+        protected ElifGroups(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _elifGroup1; }
-            set { this.RaiseAndSetIfChanged(ref _elifGroup1, value); }
         }
-        public ElifGroups ElifGroups2
-        {
-            get { return _elifGroups2; }
-            set { this.RaiseAndSetIfChanged(ref _elifGroups2, value); }
-        }
-        public ElifGroup ElifGroup2
-        {
-            get { return _elifGroup2; }
-            set { this.RaiseAndSetIfChanged(ref _elifGroup2, value); }
-        }
+    }
 
-        public ElifGroups()
+    [Grammar(Name = "elif-groups (variant 1)",
+             Description = "elif-groups: elif-group",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class ElifGroups_V1 : ElifGroups
+    {
+        ElifGroup ElifGroup;
+
+        public ElifGroups_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.ElifGroup1 = new ElifGroup();
-            this.ElifGroup2 = new ElifGroup();
-            this.ElifGroups2 = new ElifGroups();
+        }
+    }
+
+    [Grammar(Name = "elif-groups (variant 2)",
+             Description = "elif-groups: elif-groups elif-group",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class ElifGroups_V2 : ElifGroups
+    {
+        ElifGroups ElifGroups;
+        ElifGroup ElifGroup;
+
+        public ElifGroups_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,34 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class BitwiseORExpression : GrammarBase
+    [Grammar(Name = "inclusive-OR-expression (base)",
+             Description = "inclusive-OR-expression: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_12)]
+    public abstract class BitwiseORExpression : GrammarBase
     {
-        BitwiseXORExpression _bitwiseXORExpression1;
-
-        BitwiseORExpression _bitwiseORExpression2;
-        public const string BitwiseOROperator2 = GrammarCOperators.BitwiseOR;
-        BitwiseXORExpression _bitwiseXORExpression2;
-
-        public BitwiseXORExpression BitwiseXORExpression1
+        protected BitwiseORExpression(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _bitwiseXORExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _bitwiseXORExpression1, value); }
         }
-        public BitwiseORExpression BitwiseORExpression2
-        {
-            get { return _bitwiseORExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _bitwiseORExpression2, value); }
-        }
-        public BitwiseXORExpression BitwiseXORExpression2
-        {
-            get { return _bitwiseXORExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _bitwiseXORExpression2, value); }
-        }
+    }
 
-        public BitwiseORExpression()
+    [Grammar(Name = "inclusive-OR-expression (variant 1)",
+             Description = "inclusive-OR-expression: exclusive-OR-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_12)]
+    public class BitwiseORExpression_V1 : BitwiseORExpression
+    {
+        BitwiseXORExpression XORExpression;
+
+        protected BitwiseORExpression_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.BitwiseORExpression2 = new BitwiseORExpression();
-            this.BitwiseXORExpression1 = new BitwiseXORExpression();
-            this.BitwiseXORExpression2 = new BitwiseXORExpression();
+        }
+    }
+
+    [Grammar(Name = "inclusive-OR-expression (variant 2)",
+             Description = "inclusive-OR-expression: inclusive-OR-expression | exclusive-OR-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_12)]
+    public class BitwiseORExpression_V2 : BitwiseORExpression
+    {
+        BitwiseORExpression ORExpression;
+        public const string BitwiseOROperator = GrammarCOperators.BitwiseOR;
+        BitwiseXORExpression XORExpression;
+
+        protected BitwiseORExpression_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,33 +1,47 @@
-﻿namespace SimpleC.Grammar.PreprocessingDirectives
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code.Attribute;
+using SimpleC.Code;
+
+namespace SimpleC.Grammar.PreprocessingDirectives
 {
-    public class Group : GrammarBase
+    [Grammar(Name = "group (base)",
+             Description = "group: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public abstract class Group : GrammarBase
     {
-        GroupPart _groupPart1;
-
-        Group _group2;
-        GroupPart _groupPart2;
-
-        public GroupPart GroupPart1
+        protected Group(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _groupPart1; }
-            set { this.RaiseAndSetIfChanged(ref _groupPart1, value); }
         }
-        public Group Group2
-        {
-            get { return _group2; }
-            set { this.RaiseAndSetIfChanged(ref _group2, value); }
-        }
-        public GroupPart GroupPart2
-        {
-            get { return _groupPart2; }
-            set { this.RaiseAndSetIfChanged(ref _groupPart2, value); }
-        }
+    }
 
-        public Group()
+    [Grammar(Name = "group (variant 1)",
+             Description = "group: group-part",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class Group_V1 : Group
+    {
+        GroupPart GroupPart;
+
+        public Group_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.GroupPart1 = new GroupPart();
-            this.GroupPart2 = new GroupPart();
-            this.Group2 = new Group();
+        }
+    }
+
+    [Grammar(Name = "group (variant 2)",
+             Description = "group: group group-part",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
+    public class Group_V2 : Group
+    {
+        Group Group;
+        GroupPart GroupPart;
+
+        public Group_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

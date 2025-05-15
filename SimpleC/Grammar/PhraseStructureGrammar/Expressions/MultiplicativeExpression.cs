@@ -1,72 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class MultiplicativeExpression : GrammarBase
+    [Grammar(Name = "multiplicative-expression (base)",
+             Description = "multiplicative-expression: (4 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_5)]
+    public abstract class MultiplicativeExpression : GrammarBase
     {
-        CastExpression _castExpression1;
+        protected MultiplicativeExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        MultiplicativeExpression _multiplicativeExpression2;
+    [Grammar(Name = "multiplicative-expression (variant 1)",
+             Description = "multiplicative-expression: cast-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_5)]
+    public class MultiplicativeExpression_V1 : MultiplicativeExpression
+    {
+        CastExpression CastExpression;
+
+        public MultiplicativeExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "multiplicative-expression (variant 2)",
+             Description = "multiplicative-expression: multiplicative-expression * cast-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_5)]
+    public class MultiplicativeExpression_V2 : MultiplicativeExpression
+    {
+        MultiplicativeExpression MultiplicativeExpression;
         public const string MultiplicationOperator = GrammarCOperators.Multiplication;
-        CastExpression _castExpression2;
+        CastExpression CastExpression;
 
-        MultiplicativeExpression _multiplicativeExpression3;
+        public MultiplicativeExpression_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "multiplicative-expression (variant 3)",
+             Description = "multiplicative-expression: multiplicative-expression / cast-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_5)]
+    public class MultiplicativeExpression_V3 : MultiplicativeExpression
+    {
+        MultiplicativeExpression MultiplicativeExpression;
         public const string DivisionOperator = GrammarCOperators.Division;
-        CastExpression _castExpression3;
+        CastExpression CastExpression;
 
-        MultiplicativeExpression _multiplicativeExpression4;
+        public MultiplicativeExpression_V3(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "multiplicative-expression (variant 4)",
+             Description = "multiplicative-expression: multiplicative-expression % cast-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_5)]
+    public class MultiplicativeExpression_V4 : MultiplicativeExpression
+    {
+        MultiplicativeExpression MultiplicativeExpression;
         public const string ModuloOperator = GrammarCOperators.Modulo;
-        CastExpression _castExpression4;
+        CastExpression CastExpression;
 
-        public CastExpression CastExpression1
+        public MultiplicativeExpression_V4(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _castExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _castExpression1, value); }
-        }
-        public MultiplicativeExpression MultiplicativeExpression2
-        {
-            get { return _multiplicativeExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _multiplicativeExpression2, value); }
-        }
-        public CastExpression CastExpression2
-        {
-            get { return _castExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _castExpression2, value); }
-        }
-        public MultiplicativeExpression MultiplicativeExpression3
-        {
-            get { return _multiplicativeExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _multiplicativeExpression3, value); }
-        }
-        public CastExpression CastExpression3
-        {
-            get { return _castExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _castExpression3, value); }
-        }
-        public MultiplicativeExpression MultiplicativeExpression4
-        {
-            get { return _multiplicativeExpression4; }
-            set { this.RaiseAndSetIfChanged(ref _multiplicativeExpression4, value); }
-        }
-        public CastExpression CastExpression4
-        {
-            get { return _castExpression4; }
-            set { this.RaiseAndSetIfChanged(ref _castExpression4, value); }
-        }
-
-        public MultiplicativeExpression()
-        {
-            this.CastExpression1 = new CastExpression();
-            this.CastExpression2 = new CastExpression();
-            this.CastExpression3 = new CastExpression();
-            this.CastExpression4 = new CastExpression();
-            this.MultiplicativeExpression2 = new MultiplicativeExpression();
-            this.MultiplicativeExpression3 = new MultiplicativeExpression();
-            this.MultiplicativeExpression4 = new MultiplicativeExpression();
         }
     }
 }

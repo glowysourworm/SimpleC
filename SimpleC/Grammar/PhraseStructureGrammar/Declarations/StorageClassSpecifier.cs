@@ -1,12 +1,19 @@
-﻿using SimpleC.Grammar.LexicalElements;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    /// <summary>
-    /// (see A.2.2 -> 6.7.1) storage-class-specifier: This class should be just a keyword; but there may be other contextual data.
-    /// </summary>
-    public class StorageClassSpecifier : GrammarBase
+    [Grammar(Name = "storage-class-specifier",
+             Description = "storage-class-specifier: one of (...)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_1)]
+    public class StorageClassSpecifier : GrammarConstant
     {
-        Keyword _keyword;
+        // One of:  typedef, extern, static, auto, register
+        public StorageClassSpecifier(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
     }
 }

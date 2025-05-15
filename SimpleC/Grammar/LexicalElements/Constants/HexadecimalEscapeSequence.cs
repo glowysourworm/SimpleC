@@ -1,37 +1,48 @@
-﻿namespace SimpleC.Grammar.LexicalElements.Constants
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.LexicalElements.Constants
 {
-    public class HexadecimalEscapeSequence : GrammarBase
+    [Grammar(Name = "hexadecimal-escape-sequence (base)",
+             Description = "hexadecimal-escape-sequence: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public abstract class HexadecimalEscapeSequence : GrammarBase
     {
-        /// <summary>
-        /// Specific escape sequence to this grammar element
-        /// </summary>
-        public const string PrefixEscapeSequence1 = "\\x";
-        HexadecimalDigit _hexadecimalDigit1;
-
-        HexadecimalEscapeSequence _hexadecimalEscapeSequence2;
-        HexadecimalDigit _hexadecimalDigit2;
-
-        public HexadecimalDigit HexadecimalDigit1
+        protected HexadecimalEscapeSequence(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _hexadecimalDigit1; }
-            set { this.RaiseAndSetIfChanged(ref _hexadecimalDigit1, value); }
         }
-        public HexadecimalEscapeSequence HexadecimalEscapeSequence2
-        {
-            get { return _hexadecimalEscapeSequence2; }
-            set { this.RaiseAndSetIfChanged(ref _hexadecimalEscapeSequence2, value); }
-        }
-        public HexadecimalDigit HexadecimalDigit2
-        {
-            get { return _hexadecimalDigit2; }
-            set { this.RaiseAndSetIfChanged(ref _hexadecimalDigit2, value); }
-        }
+    }
 
-        public HexadecimalEscapeSequence()
+    [Grammar(Name = "hexadecimal-escape-sequence (variant 1)",
+             Description = "hexadecimal-escape-sequence: \\x hexadecimal-digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class HexadecimalEscapeSequence_V1 : HexadecimalEscapeSequence
+    {
+        public const string EscapePrefix = GrammarCEscapeSequences.HexadecimalEscape;
+        HexadecimalDigit HexadecimalDigit;
+
+        public HexadecimalEscapeSequence_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.HexadecimalDigit1 = new HexadecimalDigit();
-            this.HexadecimalDigit2 = new HexadecimalDigit();
-            this.HexadecimalEscapeSequence2 = new HexadecimalEscapeSequence();
+        }
+    }
+
+    [Grammar(Name = "hexadecimal-escape-sequence (variant 2)",
+             Description = "hexadecimal-escape-sequence: hexadecimal-escape-sequence hexadecimal-digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_5,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_4_4)]
+    public class HexadecimalEscapeSequence_V2 : HexadecimalEscapeSequence
+    {
+        HexadecimalDigitSequence HexadecimalDigitSequence;
+        HexadecimalDigit HexadecimalDigit;
+
+        public HexadecimalEscapeSequence_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

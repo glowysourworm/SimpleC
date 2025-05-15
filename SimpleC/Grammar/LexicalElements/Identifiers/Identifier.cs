@@ -1,55 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.LexicalElements.Identifiers
 {
-    /// <summary>
-    /// (See A.1.3 -> 6.4.2.1) identifier:
-    /// </summary>
-    public class Identifier : GrammarBase
+    [Grammar(Name = "identifier (base)",
+             Description = "(base) identifier: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_2_1)]
+    public abstract class Identifier : GrammarBase
     {
-        IdentifierNonDigit _identifierNonDigit1;
-        Identifier _identifier1;
-        IdentifierNonDigit _identifierNonDigit2;
-        Identifier _identifier2;
-        Digit _digit;
+        public Identifier(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public IdentifierNonDigit IdentifierNonDigit1
-        {
-            get { return _identifierNonDigit1; }
-            set { RaiseAndSetIfChanged(ref _identifierNonDigit1, value); }
-        }
-        public Identifier Identifier1
-        {
-            get { return _identifier1; }
-            set { RaiseAndSetIfChanged(ref _identifier1, value); }
-        }
-        public IdentifierNonDigit IdentifierNonDigit2
-        {
-            get { return _identifierNonDigit2; }
-            set { RaiseAndSetIfChanged(ref _identifierNonDigit2, value); }
-        }
-        public Identifier Identifier2
-        {
-            get { return _identifier2; }
-            set { RaiseAndSetIfChanged(ref _identifier2, value); }
-        }
-        public Digit Digit
-        {
-            get { return _digit; }
-            set { RaiseAndSetIfChanged(ref _digit, value); }
-        }
+    [Grammar(Name = "identifier (variant 1)",
+             Description = "identifier: identifier-nondigit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_2_1)]
+    public class Identifier_V1 : Identifier
+    {
+        public IdentifierNonDigit IdentifierNonDigit;
 
-        public Identifier()
+        public Identifier_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.IdentifierNonDigit1 = new IdentifierNonDigit();
-            this.Identifier1 = new Identifier();
-            this.IdentifierNonDigit2 = new IdentifierNonDigit();
-            this.Identifier2 = new Identifier();
-            this.Digit = new Digit();
+        }
+    }
+
+    [Grammar(Name = "identifier (variant 2)",
+             Description = "identifier: identifier identifier-nondigit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_2_1)]
+    public class Identifier_V2 : Identifier
+    {
+        public Identifier Identifier;
+        public IdentifierNonDigit IdentifierNonDigit;
+
+        public Identifier_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "identifier (variant 3)",
+             Description = "identifier: identifier digit",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_2_1)]
+    public class Identifier_V3 : Identifier
+    {
+        public Identifier Identifier;
+        public Digit Digit;
+
+        public Identifier_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,36 +1,25 @@
-﻿using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
 
 namespace SimpleC.Grammar.PreprocessingDirectives
 {
+    [Grammar(Name = "elif-group",
+             Description = "elif-group: # elif constant-expression new-line group_opt",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
     public class ElifGroup : GrammarBase
     {
-        public const char ElifGroupHashtag1 = GrammarCConstants.Hashtag;
-        public const string ElifKeyword1 = GrammarCKeywords.Keyword_elif;
-        ConstantExpression _constantExpression1;
-        NewLine _newLine1;
-        Group? _group1;
+        public const char ElifGroupHashtag = GrammarCConstants.Hashtag;
+        public const string ElifKeyword = GrammarCKeywords.Keyword_elif;
+        ConstantExpression ConstantExpression;
+        NewLine NewLine;
+        Group? Group;
 
-        public ConstantExpression ConstantExpression1
+        public ElifGroup(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _constantExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _constantExpression1, value); }
-        }
-        public NewLine NewLine1
-        {
-            get { return _newLine1; }
-            set { this.RaiseAndSetIfChanged(ref _newLine1, value); }
-        }
-        public Group? Group1
-        {
-            get { return _group1; }
-            set { this.RaiseAndSetIfChanged(ref _group1, value); }
-        }
-
-        public ElifGroup()
-        {
-            this.ConstantExpression1 = new ConstantExpression();
-            this.NewLine1 = new NewLine();
-            this.Group1 = null;
         }
     }
 }

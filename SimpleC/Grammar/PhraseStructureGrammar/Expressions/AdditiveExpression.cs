@@ -1,50 +1,64 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class AdditiveExpression : GrammarBase
+    [Grammar(Name = "additive-expression (base)",
+             Description = "additive-expression: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_6)]
+    public abstract class AdditiveExpression : GrammarBase
     {
-        MultiplicativeExpression _multiplicativeExpression1;
+        protected AdditiveExpression(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        AdditiveExpression _additiveExpression2;
-        public const string AdditionOperator2 = GrammarCOperators.Addition;
-        MultiplicativeExpression _multiplicativeExpression2;
+    [Grammar(Name = "additive-expression (variant 1)",
+             Description = "additive-expression: multiplicative-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_6)]
+    public class AdditiveExpression_V1 : AdditiveExpression
+    {
+        MultiplicativeExpression MultiplicativeExpression;
 
-        AdditiveExpression _additiveExpression3;
-        public const string SubtractionOperator3 = GrammarCOperators.Subtraction;
-        MultiplicativeExpression _multiplicativeExpression3;
+        public AdditiveExpression_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        public MultiplicativeExpression MultiplicativeExpression1
-        {
-            get { return _multiplicativeExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _multiplicativeExpression1, value); }
-        }
-        public AdditiveExpression AdditiveExpression2
-        {
-            get { return _additiveExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _additiveExpression2, value); }
-        }
-        public MultiplicativeExpression MultiplicativeExpression2
-        {
-            get { return _multiplicativeExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _multiplicativeExpression2, value); }
-        }
-        public AdditiveExpression AdditiveExpression3
-        {
-            get { return _additiveExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _additiveExpression3, value); }
-        }
-        public MultiplicativeExpression MultiplicativeExpression3
-        {
-            get { return _multiplicativeExpression3; }
-            set { this.RaiseAndSetIfChanged(ref _multiplicativeExpression3, value); }
-        }
+    [Grammar(Name = "additive-expression (variant 2)",
+             Description = "additive-expression: additive-expression + multiplicative-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_6)]
+    public class AdditiveExpression_V2 : AdditiveExpression
+    {
+        AdditiveExpression AdditiveExpression;
+        public const string AdditionOperator = GrammarCOperators.Addition;
+        MultiplicativeExpression MultiplicativeExpression;
 
-        public AdditiveExpression()
+        public AdditiveExpression_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            this.AdditiveExpression2 = new AdditiveExpression();
-            this.AdditiveExpression3 = new AdditiveExpression();
-            this.MultiplicativeExpression1 = new MultiplicativeExpression();
-            this.MultiplicativeExpression2 = new MultiplicativeExpression();
-            this.MultiplicativeExpression3 = new MultiplicativeExpression();
+        }
+    }
+
+    [Grammar(Name = "additive-expression (variant 3)",
+             Description = "additive-expression: additive-expression - multiplicative-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_6)]
+    public class AdditiveExpression_V3 : AdditiveExpression
+    {
+        AdditiveExpression AdditiveExpression;
+        public const string SubtractionOperator = GrammarCOperators.Subtraction;
+        MultiplicativeExpression MultiplicativeExpression;
+
+        public AdditiveExpression_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

@@ -1,44 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using SimpleC.Grammar.LexicalElements;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.LexicalElements.HeaderNames
 {
-    /// <summary>
-    /// Not sure if this should be an "expression". The documentation points to 
-    /// this being sets of literal constants. So, this would be a static structure
-    /// (obviously) for a header name to be evaluated. So, some of these lexical
-    /// elements might be named otherwise. (not a token, but not an expression)
-    /// </summary>
-    public class HeaderName : GrammarBase
+    [Grammar(Name = "header-name (base)",
+             Description = "(base) header-name: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public abstract class HeaderName : PreprocessingToken
     {
-        public const char CaretLeftPrefix1 = GrammarCConstants.CaretLeft;
-        HCharSequence _hCharSequence1;
-        public const char CaretRightSuffix1 = GrammarCConstants.CaretRight;
-
-        public const char DoubleQuotePrefix2 = GrammarCConstants.DoubleQuote;
-        QCharSequence _qCharSequence2;
-        public const char DoubleQuoteSuffix2 = GrammarCConstants.DoubleQuote;
-
-        public HCharSequence HCharSequence1
+        public HeaderName(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _hCharSequence1; }
-            set { this.RaiseAndSetIfChanged(ref _hCharSequence1, value); }
         }
-        public QCharSequence QCharSequence2
-        {
-            get { return _qCharSequence2; }
-            set { this.RaiseAndSetIfChanged(ref _qCharSequence2, value); }
-        }
+    }
 
-        public HeaderName()
+    [Grammar(Name = "header-name (variant 1)",
+             Description = "header-name: < h-char-sequence >",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public abstract class HeaderName_V1 : HeaderName
+    {
+        public const char CaretLeftPrefix = GrammarCConstants.CaretLeft;
+        HCharSequence HCharSequence;
+        public const char CaretRightSuffix = GrammarCConstants.CaretRight;
+
+        public HeaderName_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.HCharSequence1 = new HCharSequence();
-            this.QCharSequence2 = new QCharSequence();
+        }
+    }
+
+    [Grammar(Name = "header-name (variant 2)",
+             Description = "header-name: \" q-char-sequence \"",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_8,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_7)]
+    public abstract class HeaderName_V2 : HeaderName
+    {
+        public const char DoubleQuotePrefix = GrammarCConstants.DoubleQuote;
+        QCharSequence QCharSequence;
+        public const char DoubleQuoteSuffix = GrammarCConstants.DoubleQuote;
+
+        public HeaderName_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

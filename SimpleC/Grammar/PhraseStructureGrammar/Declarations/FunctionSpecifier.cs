@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using SimpleC.Grammar.LexicalElements;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    /// <summary>
-    /// (see A.2.2 -> 6.7.4) function-specifier: This class should be just a keyword; but there may be other contextual data.
-    /// </summary>
+    [Grammar(Name = "function-specifier",
+             Description = "function-specifier: one of (...)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_4)]
     public class FunctionSpecifier : GrammarBase
     {
-        Keyword _keyword;
+        // One of: inline
+        public FunctionSpecifier(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
     }
 }

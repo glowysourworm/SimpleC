@@ -1,39 +1,23 @@
-﻿namespace SimpleC.Grammar.PreprocessingDirectives
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PreprocessingDirectives
 {
+    [Grammar(Name = "if-section",
+             Description = "if-section: if-group elif-groups_opt else-group_opt endif-line",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
     public class IfSection : GrammarBase
     {
-        IfGroup _ifGroup1;
-        ElifGroups? _elifGroups1;
-        ElseGroup? _elseGroup1;
-        EndifLine _endifLine;
+        IfGroup IfGroup;
+        ElifGroups? ElifGroups;
+        ElseGroup? ElseGroup;
+        EndifLine EndifLine;
 
-        public IfGroup IfGroup1
+        public IfSection(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _ifGroup1; }
-            set { this.RaiseAndSetIfChanged(ref _ifGroup1, value); }
-        }
-        public ElifGroups? ElifGroups1
-        {
-            get { return _elifGroups1; }
-            set { this.RaiseAndSetIfChanged(ref _elifGroups1, value); }
-        }
-        public ElseGroup? ElseGroup1
-        {
-            get { return _elseGroup1; }
-            set { this.RaiseAndSetIfChanged(ref _elseGroup1, value); }
-        }
-        public EndifLine EndifLine
-        {
-            get { return _endifLine; }
-            set { this.RaiseAndSetIfChanged(ref _endifLine, value); }
-        }
-
-        public IfSection()
-        {
-            this.IfGroup1 = new IfGroup();
-            this.ElifGroups1 = null;
-            this.ElseGroup1 = null;
-            this.EndifLine = new EndifLine();
         }
     }
 }

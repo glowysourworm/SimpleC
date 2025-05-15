@@ -1,71 +1,78 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class DeclarationSpecifiers : GrammarBase
+    [Grammar(Name = "declaration-specifiers (base)",
+             Description = "declaration: (4 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public abstract class DeclarationSpecifiers : GrammarBase
     {
-        StorageClassSpecifier _storageClassSpecifier1;
-        DeclarationSpecifiers? _declarationSpecifiers1;
+        protected DeclarationSpecifiers(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        TypeSpecifier _typeSpecifier2;
-        DeclarationSpecifiers? _declarationSpecifiers2;
+    [Grammar(Name = "declaration-specifiers (variant 1)",
+             Description = "declaration: storage-class-specifier declaration-specifiers_opt",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public class DeclarationSpecifiers_V1 : DeclarationSpecifiers
+    {
+        StorageClassSpecifier StorageClassSpecifier;
+        DeclarationSpecifiers? DeclarationSpecifiers;
 
-        TypeQualifier _typeQualifier3;
-        DeclarationSpecifiers? _declarationSpecifiers3;
+        public DeclarationSpecifiers_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        FunctionSpecifier _functionSpecifier4;
-        DeclarationSpecifiers? _declarationSpecifiers4;
+    [Grammar(Name = "declaration-specifiers (variant 2)",
+             Description = "declaration: type-specifier declaration-specifiers_opt",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public class DeclarationSpecifiers_V2 : DeclarationSpecifiers
+    {
+        TypeSpecifier TypeSpecifier;
+        DeclarationSpecifiers? DeclarationSpecifiers;
 
-        public StorageClassSpecifier StorageClassSpecifier1
+        public DeclarationSpecifiers_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _storageClassSpecifier1; }
-            set { this.RaiseAndSetIfChanged(ref _storageClassSpecifier1, value); }
         }
-        public DeclarationSpecifiers? DeclarationSpecifiers1
-        {
-            get { return _declarationSpecifiers1; }
-            set { this.RaiseAndSetIfChanged(ref _declarationSpecifiers1, value); }
-        }
-        public TypeSpecifier TypeSpecifier2
-        {
-            get { return _typeSpecifier2; }
-            set { this.RaiseAndSetIfChanged(ref _typeSpecifier2, value); }
-        }
-        public DeclarationSpecifiers? DeclarationSpecifiers2
-        {
-            get { return _declarationSpecifiers2; }
-            set { this.RaiseAndSetIfChanged(ref _declarationSpecifiers2, value); }
-        }
-        public TypeQualifier TypeQualifier3
-        {
-            get { return _typeQualifier3; }
-            set { this.RaiseAndSetIfChanged(ref _typeQualifier3, value); }
-        }
-        public DeclarationSpecifiers? DeclarationSpecifiers3
-        {
-            get { return _declarationSpecifiers3; }
-            set { this.RaiseAndSetIfChanged(ref _declarationSpecifiers3, value); }
-        }
-        public FunctionSpecifier FunctionSpecifier4
-        {
-            get { return _functionSpecifier4; }
-            set { this.RaiseAndSetIfChanged(ref _functionSpecifier4, value); }
-        }
-        public DeclarationSpecifiers? DeclarationSpecifiers4
-        {
-            get { return _declarationSpecifiers4; }
-            set { this.RaiseAndSetIfChanged(ref _declarationSpecifiers4, value); }
-        }
+    }
 
-        public DeclarationSpecifiers()
-        {
-            this.DeclarationSpecifiers1 = null;
-            this.DeclarationSpecifiers2 = null;
-            this.DeclarationSpecifiers3 = null;
-            this.DeclarationSpecifiers4 = null;
+    [Grammar(Name = "declaration-specifiers (variant 3)",
+             Description = "declaration: type-qualifier declaration-specifiers_opt",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public class DeclarationSpecifiers_V3 : DeclarationSpecifiers
+    {
+        TypeQualifier TypeQualifier;
+        DeclarationSpecifiers? DeclarationSpecifiers;
 
-            this.FunctionSpecifier4 = new FunctionSpecifier();
-            this.TypeSpecifier2 = new TypeSpecifier();
-            this.TypeQualifier3 = new TypeQualifier();
-            this.StorageClassSpecifier1 = new StorageClassSpecifier();
+        public DeclarationSpecifiers_V3(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "declaration-specifiers (variant 4)",
+             Description = "declaration: function-specifier declaration-specifiers_opt",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public class DeclarationSpecifiers_V4 : DeclarationSpecifiers
+    {
+        FunctionSpecifier FunctionSpecifier;
+        DeclarationSpecifiers? DeclarationSpecifiers;
+
+        public DeclarationSpecifiers_V4(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

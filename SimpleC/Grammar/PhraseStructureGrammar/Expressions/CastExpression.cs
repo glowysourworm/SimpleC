@@ -1,37 +1,51 @@
-﻿using SimpleC.Grammar.PhraseStructureGrammar.Declarations;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.PhraseStructureGrammar.Declarations;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Expressions
 {
-    public class CastExpression : GrammarBase
+    [Grammar(Name = "cast-expression (base)",
+             Description = "cast-expression: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_4)]
+    public abstract class CastExpression : GrammarBase
     {
-        UnaryExpression _unaryExpression1;
-
-        public const char BracketLeftOpen2 = GrammarCConstants.BracketLeft;
-        TypeName _typeName2;
-        public const char BracketRightClose2 = GrammarCConstants.BracketRight;
-        CastExpression _castExpression2;
-
-        public UnaryExpression UnaryExpression1
+        protected CastExpression(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _unaryExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _unaryExpression1, value); }
         }
-        public TypeName TypeName2
-        {
-            get { return _typeName2; }
-            set { this.RaiseAndSetIfChanged(ref _typeName2, value); }
-        }
-        public CastExpression CastExpression2
-        {
-            get { return _castExpression2; }
-            set { this.RaiseAndSetIfChanged(ref _castExpression2, value); }
-        }
+    }
 
-        public CastExpression()
+    [Grammar(Name = "cast-expression (variant 1)",
+             Description = "cast-expression: unary-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_4)]
+    public class CastExpression_V1 : CastExpression
+    {
+        UnaryExpression UnaryExpression;
+
+        public CastExpression_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.UnaryExpression1 = new UnaryExpression();
-            this.TypeName2 = new TypeName();
-            this.CastExpression2 = new CastExpression();
+        }
+    }
+
+    [Grammar(Name = "cast-expression (variant 2)",
+             Description = "cast-expression: ( type-name ) cast-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_1,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_5_4)]
+    public class CastExpression_V2 : CastExpression
+    {
+        public const char TypeNameOpenBracket = GrammarCConstants.BracketLeft;
+        TypeName TypeName;
+        public const char TypeNameCloseBracket = GrammarCConstants.BracketRight;
+
+        CastExpression CastExpression;
+
+        public CastExpression_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

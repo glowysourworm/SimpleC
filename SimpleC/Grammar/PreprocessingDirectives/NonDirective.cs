@@ -1,25 +1,21 @@
-﻿namespace SimpleC.Grammar.PreprocessingDirectives
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PreprocessingDirectives
 {
+    [Grammar(Name = "non-directive",
+             Description = "non-directive: pp-tokens new-line",
+             Section = ISOCStandardAnnexSection.A_3,
+             SubSection = ISOCStandardAnnexSubSection.None,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_10)]
     public class NonDirective : GrammarBase
     {
-        PreprocessingTokens _preprocessingTokens1;
-        NewLine _newLine1;
+        public PreprocessingTokens PreprocessingTokens;
+        public NewLine NewLine;
 
-        public PreprocessingTokens PreprocessingTokens1
+        public NonDirective(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _preprocessingTokens1; }
-            set { this.RaiseAndSetIfChanged(ref _preprocessingTokens1, value); }
-        }
-        public NewLine NewLine1
-        {
-            get { return _newLine1; }
-            set { this.RaiseAndSetIfChanged(ref _newLine1, value); }
-        }
-
-        public NonDirective()
-        {
-            this.PreprocessingTokens1 = new PreprocessingTokens();
-            this.NewLine1 = new NewLine();
         }
     }
 }

@@ -1,41 +1,66 @@
-﻿using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.PhraseStructureGrammar.Expressions;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class Initializer : GrammarBase
+    [Grammar(Name = "initializer (base)",
+             Description = "initializer: (3 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public abstract class Initializer : GrammarBase
     {
-        AssignmentExpression _assignmentExpression1;
-
-        public const char InitializerListBracketOpen2 = GrammarCConstants.BracketCurlyLeft;
-        InitializerList _initializerList2;
-        public const char InitializerListBracketClose2 = GrammarCConstants.BracketCurlyRight;
-
-        public const char InitializerListBracketOpen3 = GrammarCConstants.BracketCurlyLeft;
-        InitializerList _initializerList3;
-        public const char InitializerListCommaSeparator3 = GrammarCConstants.Comma;
-        public const char InitializerListBracketClose3 = GrammarCConstants.BracketCurlyRight;
-
-        public AssignmentExpression AssignmentExpression1
+        protected Initializer(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _assignmentExpression1; }
-            set { this.RaiseAndSetIfChanged(ref _assignmentExpression1, value); }
         }
-        public InitializerList InitializerList2
-        {
-            get { return _initializerList2; }
-            set { this.RaiseAndSetIfChanged(ref _initializerList2, value); }
-        }
-        public InitializerList InitializerList3
-        {
-            get { return _initializerList3; }
-            set { this.RaiseAndSetIfChanged(ref _initializerList3, value); }
-        }
+    }
 
-        public Initializer()
+    [Grammar(Name = "initializer (variant 1)",
+             Description = "initializer: assignment-expression",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class Initializer_V1 : Initializer
+    {
+        public AssignmentExpression AssignmentExpression;
+
+        public Initializer_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.InitializerList2 = new InitializerList();
-            this.InitializerList3 = new InitializerList();
-            this.AssignmentExpression1 = new AssignmentExpression();
+        }
+    }
+
+    [Grammar(Name = "initializer (variant 2)",
+             Description = "initializer: { initializer-list }",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class Initializer_V2 : Initializer
+    {
+        public const char InitializerListBracketOpen = GrammarCConstants.BracketCurlyLeft;
+        InitializerList InitializerList;
+        public const char InitializerListBracketClose = GrammarCConstants.BracketCurlyRight;
+
+        public Initializer_V2(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "initializer (variant 3)",
+             Description = "initializer: { initializer-list , }",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7_8)]
+    public class Initializer_V3 : Initializer
+    {
+        public const char InitializerListBracketOpen = GrammarCConstants.BracketCurlyLeft;
+        InitializerList InitializerList;
+        public const char CommaSeparator = GrammarCConstants.Comma;
+        public const char InitializerListBracketClose = GrammarCConstants.BracketCurlyRight;
+
+        public Initializer_V3(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

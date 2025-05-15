@@ -1,34 +1,48 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code.Attribute;
+using SimpleC.Code;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.Declarations
 {
-    public class InitDeclarator : GrammarBase
+    [Grammar(Name = "init-declarator (base)",
+             Description = "init-declarator: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public abstract class InitDeclarator : GrammarBase
     {
-        Declarator _declarator1;
+        protected InitDeclarator(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
 
-        Declarator _declarator2;
+    [Grammar(Name = "init-declarator (variant 1)",
+             Description = "init-declarator: declarator",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public class InitDeclarator_V1 : InitDeclarator
+    {
+        Declarator Declarator;
+
+        public InitDeclarator_V1(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
+    }
+
+    [Grammar(Name = "init-declarator (variant 2)",
+             Description = "init-declarator: declarator = initializer",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_2,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_7)]
+    public class InitDeclarator_V2 : InitDeclarator
+    {
+        Declarator Declarator;
         public const string AssignmentOperator = GrammarCOperators.Assignment;
-        Initializer _initializer2;
+        Initializer Initializer;
 
-        public Declarator Declarator1
+        public InitDeclarator_V2(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _declarator1; }
-            set { this.RaiseAndSetIfChanged(ref _declarator1, value); }
-        }
-        public Declarator Declarator2
-        {
-            get { return _declarator2; }
-            set { this.RaiseAndSetIfChanged(ref _declarator2, value); }
-        }
-        public Initializer Initializer2
-        {
-            get { return _initializer2; }
-            set { this.RaiseAndSetIfChanged(ref _initializer2, value); }
-        }
-
-        public InitDeclarator()
-        {
-            this.Initializer2 = new Initializer();
-            this.Declarator1 = new Declarator();
-            this.Declarator2 = new Declarator();
         }
     }
 }

@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
 
 namespace SimpleC.Grammar.LexicalElements.Identifiers
 {
+    [Grammar(Name = "digit",
+             Description = "digit: one of (...)",
+             Section = ISOCStandardAnnexSection.A_1,
+             SubSection = ISOCStandardAnnexSubSection.A_1_3,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_4_2_1)]
     public class Digit : GrammarConstant
     {
+        public Digit(CodeRefBase codeRef) : base(codeRef)
+        {
+        }
     }
 }

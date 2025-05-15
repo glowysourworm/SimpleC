@@ -1,33 +1,47 @@
-﻿namespace SimpleC.Grammar.PhraseStructureGrammar.ExternalDefinitions
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+
+namespace SimpleC.Grammar.PhraseStructureGrammar.ExternalDefinitions
 {
-    public class TranslationUnit : GrammarBase
+    [Grammar(Name = "translation-unit (base)",
+             Description = "translation-unit: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9)]
+    public abstract class TranslationUnit : GrammarBase
     {
-        ExternalDeclaration _externalDeclaration1;
-
-        TranslationUnit _translationUnit2;
-        ExternalDeclaration _externalDeclaration2;
-
-        public ExternalDeclaration ExternalDeclaration1
+        protected TranslationUnit(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _externalDeclaration1; }
-            set { this.RaiseAndSetIfChanged(ref _externalDeclaration1, value); }
         }
-        public TranslationUnit TranslationUnit2
-        {
-            get { return _translationUnit2; }
-            set { this.RaiseAndSetIfChanged(ref _translationUnit2, value); }
-        }
-        public ExternalDeclaration ExternalDeclaration2
-        {
-            get { return _externalDeclaration2; }
-            set { this.RaiseAndSetIfChanged(ref _externalDeclaration2, value); }
-        }
+    }
 
-        public TranslationUnit()
+    [Grammar(Name = "translation-unit (variant 1)",
+             Description = "translation-unit: external-declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9)]
+    public class TranslationUnit_V1 : TranslationUnit
+    {
+        ExternalDeclaration ExternalDeclaration;
+
+        public TranslationUnit_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.ExternalDeclaration1 = new ExternalDeclaration();
-            this.ExternalDeclaration2 = new ExternalDeclaration();
-            this.TranslationUnit2 = new TranslationUnit();
+        }
+    }
+
+    [Grammar(Name = "translation-unit (variant 2)",
+             Description = "translation-unit: translation-unit external-declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9)]
+    public class TranslationUnit_V2 : TranslationUnit
+    {
+        TranslationUnit TranslationUnit;
+        ExternalDeclaration ExternalDeclaration;
+
+        public TranslationUnit_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }

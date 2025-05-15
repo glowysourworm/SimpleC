@@ -1,35 +1,48 @@
-﻿using SimpleC.Grammar.PhraseStructureGrammar.Declarations;
+﻿using SimpleC.Base.Standard;
+using SimpleC.Code;
+using SimpleC.Code.Attribute;
+using SimpleC.Grammar.PhraseStructureGrammar.Declarations;
 
 namespace SimpleC.Grammar.PhraseStructureGrammar.ExternalDefinitions
 {
-    public class DeclarationList : GrammarBase
+    [Grammar(Name = "declaration-list (base)",
+             Description = "declaration-list: (2 variants)",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9_1)]
+    public abstract class DeclarationList : GrammarBase
     {
-        Declaration _declaration1;
-
-        DeclarationList _declarationList2;
-        Declaration _declaration2;
-
-        public Declaration Declaration1
+        protected DeclarationList(CodeRefBase codeRef) : base(codeRef)
         {
-            get { return _declaration1; }
-            set { this.RaiseAndSetIfChanged(ref _declaration1, value); }
         }
-        public DeclarationList DeclarationList2
-        {
-            get { return _declarationList2; }
-            set { this.RaiseAndSetIfChanged(ref _declarationList2, value); }
-        }
-        public Declaration Declaration2
-        {
-            get { return _declaration2; }
-            set { this.RaiseAndSetIfChanged(ref _declaration2, value); }
-        }
+    }
 
-        public DeclarationList()
+    [Grammar(Name = "declaration-list (variant 1)",
+             Description = "declaration-list: declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9_1)]
+    public class DeclarationList_V1 : DeclarationList
+    {
+        Declaration Declaration;
+
+        public DeclarationList_V1(CodeRefBase codeRef) : base(codeRef)
         {
-            this.Declaration1 = new Declaration();
-            this.Declaration2 = new Declaration();
-            this.DeclarationList2 = new DeclarationList();
+        }
+    }
+
+    [Grammar(Name = "declaration-list (variant 2)",
+             Description = "declaration-list: declaration-list declaration",
+             Section = ISOCStandardAnnexSection.A_2,
+             SubSection = ISOCStandardAnnexSubSection.A_2_4,
+             SubSectionChapter = ISOCStandardAnnexSubSectionChapter.s6_9_1)]
+    public class DeclarationList_V2 : DeclarationList
+    {
+        DeclarationList DeclarationList;
+        Declaration Declaration;
+
+        public DeclarationList_V2(CodeRefBase codeRef) : base(codeRef)
+        {
         }
     }
 }
