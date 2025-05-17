@@ -45,7 +45,7 @@
 		</Setter>
 		<Setter Property="ContentTemplate">
 			<DataTemplate>
-				<controls:SimpleTextEditor x:Name="TheTextEditor" />
+				<controls:SimpleTextEditor x:Name="TheTextEditor"  />
 			</DataTemplate>
 		</Setter>
 	</ControlTheme>
