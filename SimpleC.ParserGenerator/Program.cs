@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿// Generates C Parsers
+
+static int Main()
+{
+    return 0;
+}

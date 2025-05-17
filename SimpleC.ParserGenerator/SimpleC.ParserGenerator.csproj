@@ -8,35 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="YaccLexTools" Version="1.2.3" />
-    <PackageReference Include="YaccLexTools.Gplex" Version="1.2.3.1" />
-    <PackageReference Include="YaccLexTools.Gppg" Version="1.5.3.1" />
-
-	  <YaccFile Include="Grammar\ANSI_C_Grammar-1985-jeff-lee.y">
-		  <OutputFile>Generated\ANSI_C_Parser.Generated.cs</OutputFile>
-		  <Arguments>/gplex /nolines</Arguments>
-	  </YaccFile>
-
-	  <None Include="Generated\ANSI_C_Parser.Generated.cs">
-		  <AutoGen>True</AutoGen>
-		  <DesignTime>True</DesignTime>
-		  <DependentUpon>Grammar\ANSI_C_Grammar-1985-jeff-lee.y</DependentUpon>
-	  </None>
-
-	  <LexFile Include="Grammar\ANSI_C_Analyzer-1985-jeff-lee.lex">
-		  <OutputFile>Generated\ANSI_C_Analyzer.Generated.cs</OutputFile>
-	  </LexFile>
-
-	  <None Include="Generated\ANSI_C_Analyzer.Generated.cs">
-		  <AutoGen>True</AutoGen>
-		  <DesignTime>True</DesignTime>
-		  <DependentUpon>Grammar\ANSI_C_Analyzer-1985-jeff-lee.lex</DependentUpon>
-	  </None>
-	  
+    <Folder Include="Generated\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Generated\" />
+    <PackageReference Include="Antlr" Version="3.5.0.2" />
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
   </ItemGroup>
 
 
