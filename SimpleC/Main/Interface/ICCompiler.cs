@@ -11,6 +11,26 @@ namespace SimpleC.Main.Interface
     /// </summary>
     public interface ICCompiler
     {
+        /*
+
+            Front End:
+
+            1) Lexical Analysis
+            2) Syntax Analysis
+            3) Semantic Analysis
+            4) First Pass Code Generation*  (considered "back end") (assembler)
+
+            Back End: (device specific)
+            
+            5) Optimization
+            6) Second Pass Code Generation  (assembler)
+            
+            Other Components:
+
+            1) Symbol Table Manager
+            2) Error Handler
+        */
+
         public event SimpleHandler<ICCompilerEventData> CompilerEvent;
 
         /// <summary>

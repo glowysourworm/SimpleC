@@ -1,0 +1,596 @@
+Resources:  (See Dr. Rainer Leupers, LANCE)
+----------
+Website:	  	https://www.nesoacademy.org
+Forum:		  	https://forum.nesoacademy.org
+Free Course:  	https://www.youtube.com/@nesoacademy
+YACC:  		  	https://en.wikipedia.org/wiki/Yacc
+LANCE:		  	https://www.ice.rwth-aachen.de/cms/ice/forschung/abgeschlossene-projekte/~bkajkw/lance-c-compiler-system/?lidx=1
+Open-Standard:  http://www.open-std.org/jtc1/sc22/WG14/www/docs/
+
+Phases of a Compiler
+
+Source Code / HLL Code -> Machine Code (Language Translator) (High Level Language)
+
+Phases:
+
+	Processor, Compiler, Assembler, Linker/Loader
+	
+Example:  x = a+b*c;
+
+Lexical Analyzer:
+
+	Lexemes -> Tokens  (Lexemes = input "words") (Lexemes togheter create meaning)
+	
+	x | identifier
+	= | operator
+	a | identifier
+	+ | operator
+	b | identifier
+	* | operator
+	c | identifier
+	
+	Lexical Analyser recognizes tokens using Regex:  
+	
+	Regex for identifiers: l(l+d)*|_(l+d)*   (this will find "x") in the example.
+	
+	l:letter, d:digit, _:underscore
+	
+	Syntax Analysis:  SEFT Production Rules
+	
+	S -> id=E;  	(identifer, equals operator, E, semicolon)
+	E -> E + T|T	(expression + term) OR (term)
+	T -> T * F|F    (term * factor) OR (factor)
+	F -> id			(factor is an identifier)
+	
+	Creates Parse Tree:  (see SEFT theory of computation)
+	
+	S 
+		id
+		=
+		E
+			E
+				T
+					F
+						id
+			+
+			T
+				T
+					F
+						id
+				*
+				F
+					id
+		;
+		
+	So, bottom up would first produce the "id" which is the factor "F"
+	
+	Top -> Bottom, Left -> Right (standard traversal)
+	
+		id, =, id, +, id, *, id, ;
+		
+		id = id + id * id ;  (this is the "yield" of the parse tree)
+		
+		since the yield of the parse tree and the expression are the
+		same, the syntax analyser will not produce any errors.
+		
+		Essentially, the Lexems / Tokens table must match the yield 
+		of the parse tree.
+		
+	Semantic Analyzer:  Takes the Parse Tree and produces the Semantically Verified Parse Tree
+	
+		- Type Checking:  Is each "id" a constant, or a variable?
+		- Error Bounds Checking
+		- Correctness of Scope Resolution
+		
+	Intermediate Code Generator (first pass):  
+	
+		- Semantically Verified Parse Tree -> Intermediate Code (TAC) ("Three Address Code")
+			(produces): 
+				t_0 = b * c;
+				t_1 = a + t_0;
+				x = t_1;
+		
+		Operator precedence is visible from the tree (bottom -> top). So the first expression
+		t_0 = b * c; can be tried bottom -> top.
+		
+	Code Optimizer:  Intermediate Code -> Code Optimization -> Optimized Code
+	
+		- Can be either machine dependent, or independent.		
+		- Output for this example:
+		
+			t_0 = b * c;
+			x = a + t_0;
+			
+	Target Code Generator:  Optimized (TAC) -> Target Code Generation -> ASM
+	
+		t_0 = b * c;
+		x = a + t_0;
+		
+		...
+		
+		mov		eax, DWORD PTR [rbp-8]
+		imul	eax, DWORD PTR [rbp-12]
+		mov		edx, eax
+		mov		eax, DWORD PTR [rbp-4]
+		add		eax, edx
+		mov		DWORD PTR [rbp-16], eax
+		
+		...
+		
+		mov     	move (destination, source) (edx register is also 32 bit register)
+		eax			extended version of ax register, combines ah and al (registers)
+					(16 high order bits, 16 low order bits), eax then can actually
+					store 32 bits, and is actually the accumulator register
+				
+		DWORD PTR 	Data Word Pointer which points at the register based pointer "rbp" with a "scaling
+					factor" of -8 (for the example: the variable "b" is being moved to the eax register)
+					
+		imul		"signed multiplication", Data Word Pointer is pointing to "c" (which is the [rbp-12]
+					"scaled" address. So, the result is stored in eax register.
+					
+		add			Addition (store in first register)
+		
+		Data Word Pointer: (Question:  Why is the assembler code generated in this way?)
+		
+			a, b, c, x -> [rbp-4], [rbp-8], [rbp-12], [rbp-16]
+			
+	Tools for Implementation:  
+	
+		Lexical Analysis: LEX (Standard Lexical analyzer for Unix)
+		
+		Syntax Analysis:  YACC (Yet Another Compiler Compiler)
+		
+		LANCE Compiler:	  Entire Front End Framework of C language compiler (for embedded processors)
+						  by Dr. Reinhold Rightburst (Univ. of Dartmouth, Germany)
+						  
+	
+	Symbol Table: (next course)
+	
+		- Usage by various phases
+		- Entries of Symbol Table
+		- Operations on Symbol Table
+		
+		Stores information about:  Variables, Functions, Objects, Classes, Interfaces
+		
+		Lexical Analysis:  Creates entries for identifiers
+		Syntax Analysis:   Adds information regarding attributes
+		Semantic Analysis: Using available info checks Semantics and updates the Symbol Table
+		Intermediate Gen:  Ads temporary variable information
+		Code Optimization: Information is used for Machine Dependent optimization
+		Target Code Gen:   Generates the Target Code using address info for identifiers
+		
+		Symbol Table (Entries) (Machine Dependent!)
+		
+		Name, Type, Size, Dimension (array dimension), Line of Declaration, Line(s) of Usage, Address (back end)
+		
+		Example:  int count;
+		
+		count, int,  2  (bytes) (machine dependent), 0, --, --, --
+		
+		Example:  char x[] = "NESO ACADEMY";
+		
+		x, 	   char, 12 (bytes)					   , 1, --, --, --
+		
+Lexical Analyzer (Details)
+	
+	1) Scans the Pure HLL code line by line
+	2) Takes Lexemes as input and produces Tokens
+	
+		Tokens: Identifier, Operator, Constant, Keyword, Literals, Punctuators, Special Characters
+		
+	Lexemes -> Scanning (phase) (eliminates non-token elements) -> Analyzing -> Tokens
+	
+	Analyzing: (C-Tokens are recognized using a finite-state-machine)
+	
+		if: 		-> a -> (sees 'i') -> b -> (sees 'f') -> c
+		
+		Identifier: -> d -> (a-z|A-Z|_) -> e <- (a-z|A-Z|_|0-9)
+		
+		Integer:	-> f -> (+|-) -> g -> (0-9) -> h 
+		
+						h -> (epsilon transition) -> g (for multiple digits)
+						f -> (epsilon transition) -> g (for silent + character)
+						
+		These three FSM's (as a single language) may be combined into a single state
+		machine called an NFA (Non-Deterministic Finite Automater)
+		
+		-> S -> (epsilon) -> a -> ...
+			 -> (epsilon) -> d -> ...
+			 -> (epsilon) -> f -> ...
+		
+		An example of this NFA, as an actual implementation, is called a Deterministic
+		Finite Automater (DFA):
+		
+		-> S -> 'i'   -> 1
+			 -> (+|-) -> 5
+			 
+		(This is best left to the channel video:  https://www.youtube.com/watch?v=4nx8LEGy9kI&list=PLBlnK6fEyqRjT3oJxFXRgjPNzeS-LFY-q&index=5)
+		Around minute 6.
+		
+		The result will identify integer constants, identifiers, and the "if" keyword.
+		
+		Structuring this process:
+		
+		NFA -> DFA -> mDFA requires knowledge of Theory of Computation to produce the 
+		minimized mDFA. (see their course)
+		
+	Comments:  int NE/*it's a comment*/SO; -> (see video) -> int NE SO; (why the whitespace???)
+	
+	White spaces:
+	
+		' '		space
+		'\t'	horizontal tab
+		'\n'	newline
+		'\v'	vertical tab 	(6 times the newline)
+		'\f'	form feed	 	(page break ASCII character)
+		'\r'	carriage return
+		
+		These are all eliminated by the scanning phase of the analyzer
+		
+	Macro Expansion:
+	
+		(probably another video on specifics.. tokens are "exchanged" one-by-one between
+		 the lexical analyzer and the syntax analyzer. And, this has something to do with
+		 how the symbol tables handles the macros...)
+		 
+		It's probably simple to just expand the macros before beginning tokenization.
+		
+	Tokenization: Count the number of tokens in a given code segment
+	
+	Example:
+	
+		int main()
+		{
+			int x,a=2,b=3,c=5;
+			x = a+b*c;
+			printf("The value of x is %d",x);
+			
+			return 0;
+		}
+		
+		Token 1: int  	(keyword)
+		Token 2: main 	(identifer)
+		Token 3: (		(punctuator)
+		Token 4: )		(punctuator)
+		Token 5: {		(punctuator)
+		Token 6: int	
+		Token 7: x		(identifier)
+		Token 8: ,		(punctuator)
+		Token 9: a		(identifier)
+		Token 10: =		(operator)
+		Token 11: 2		(constant)
+		Token 12: ,		(punctuator)
+		
+		... each token is a NEW token. So, the count increases. "x", for example, has multiple
+		entries as a token. So, this must be further parsed out to show to the symbol table.
+		
+	Error Handling:  Compile Time / Run Time
+	
+		Lexical Errors:		Identifiers that are too long, Numerical Constant length, 
+						    ill formed numeric constants, illegal characters
+		Syntax Errors:
+		Semantic Errors:
+		
+		ANSI C:  6 significant characters for external identifier name (OLD STANDARD),
+				 now 31 characters. MSFT now at 247 characters. C++ (modern) at 2048.
+				 Python (79 characters)
+				 
+	Lexical Error Recovery: (THIS IS CONTEXTUAL!)
+		
+		Panic-mode Recovery:  Stop after first error
+		
+			Example:  int 4NESO;  The digit '4' will signal an error. So, the scanner will
+								  try finding the ';' separator to handle the Panic-Mode 
+								  error recovery.
+								  
+			Example:  while (condition) { (line 1); ERROR(line 2); (line 3); }
+			
+					  The error line will cause the lexer to scan for the delimeter
+					  '}' to signal that this block has an error.
+					  
+					  This narrows down where the error handling will take place. So, there
+					  will be less to signal (for the user).
+					  
+		Transpose of two adjacent characters:  (WHEN TO TRY?)(Probably used as a text filter!)
+		
+			Example:  unoin test
+					  {
+						int x;
+						float y;
+					  } T1;
+					  
+					  (Translates the union keyword) (not explained as to when to try this)
+					  
+		Insert a missing character: (Probably a similar use case)
+		
+			Example: it NESO; -> int NESO; (where there are still errors)
+			
+		Delete unknown or extra character:
+		
+			Example:  intt NESO; -> int NESO;
+			
+		Replace a character with another
+		
+			Example:  itt NESO; -> int NESO;
+			
+	Introduction to Formal Grammars:  
+	
+		Type-0, Type-1, Type-2, Type-3 (Unrestricted, Context Sensitive, Context Free, Regular Grammar)
+	
+		(Type-0 is most unrestricted, Type-3 is most restricted)
+	
+		Syntax Analyzer:  Lexical Analysis -> Syntax Analysis -> Parse Tree (see above)
+		
+		Context Free Grammar (CFG):  SETF example (Variables / Constants) (Non-Terminals / Terminals)
+		
+		Grammar:  (N, T, P, S)  (Non-Terminals, Terminals, Production Rules (for terminal strings), Expressions (synthesis))
+		
+		CHOMSKY!  A Phrase Structure Grammar (or simply grammar) is (N, T, P, S) where
+		
+				  1) N is a finite, non-empty set of Non-terminals
+				  2) T is a finite, non-empty set of Terminals
+				  3) N (intersect) T = PHI (the speaker implied the null set i think)
+				  4) S is a special non-terminal (i.e. S (subset) N), callsed the Start symbol ( -> S -> ...)
+				  5) P is a finite set whote elements are of the form, alpha->beta
+				  
+				  where alpha, beta are of N (union) T
+				  
+					    elements are Production Rules
+						
+				  Before Chomsky, Ancient Indian Grammarian Panini "The Ashtadhyayi of Panini" 
+				  (The 8 Chapters of Panini).
+				  
+		These grammar types seem to be related to the problem of N (union) T, which seems to be
+		the constants that go between Terminals (constant), and Non-Terminals (variables). Probably
+		preprocessors, and macros. (?)
+		
+	Derivations of CFG's (Context Free Grammars)
+	
+		Syntax Analyzer: CFG -> Parser (Stream of Tokens)
+		
+			CFG:  E -> E + E | E x E | id
+			
+			(N, T, P, S)
+			
+			N:  {E}
+			T:  {+, x, id}
+			P:  All three rules
+			S:  Start Symbol is E
+			
+			Type-2 (CFG):  A -> alpha, A (belongs) N, alpha (belongs) V*
+			
+						   The LHS of every A must have only one Non-Terminal (yes!)
+						   The RHS must have any combination of terminals and non-terminals (yes!)
+						   
+			Left Most Derivation:  id + id x id
+								   E -> E + E
+								   
+								   Show that you can write this statement using
+								   the production rules. (yes!)
+								   
+			Right Most Derivation:  E => E + E (start at the right)
+									E => E + E x E
+									E => E + E x id
+									E => E + id x id
+									E => id + id x id
+									
+			Parse Tree Derivation:  E 
+										E
+											id
+										+
+										E
+											E
+												id
+											x
+											E
+												id
+	
+	Ambiguity in CFGs:  There is more than one parse tree for a given set of Production Rules (P)
+											
+	(Skipping a lot of material on CFG's:  Recursion, Non-Deterministic CFG's, Precedence, ...)
+	
+	Introduction to Parsers:
+	
+		Definition: A program that generates a parse tree for the given string, if the given string
+				    is generated from the underlying grammar.
+					
+		Generation: Top Down / Bottom Up:  
+			
+			Example Grammar: S -> aABe, A -> Abc | a, B -> d
+			Produce:  aabcde
+		
+			Top Down:  S
+							a
+							A
+								A
+									a
+								b
+								c
+							B
+								d
+							e
+							
+			Left Most Derivation + (Which production to use) => production of the result aabcde
+			
+			Bottom Up:  a
+						a
+							A
+						b		A
+						c			S
+						d		B					
+						e
+						
+						(Hard to represent this on Notepad++)
+			
+			Right Most Derivation (In reverse) + (When to reduce) => production of the Start Symbol S.
+			
+		Parsers:
+		
+			Top Down: 
+				With Backtracking:		Brute Forcing
+				Without Backtracking:	Recursive Descent Parsers / Predictive Parsers (LL(1), LL(k))
+				
+			Bottom Up: (Shift-Reduce Parsers)
+				Operator Precedence Parsers: (Can handle ambiguous grammar)
+				LR Parsers:  LR(0), SLR(1), LALR(1), CLR(1)
+				
+		Must use un-ambiguous CFG grammars. With backtracking CAN handle non-deterministic CFG's; but
+		without backtracking cannot. Without backtracking cannot handle Left recursion.
+		
+		SLR(1) is "more powerful" than LR(0), ..., CLR(1) is the "most powerful" parser.
+		
+	Top Down Parser: Left Most Derivation, CFG withOUT Left Recursion, Non-Determinism. "Which production
+					 rules to use"
+					 
+	Recursive Descent Parser:
+	
+		A recursive descent parser is a top-down parser built from a set of mutually recursive procedures
+		(or a non-recursive equivalent) where each such procedure implements one of the non-terminals of 
+		the grammar. Thus the structure of the resulting program closely mirrors that of the grammar it
+		recognizes.  
+		
+		Example:  E  ->  iE'
+				  E' -> +iE' | e
+				  
+			E()
+			{
+				if (look_ahead=='i')
+				{
+					match('i');
+					E'();
+				}
+			}
+			
+			E'()
+			{
+				if (look_ahead=='+')
+				{
+					match('+');
+					match('-');
+					E'();
+				}
+				else
+					return;
+			}
+			
+			match(char c)
+			{
+				if (look_ahead==c)
+					look_ahead = getchar();
+				else
+					printf("ERROR!");
+			}
+			
+			main()
+			{
+				E();
+				if (look_ahead=='$')					// Old symbol for end of "string"
+					printf("Parsing Successful!");
+			}
+			
+			Input:  i+i$
+			
+			Output:  
+			
+				E
+					i
+					E'
+						+
+						i
+						E'
+						
+	Top Down Parsers - LL(1) Parsers: (Predictive Parser WithOUT Backtracking)
+	
+		Run-Time:  [ Stack -> ... <- Heap | Unitialized Data (bss) | Initialized data | Text/Code segment ]
+		
+		LL(1): Left Most Derivation (Top Down)
+		
+			[Input Buffer | $] -> [ LL(1) Parser ] <-> [ LL(1) Parsing Table ]
+										 |
+								  [	   Stack     ]
+								  
+			FIRST():  Given any non-terminal of a CFG, if we derive all the possible strings from it, the 
+					  first terminal(s) is the FIRST() of the non-terminal.
+					  
+			S -> ABC
+			A -> a | epsilon   (reminder that epsilon isn't a terminal)
+			B -> b
+			C -> c
+			
+			FIRST(S):  { a, b }  (The 'b' terminal comes from the output epsilon of the FIRST(A))
+			FIRST(A):  a
+			
+			FOLLOW(): During the process of derivation, the terminal(s) that could follow the non-terminal
+					  are to be considered as FOLLOW() of the non-terminal.
+					  
+			S -> ABC
+			A -> a
+			B -> b|epsilon
+			C -> c
+			
+			FOLLOW(S): {$}			(This podcast isn't explaining FOLLOW entirely)
+			FOLLOW(A): {b, c}
+			FOLLOW(B): {c}
+			FOLLOW(C): {$}
+			
+		FIRST / FOLLOW:
+		
+		E -> TE'			{id,(}			{$,)}
+		E'-> +TE'|epsilon	{+,epsilon}		{$,)}
+		T -> FT'			{id,(}			{+,$,)}
+		T'-> *FT'|epsilon	{*,epsilon}		{+,$,)}
+		F -> id|(E)			{id,(}			{*,+,$,)}
+		
+		LL(1) Parsing Table:
+				
+				id			(			)			*			+			$	
+		E		E->TE'		E->TE'		
+		E'								E'->e					E'->+TE'	E'->e		(The epsilon rule uses the FOLLOW)
+		T		T->FT'		T->FT'
+		T'								T'->e		T'->*FT'	T'->e		T'->e		(The epsilon rule uses the FOLLOW)
+		F		F->id 		F->(E)
+		
+		The rules are selected based on "easiest to produce" F->id was selected in place
+		of F->(E) (which would produce something like "id" eventually). The epsilon rules
+		aren't yet understood.
+		
+		Rules: (to produce the above table)
+		
+		1) All the e-productions are placed under the FOLLOW sets.
+		2) Remaining productions are placed under the FIRSTs.
+		
+	LL(1) Parsing:
+	
+	Grammar / FIRST / FOLLOW
+	
+	S -> aABb		{a}			{$}
+	A -> c|epsilon	{c,epsilon} {d, b}
+	B -> b|epsilon	{d,epsilon} {b}
+	
+	
+			a		b		c		d		$
+	S		S->aABb
+	A				A->e	A->c	A->e
+	B				B->e			B->b
+	
+	
+	Input:	       [a,d,b,$]
+	Parsing Stack: 
+		
+		-> [$, S]				[a,d,b,$] [0] <- (current index)
+		-> [$, b, B, A, a]		[a,d,b,$] [0]
+		-> [$, b, B, A]			[a,d,b,$] [1] (finalizing non-terminal 'a')
+		-> [$, b, B, e]			[a,d,b,$] [1] (Production Rule [A,d] = A->epsilon)
+		-> [$, b, B]			[a,d,b,$] [1] (WHY??) (Because, epsilon => "empty string", and we were in the
+													   context of 'A' non-terminal)(not explained well enough)
+		-> [$, b, d]			[a,d,b,$] [1] (The next procedure will be to pop 'd' because they match)
+		-> [$, b]				[a,d,b,$] [2] (and to advance the current index)
+		-> [$]					[a,d,b,$] [3] (and again...)
+		
+		Parse Tree:
+		
+		S
+			a
+			A - epsilon
+			B - d
+			b
