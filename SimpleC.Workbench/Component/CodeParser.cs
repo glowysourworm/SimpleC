@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
-using SimpleC.ParserGenerator.Component;
+using SimpleC.Workbench.Component.CodeAnalysis;
 using SimpleC.Workbench.ViewModels;
+using SimpleC.Workbench.ViewModels.CodeAnalysis;
 
-namespace SimpleC.Workbench.Models
+namespace SimpleC.Workbench.Component
 {
     public class CodeParser
     {
@@ -18,7 +19,8 @@ namespace SimpleC.Workbench.Models
         CParser _parser;
         CParseTreeListener _parserListener;
 
-        public List<string> TokenMessages { get; set; }
+        public List<TokenViewModel> Tokens { get; set; }
+        public List<SyntaxErrorViewModel> SyntaxErrors { get; set; }
 
         public event EventHandler<LogViewModel> LogEvent;
 
@@ -27,6 +29,7 @@ namespace SimpleC.Workbench.Models
             _inputStream = new CodeParserInputStream();
             _lexer = new CLexer(_inputStream);
             _lexerErrorListener = new CLexerErrorListener();
+            _lexerErrorListener.SyntaxErrorEvent += OnSyntaxError;
 
             _lexer.AddErrorListener(_lexerErrorListener);
             _tokenStream = new CommonTokenStream(_lexer);
@@ -38,7 +41,8 @@ namespace SimpleC.Workbench.Models
             _parserListener.VisitTerminalEvent += OnVisitTerminalNodeEvent;
             _parser.AddParseListener(_parserListener);
 
-            this.TokenMessages = new List<string>();
+            this.Tokens = new List<TokenViewModel>();
+            this.SyntaxErrors = new List<SyntaxErrorViewModel>();
         }
 
         ~CodeParser()
@@ -53,6 +57,8 @@ namespace SimpleC.Workbench.Models
 
             try
             {
+                this.SyntaxErrors.Clear();
+
                 _inputStream.Seek(0);
                 _inputStream.Load(codeString);
                 _parser.Reset();
@@ -62,17 +68,27 @@ namespace SimpleC.Workbench.Models
                 var walker = new ParseTreeWalker();
                 walker.Walk(_parserListener, unit);
 
-                this.TokenMessages.Clear();
+
+                this.Tokens.Clear();
 
                 foreach (var token in _lexer.GetAllTokens())
                 {
                     var message = "Token:  Name={0} Source={1} Type={2} Line={3} Column={4}";
-                    var formattedMessage = string.Format(message, 
-                                                         token.Text, 
-                                                         token.TokenSource.SourceName, 
-                                                         _parser.Vocabulary.GetDisplayName(token.Type) ?? "", 
+                    var formattedMessage = string.Format(message,
+                                                         token.Text,
+                                                         token.TokenSource.SourceName,
+                                                         _parser.Vocabulary.GetDisplayName(token.Type) ?? "",
                                                          token.Line, token.Column);
-                    this.TokenMessages.Add(formattedMessage);
+
+                    this.Tokens.Add(new TokenViewModel()
+                    {
+                        Text = token.Text,
+                        Column = token.Column,
+                        Channel = _lexer.ChannelNames[token.Channel],
+                        Line = token.Line,
+                        Source = token.TokenSource.SourceName,
+                        Type = _parser.Vocabulary.GetDisplayName(token.Type) ?? ""
+                    });
                 }
 
                 OnLog("Parser ran successfully", LogType.Message, LogSeverity.Info);
@@ -95,6 +111,11 @@ namespace SimpleC.Workbench.Models
                     Timestamp = DateTime.Now
                 });
             }
+        }
+
+        private void OnSyntaxError(object? sender, SyntaxErrorViewModel error)
+        {
+            this.SyntaxErrors.Add(error);
         }
 
         private void OnVisitTerminalNodeEvent(object? sender, ITerminalNode e)

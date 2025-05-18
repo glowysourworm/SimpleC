@@ -6,7 +6,7 @@ using Avalonia.Threading;
 
 using AvaloniaEdit.TextMate;
 
-using SimpleC.Workbench.Models;
+using SimpleC.Workbench.Component;
 using SimpleC.Workbench.ViewModels;
 
 using TextMateSharp.Grammars;

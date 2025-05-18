@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using AvaloniaEdit;
-
-using SimpleC.ParserGenerator.Component;
-using SimpleC.Workbench.Models;
 
 namespace SimpleC.Workbench.ViewModels
 {
@@ -16,7 +7,6 @@ namespace SimpleC.Workbench.ViewModels
         string _fullPath;
         string _fileNameOrDirectoryName;
         string _contents;
-
 
         public string FullPath
         {

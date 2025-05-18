@@ -1,8 +1,10 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 
-namespace SimpleC.ParserGenerator.Component
+namespace SimpleC.Workbench.Component.CodeAnalysis
 {
     public class CParseTreeListener : CBaseListener
     {

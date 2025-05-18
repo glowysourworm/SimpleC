@@ -4,7 +4,7 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-using SimpleC.Workbench.Models;
+using SimpleC.Workbench.Component;
 using SimpleC.Workbench.ViewModels;
 
 namespace SimpleC.Workbench.Views
@@ -46,16 +46,17 @@ namespace SimpleC.Workbench.Views
             var viewModel = this.DataContext as ViewModel;
             if (viewModel != null)
             {
-                viewModel.ParserLogs.Clear();
-                foreach (var token in _parser.TokenMessages)
+                viewModel.Tokens.Clear();
+                viewModel.SyntaxErrors.Clear();
+
+                foreach (var token in _parser.Tokens)
                 {
-                    viewModel.ParserLogs.Add(new LogViewModel()
-                    {
-                        Message = token,
-                        Severity = LogSeverity.Info,
-                        Type = LogType.Code,
-                        Timestamp = DateTime.Now
-                    });
+                    viewModel.Tokens.Add(token);
+                }
+
+                foreach (var error in _parser.SyntaxErrors)
+                {
+                    viewModel.SyntaxErrors.Add(error);
                 }
             }
         }

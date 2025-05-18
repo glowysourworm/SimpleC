@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SimpleC.Workbench.Models
+namespace SimpleC.Workbench.Component
 {
     public class Debouncer
     {

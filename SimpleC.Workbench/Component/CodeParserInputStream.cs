@@ -3,7 +3,7 @@
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 
-namespace SimpleC.Workbench.Models
+namespace SimpleC.Workbench.Component
 {
     public class CodeParserInputStream : ICharStream
     {

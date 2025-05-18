@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
+using SimpleC.Workbench.ViewModels.CodeAnalysis;
+
 namespace SimpleC.Workbench.ViewModels
 {
     public partial class ViewModel : ViewModelBase
@@ -9,7 +11,8 @@ namespace SimpleC.Workbench.ViewModels
 
         ObservableCollection<CodeFileViewModel> _codeFiles;
         ObservableCollection<LogViewModel> _logs;
-        ObservableCollection<LogViewModel> _parserLogs;
+        ObservableCollection<TokenViewModel> _tokens;
+        ObservableCollection<SyntaxErrorViewModel> _syntaxErrors;
 
         public FileItemViewModel ProjectFiles
         {
@@ -26,11 +29,17 @@ namespace SimpleC.Workbench.ViewModels
             get { return _logs; }
             set { this.SetProperty(ref _logs, value); }
         }
-        public ObservableCollection<LogViewModel> ParserLogs
+        public ObservableCollection<TokenViewModel> Tokens
         {
-            get { return _parserLogs; }
-            set { this.SetProperty(ref _parserLogs, value); }
+            get { return _tokens; }
+            set { this.SetProperty(ref _tokens, value); }
         }
+        public ObservableCollection<SyntaxErrorViewModel> SyntaxErrors
+        {
+            get { return _syntaxErrors; }
+            set { this.SetProperty(ref _syntaxErrors, value); }
+        }
+
 
         public ViewModel()
         {
@@ -51,7 +60,8 @@ namespace SimpleC.Workbench.ViewModels
                 }
             };
             this.Logs = new ObservableCollection<LogViewModel>();
-            this.ParserLogs = new ObservableCollection<LogViewModel>();
+            this.Tokens = new ObservableCollection<TokenViewModel>();
+            this.SyntaxErrors = new ObservableCollection<SyntaxErrorViewModel>();
         }
 
         public void Load(string projectFilePath)

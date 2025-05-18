@@ -73,8 +73,18 @@
 				</ListBox>				
 			</TabItem>
 
-			<TabItem Header="Parser Output">
-				<ListBox x:Name="ParserLB" ItemsSource="{Binding ParserLogs}">
+			<TabItem Header="Tokens">
+				<ListBox x:Name="ParserLB" ItemsSource="{Binding Tokens}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Text}" />
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+
+			<TabItem Header="Syntax Errors">
+				<ListBox x:Name="SyntaxErrorLB" ItemsSource="{Binding SyntaxErrors}">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding Message}" />
