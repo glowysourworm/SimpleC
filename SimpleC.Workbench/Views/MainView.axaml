@@ -8,11 +8,7 @@
 			 Margin="0">
 
 	<UserControl.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceInclude Source="/Resources/Template/FileTabControl.axaml" />
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
+
 	</UserControl.Resources>
 
 	<!-- Primary Docker Dock.Avalonia is not quite stable / usable. -->
@@ -47,7 +43,40 @@
 		<controls:ProjectFileTreeControl />
 
 		<!-- Instance of FileTabControl (see Resources / Template / FileTabControl.axaml) -->
-		<TabControl Grid.Column="2" Padding="0" ItemsSource="{Binding CodeFiles}" />
+		<TabControl x:Name="CodeTabControl" Grid.Column="2" Padding="0" ItemsSource="{Binding CodeFiles}">
+			<TabControl.Resources>
+				<ResourceDictionary>
+					<ResourceDictionary.MergedDictionaries>
+						<ResourceInclude Source="/Resources/Template/FileTabControl.axaml" />
+					</ResourceDictionary.MergedDictionaries>
+				</ResourceDictionary>
+			</TabControl.Resources>
+		</TabControl>
+
+		<!-- Output Messages -->
+		<TabControl Grid.Row="2" Grid.ColumnSpan="3">
+			
+			<TabItem Header="Log Messages">
+				<ListBox x:Name="OutputLB" ItemsSource="{Binding Logs}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Message}" />
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>				
+			</TabItem>
+
+			<TabItem Header="Parser Output">
+				<ListBox x:Name="ParserLB" ItemsSource="{Binding ParserLogs}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Message}" />
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+
+		</TabControl>
 
 	</Grid>
 

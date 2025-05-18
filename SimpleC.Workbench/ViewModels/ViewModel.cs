@@ -8,6 +8,8 @@ namespace SimpleC.Workbench.ViewModels
         FileItemViewModel _projectFiles;
 
         ObservableCollection<CodeFileViewModel> _codeFiles;
+        ObservableCollection<LogViewModel> _logs;
+        ObservableCollection<LogViewModel> _parserLogs;
 
         public FileItemViewModel ProjectFiles
         {
@@ -18,6 +20,16 @@ namespace SimpleC.Workbench.ViewModels
         {
             get { return _codeFiles; }
             set { this.SetProperty(ref _codeFiles, value); }
+        }
+        public ObservableCollection<LogViewModel> Logs
+        {
+            get { return _logs; }
+            set { this.SetProperty(ref _logs, value); }
+        }
+        public ObservableCollection<LogViewModel> ParserLogs
+        {
+            get { return _parserLogs; }
+            set { this.SetProperty(ref _parserLogs, value); }
         }
 
         public ViewModel()
@@ -38,6 +50,8 @@ namespace SimpleC.Workbench.ViewModels
                     Contents = "Hello World! (File2)"
                 }
             };
+            this.Logs = new ObservableCollection<LogViewModel>();
+            this.ParserLogs = new ObservableCollection<LogViewModel>();
         }
 
         public void Load(string projectFilePath)

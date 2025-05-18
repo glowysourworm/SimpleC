@@ -1,7 +1,12 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using System.Threading.Tasks;
+
+using Avalonia.Controls;
+using Avalonia.Threading;
 
 using AvaloniaEdit.TextMate;
 
+using SimpleC.Workbench.Models;
 using SimpleC.Workbench.ViewModels;
 
 using TextMateSharp.Grammars;
@@ -14,6 +19,7 @@ namespace SimpleC.Workbench.Controls
     {
         private Installation _textMateInstallation;
         private RegistryOptions _registryOptions;
+        private Debouncer _debouncer;
 
         public SimpleTextEditor()
         {
@@ -30,6 +36,9 @@ namespace SimpleC.Workbench.Controls
             // Initial setup of TextMate.
             _textMateInstallation = this.Editor.InstallTextMate(_registryOptions);
 
+            // Debounce the code parser
+            _debouncer = new Debouncer(300);
+
             // Set default language
             SetGrammar(_registryOptions.GetLanguageByExtension(".c"));
 
@@ -41,12 +50,14 @@ namespace SimpleC.Workbench.Controls
 
             this.GrammarCB.SelectionChanged += GrammarCB_SelectionChanged;
             this.DataContextChanged += SimpleTextEditor_DataContextChanged;
+            this.Editor.TextChanged += Editor_TextChanged;
         }
 
         ~SimpleTextEditor()
         {
             this.GrammarCB.SelectionChanged -= GrammarCB_SelectionChanged;
             this.DataContextChanged -= SimpleTextEditor_DataContextChanged;
+            this.Editor.TextChanged -= Editor_TextChanged;
         }
 
         private void SetGrammar(Language language)
@@ -75,6 +86,23 @@ namespace SimpleC.Workbench.Controls
                 this.Editor.Clear();
                 this.Editor.AppendText(viewModel.Contents);
             }
+        }
+
+        private void Editor_TextChanged(object? sender, System.EventArgs e)
+        {
+            _debouncer.Debounce(RaiseTextEvent);
+        }
+
+        private void RaiseTextEvent()
+        {
+            Dispatcher.UIThread.Invoke(() =>
+            {
+                var viewModel = this.Editor.DataContext as CodeFileViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.RaiseTextChanged(this.Editor.Text);
+                }
+            });
         }
     }
 }
