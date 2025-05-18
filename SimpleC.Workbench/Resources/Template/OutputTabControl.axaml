@@ -1,0 +1,91 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:avaEdit="https://github.com/avaloniaui/avaloniaedit"
+					xmlns:controls="clr-namespace:SimpleC.Workbench.Controls;assembly=SimpleC.Workbench"
+					xmlns:converter="using:SimpleC.Workbench.Converter"
+					x:CompileBindings="False">
+
+	<converter:BoolToBrushConverter x:Key="BoolToBrushConverter" />
+
+	<ControlTheme x:Key="BaseTabItemControlTheme" TargetType="TabItem">
+		<Setter Property="Padding" Value="0" />
+		<Setter Property="Template">
+			<ControlTemplate>
+
+				<Border
+					x:Name="PART_LayoutRoot"
+					Background="{TemplateBinding Background}"
+					BorderBrush="{TemplateBinding BorderBrush}"
+					BorderThickness="{TemplateBinding BorderThickness}"
+					Padding="{TemplateBinding Padding}">
+					<ContentPresenter x:Name="PART_ContentPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+				</Border>
+
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+	<ControlTheme x:Key="FirstTabItemControlTheme" TargetType="TabItem" BasedOn="{StaticResource BaseTabItemControlTheme}">
+		<Setter Property="Background" Value="#EEEEEE" />
+		<Setter Property="Cursor" Value="Hand" />
+		<Setter Property="HeaderTemplate">
+			<DataTemplate>
+				<Border Background="{Binding IsSelected, 
+											 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}, 
+											 Converter={StaticResource BoolToBrushConverter},
+											 ConverterParameter={x:Static Brushes.White}}">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding Header, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabItem}}" FontSize="14" Padding="10" />
+					</StackPanel>
+				</Border>
+			</DataTemplate>
+		</Setter>
+	</ControlTheme>
+
+	<ControlTheme x:Key="BaseTabControlTheme" TargetType="TabControl">
+		<Setter Property="ItemsPanel">
+			<ItemsPanelTemplate>
+				<StackPanel Orientation="Horizontal" />
+			</ItemsPanelTemplate>
+		</Setter>
+		<Setter Property="Padding" Value="0" />
+		<Setter Property="Template">
+			<ControlTemplate>
+
+				<DockPanel>
+					<ItemsPresenter x:Name="PART_ItemsPresenter" DockPanel.Dock="Top" ItemsPanel="{TemplateBinding ItemsPanel}" ZIndex="1" />
+
+					<Border
+						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						CornerRadius="{TemplateBinding CornerRadius}">
+						<ContentPresenter
+							x:Name="PART_SelectedContentHost"
+							Margin="{TemplateBinding Padding}"
+							Content="{TemplateBinding SelectedContent}"
+							ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+							HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+							VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</DockPanel>
+
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+	<ControlTheme x:Key="FirstTabControlTheme" TargetType="TabControl" BasedOn="{StaticResource BaseTabControlTheme}">
+		<Setter Property="Background" Value="White" />
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<StackPanel Background="#DDDDDD" Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemContainerTheme" Value="{StaticResource FirstTabItemControlTheme}" />
+	</ControlTheme>
+
+	<ControlTheme x:Key="{x:Type TabControl}" TargetType="TabControl" BasedOn="{StaticResource FirstTabControlTheme}" />
+	
+</ResourceDictionary>
